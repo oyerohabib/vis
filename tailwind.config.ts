@@ -30,10 +30,35 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        slideUp: {
+          "70%": {
+            opacity: "0.7",
+            transform: "translateY(50px)",
+          },
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+        slideDown: {
+          "100%": {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        },
+        slideNavUp: {
+          "100%": {
+            transform: "translateY(-112px)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        slideUp: "slideUp 1s 0.2s ease forwards",
+        slideDown: "slideDown 1s 0.2s ease forwards",
+        slideNavUp: "slideDown 1s 0.2s ease forwards",
       },
       fontFamily: {
         poppins: [`var(--font-poppins)`, "sans-serif"],

@@ -1,6 +1,8 @@
 import React from "react";
+import { MainNav } from "@/components/navigation";
 
 import { Suspense } from "react";
+import { SkeletonNavbar } from "@/components/skeltons";
 
 export default function AdminLayout({
   children,
@@ -9,9 +11,9 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      {/* <Suspense fallback={<SkeletonNavbar />}>
-        <Header />
-      </Suspense> */}
+      <Suspense fallback={<SkeletonNavbar />}>
+        <MainNav />
+      </Suspense>
       {children}
       {/* <Sub />
       <Footer /> */}
