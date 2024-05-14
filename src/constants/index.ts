@@ -1,0 +1,1 @@
+import { NavbarLinkProps } from "@/types";
