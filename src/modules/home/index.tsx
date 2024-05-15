@@ -516,6 +516,40 @@ const Feedbackcard = ({ image, name, review }: CardProps) => (
 const FeedBack = () => {
   const SectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView({ ref: SectionRef });
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    arrows: false,
+    autoplay: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    pauseOnHover: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
     <>
       <section
@@ -534,11 +568,11 @@ const FeedBack = () => {
           Take a dive into the reviews of what our user have to say about their
           experience at with Viscio Express
         </p>
-        <div className="flex flex-wrap justify-center mt-10">
+        <Slider {...settings} className="mt-5 py-7">
           {FeedbackcardData.map((data, index) => (
             <Feedbackcard {...data} key={index} />
           ))}
-        </div>
+        </Slider>
       </section>
     </>
   );
