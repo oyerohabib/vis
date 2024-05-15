@@ -1,15 +1,20 @@
 import React from "react";
-import { HeroSection, Statistics, Patners, WhatWeDo } from "@/modules/home";
+import {
+  HeroSection,
+  Statistics,
+  Patners,
+  WhatWeDo,
+  CoveredLocation,
+} from "@/modules/home";
 
 const HOME = () => {
   return (
-    <div
-    // className="overflow-x-hidden"
-    >
+    <div>
       <HeroSection />
       <Statistics />
       <Patners />
       <WhatWeDo />
+      <CoveredLocation />
     </div>
   );
 };

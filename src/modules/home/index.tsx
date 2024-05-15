@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import Image from "next/image";
 import { cn } from "@/utils";
 import useInView from "@/hooks/useInView";
+import "./styles.scss";
 
 const HeroSection = () => {
   const settings = {
@@ -343,66 +344,120 @@ const cardData = [
     text: "Cut down avoidable Carbon Emissions by un-maximized mobility assets",
   },
 ];
-// interface LocationCardProps {
-//   imageSrc: string;
-//   locationName: string;
-// }
 
-// const LocationCard: React.FC<LocationCardProps> = ({
-//   imageSrc,
-//   locationName,
-// }) => {
-//   return (
-//     <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
-//       <div className="overflow-hidden relative flex-col grow justify-end items-center px-16 pt-80 pb-12 text-2xl font-medium leading-7 whitespace-nowrap rounded-3xl border border-white border-solid shadow-sm aspect-[0.96] text-zinc-100 max-md:px-5 max-md:pt-10 max-md:mt-9">
-//         <img
-//           loading="lazy"
-//           src={imageSrc}
-//           alt={`Image of ${locationName}`}
-//           className="object-cover absolute inset-0 size-full"
-//         />
-//         {locationName}
-//       </div>
-//     </div>
-//   );
-// };
+const locations = [
+  {
+    image: "/lagos",
+    locationName: "Lagos",
+  },
+  {
+    image: "/ogbomoso",
+    locationName: "Ogbomosho",
+  },
+  {
+    image: "/akwaibom",
+    locationName: "Akwa Ibom",
+  },
+  {
+    image: "/kaduna",
+    locationName: "Kaduna",
+  },
+  {
+    image: "/calabar",
+    locationName: "calabar",
+  },
+  {
+    image: "/markudi",
+    locationName: "markudi",
+  },
+  {
+    image: "/plateau",
+    locationName: "plateau",
+  },
+  {
+    image: "/kano",
+    locationName: "kano",
+  },
+];
 
-// const locations = [
-//   {
-//     imageSrc:
-//       "https://cdn.builder.io/api/v1/image/assets/TEMP/b89e8fd0ef06be29d5f998eed1ef2c3d22dd074bb17de7a8045ba9a67e4f5c1a?apiKey=af97e94b909e4cdbb531b36fb1b19598&",
-//     locationName: "Lagos",
-//   },
-//   {
-//     imageSrc:
-//       "https://cdn.builder.io/api/v1/image/assets/TEMP/44059790aa661844963709224fdabb1cc0910b85db7dbef895e1a09193ca020f?apiKey=af97e94b909e4cdbb531b36fb1b19598&",
-//     locationName: "Ogbomoso",
-//   },
-//   {
-//     imageSrc:
-//       "https://cdn.builder.io/api/v1/image/assets/TEMP/0e69d2633ef0d1f13c885ab9ef80b7c11f0a6b6704709c99190033d55f4cc1f5?apiKey=af97e94b909e4cdbb531b36fb1b19598&",
-//     locationName: "Akwa Ibom",
-//   },
-//   {
-//     imageSrc:
-//       "https://cdn.builder.io/api/v1/image/assets/TEMP/0461fd92819eb5603af15b617f92840f37659cf15cae23279f143d97002aaf15?apiKey=af97e94b909e4cdbb531b36fb1b19598&",
-//     locationName: "Kaduna",
-//   },
-// ];
+const CoveredLocation = () => {
+  const SectionRef = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView({ ref: SectionRef });
 
-// function MyComponent() {
-//   return (
-//     <section>
-//       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-//         {locations.map((location, index) => (
-//           <LocationCard
-//             key={index}
-//             imageSrc={location.imageSrc}
-//             locationName={location.locationName}
-//           />
-//         ))}
-//       </div>
-//     </section>
-//   );
-// }
-export { HeroSection, Statistics, Patners, WhatWeDo };
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    arrows: false,
+    autoplay: true,
+    slidesToShow: 3.5,
+    slidesToScroll: 1,
+    pauseOnHover: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3.5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  return (
+    <section
+      ref={SectionRef}
+      className={cn(
+        "flex flex-col bg-black px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 pb-12",
+        isInView
+          ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+          : " opacity-0 translate-y-36"
+      )}
+    >
+      <h2 className="text-5xl font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
+        Our Coverage Cities
+      </h2>
+      <p className="mt-6 text-xl font-light leading-6 text-white w-full md:w-[40%]">
+        Our commitment to serve you constantly propels us to enlarge our
+        coverage locations to ensure efficient service delivery and proximity to
+        our priority channels.
+      </p>
+      <Slider {...settings} className="mt-5">
+        {locations.map((locations, index) => (
+          <>
+            <div className="flex w-full max-w-[380px]">
+              <div className="relative flex px-16 pt-80 pb-12 text-2xl font-medium leading-7 whitespace-nowrap rounded-3xl text-center  border border-white border-solid shadow-sm aspect-[0.96] text-zinc-100 max-md:px-5 max-md:pt-10 max-md:mt-9">
+                <Image
+                  loading="lazy"
+                  src={`/states${locations.image}.png`}
+                  alt={locations.locationName}
+                  layout="fill"
+                  // objectFit="object"
+                  className="object-cover absolute"
+                />
+                <span className="capitalize text-white relative">
+                  {locations.locationName}
+                </span>
+              </div>
+            </div>
+          </>
+        ))}
+      </Slider>
+    </section>
+  );
+};
+export { HeroSection, Statistics, Patners, WhatWeDo, CoveredLocation };
