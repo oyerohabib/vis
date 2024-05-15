@@ -6,6 +6,7 @@ import Image from "next/image";
 import { cn } from "@/utils";
 import useInView from "@/hooks/useInView";
 import "./styles.scss";
+import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   const settings = {
@@ -460,4 +461,131 @@ const CoveredLocation = () => {
     </section>
   );
 };
-export { HeroSection, Statistics, Patners, WhatWeDo, CoveredLocation };
+
+type CardProps = {
+  image: string;
+  review: string;
+  name: string;
+};
+
+const FeedbackcardData: CardProps[] = [
+  {
+    image: "/feedback",
+    review:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
+    name: "Ajani Ben",
+  },
+  {
+    image: "/feedback",
+    review:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
+    name: "Ajani Ben",
+  },
+  {
+    image: "/feedback",
+    review:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
+    name: "Ajani Ben",
+  },
+  {
+    image: "/feedback",
+    review:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
+    name: "Ajani Ben",
+  },
+];
+
+const Feedbackcard = ({ image, name, review }: CardProps) => (
+  <article className="flex flex-col items-center px-12 py-14 w-full bg-white rounded-3xl shadow-2xl max-w-[411px]">
+    <Image
+      src={`${image}.png`}
+      alt="feedback"
+      className="rounded-full w-[80px] h-[80px]"
+      width={80}
+      height={80}
+      loading="lazy"
+    />
+    <p className="self-stretch mt-6 text-lg font-light leading-6 text-center">
+      {review}
+    </p>
+    <hr className="shrink-0 mt-8 h-0.5 border-2 border-solid bg-zinc-800 border-zinc-800 w-[134px]" />
+    <p className="mt-4 text-xl leading-6">{name}</p>
+  </article>
+);
+
+const FeedBack = () => {
+  const SectionRef = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView({ ref: SectionRef });
+  return (
+    <>
+      <section
+        ref={SectionRef}
+        className={cn(
+          "flex flex-col bg-white px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 pb-12",
+          isInView
+            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+            : " opacity-0 translate-y-36"
+        )}
+      >
+        <h2 className="text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl">
+          What our Customers says
+        </h2>
+        <p className="mt-6 text-xl font-light leading-6 text-black w-full md:w-[40%]">
+          Take a dive into the reviews of what our user have to say about their
+          experience at with Viscio Express
+        </p>
+        <div className="flex flex-wrap justify-center mt-10">
+          {FeedbackcardData.map((data, index) => (
+            <Feedbackcard {...data} key={index} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+};
+
+const GiveReview = () => {
+  const SectionRef = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView({ ref: SectionRef });
+  return (
+    <>
+      <section
+        ref={SectionRef}
+        className={cn(
+          "flex overflow-hidden relative flex-col justify-center items-center p-20 text-white min-h-[492px]",
+          isInView
+            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+            : " opacity-0 translate-y-36"
+        )}
+      >
+        <Image
+          src="/review.png"
+          alt="Description of the image"
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0"
+        />
+        <h1 className="relative mt-5 text-6xl font-semibold text-center max-md:max-w-full max-md:text-4xl">
+          Rider&apos;s Reviews
+        </h1>
+        <p className="relative mt-4 text-2xl text-center w-[785px] max-md:max-w-full">
+          Are you a Logistics Operator, looking to employ a new driver/rider for
+          your vehicle? Find his past work records here.
+        </p>
+        <Button className="relative justify-center h-[56px] mt-14 text-xl leading-6 text-white rounded-xl border-t-2 border-r-4 border-b-4 border-l-2 bg-transparent hover:bg-transparent border-white border-solid max-md:px-5 max-md:mt-10">
+          See Reviews
+        </Button>
+      </section>
+    </>
+  );
+};
+
+export {
+  HeroSection,
+  Statistics,
+  Patners,
+  WhatWeDo,
+  CoveredLocation,
+  FeedBack,
+  GiveReview,
+};

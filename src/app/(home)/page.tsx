@@ -5,6 +5,8 @@ import {
   Patners,
   WhatWeDo,
   CoveredLocation,
+  FeedBack,
+  GiveReview,
 } from "@/modules/home";
 
 const HOME = () => {
@@ -15,6 +17,8 @@ const HOME = () => {
       <Patners />
       <WhatWeDo />
       <CoveredLocation />
+      <FeedBack />
+      <GiveReview />
     </div>
   );
 };
