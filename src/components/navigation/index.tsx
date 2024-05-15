@@ -49,6 +49,7 @@ const MainNav = () => {
           width={55}
           height={18}
           loading="eager"
+          className={cn(scrollHeight > 200 && "invert")}
         />
       </Link>
       <div className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 2xl:gap-x-10 w-full justify-center max-w-[50%]">
@@ -65,7 +66,8 @@ const MainNav = () => {
             }}
             className={cn(
               " w-full text-white  flex justify-center capitalize text-base relative font-medium  before:bg-primary before:w-[0%] before:h-1 before:absolute before:-bottom-2 before:left-0 before:transition-all before:duration-500 ",
-              isActive === link.link ? "before:w-full text-primary" : ""
+              scrollHeight > 200 && "text-black",
+              isActive === link.link ? "before:w-full text-primary" : "",
               //   pathname === home && scrollHeight < 200
               //     ? "text-white"
               //     : "text-black"

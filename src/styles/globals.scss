@@ -4,3 +4,74 @@
 
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #001b87;
+  border-radius: 8px;
+}
+
+.box {
+  position: relative;
+  width: 358px;
+  height: 272px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -ms-align-items: center;
+  overflow: hidden;
+}
+
+.box .content {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -ms-align-items: center;
+  background-color: white;
+  z-index: 99;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 180%;
+  background: linear-gradient(#001b87, #0bce83);
+  animation: rotate 4s linear infinite;
+  /* background-color: ; */
+  /* border-radius: 20px; */
+  /* z-index: 1; */
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  background: white;
+  inset: 5px;
+  border-radius: 20px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

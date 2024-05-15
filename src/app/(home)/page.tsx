@@ -1,14 +1,15 @@
 import React from "react";
-import { HeroSection, Statistics, Patners } from "@/modules/home";
+import { HeroSection, Statistics, Patners, WhatWeDo } from "@/modules/home";
 
 const HOME = () => {
   return (
-    <div 
+    <div
     // className="overflow-x-hidden"
     >
       <HeroSection />
       <Statistics />
       <Patners />
+      <WhatWeDo />
     </div>
   );
 };

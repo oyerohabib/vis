@@ -199,7 +199,7 @@ const Patners = () => {
   const isInView2 = useInView({ ref: AboutusRef });
 
   return (
-    <section className="container my-8 max-md:pt-12 lg:my-20 w-full flex flex-col items-center px-4">
+    <section className="px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 w-full flex flex-col items-center">
       <div
         ref={PatnersRef}
         className={cn(
@@ -237,35 +237,37 @@ const Patners = () => {
         ref={AboutusRef}
         className={cn(
           "grid grid-cols-2 w-full items-center justify-center bg-white",
-          isInView
+          isInView2
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
         )}
       >
         <div className="flex flex-col space-y-4">
           <h2 className="text-2xl font-bold text-primary">About Us</h2>
-          <p className="text-zinc-600">
-            We make back-loading logistics profitable for agro-logistics
-            providers and enable farmers/food aggregators move their produce
-            from farm to market affordably & predictably. The African logistics
-            scene is riddled with infrastructure gaps, high operating costs and
-            overly fragmented activities.
-          </p>
-          <p className="text-zinc-600">
-            Viscio express platform serves as a reliable collaboration tool for
-            various logistics agents across multiple locations leveraging on
-            technology tools and a smart operations framework.
-          </p>
-          <button className="justify-center self-start px-9 py-5 mt-28 text-2xl font-light text-blue-900 rounded-xl border-t-2 border-r-4 border-b-4 border-l-2 border-blue-900 border-solid max-md:px-5 max-md:mt-10">
+          <div className="text-[24px] font-medium">
+            <p className="text-black">
+              We make back-loading logistics profitable for agro-logistics
+              providers and enable farmers/food aggregators move their produce
+              from farm to market affordably & predictably. The African
+              logistics scene is riddled with infrastructure gaps, high
+              operating costs and overly fragmented activities.
+            </p>
+            <p className="text-black">
+              Viscio express platform serves as a reliable collaboration tool
+              for various logistics agents across multiple locations leveraging
+              on technology tools and a smart operations framework.
+            </p>
+          </div>
+          <button className="justify-center self-start h-[56px] text-[22px] w-[193px] mt-28 text-2xl font-light text-blue-900 rounded-xl text-center border-t-2 border-r-4 border-b-4 border-l-2 border-blue-900 border-solid max-md:px-5 max-md:mt-10">
             Learn more
           </button>
         </div>
-        <div className="flex mt-8 md:mt-0 object-cover">
+        <div className="flex mt-8 md:mt-0 object-cover justify-end">
           <Image
-            src="/hero/rightimage.png"
+            src="/hero/rightImage.png"
             alt="Logistics Illustration"
-            width={500}
-            height={500}
+            width={600}
+            height={520}
             className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover"
           />
         </div>
@@ -273,6 +275,74 @@ const Patners = () => {
     </section>
   );
 };
+
+const WhatWeDo = () => {
+  const SectionRef = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView({ ref: SectionRef });
+  return (
+    <>
+      <section className="w-full flex flex-col px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20">
+        <div
+          ref={SectionRef}
+          className={cn(
+            "flex flex-col",
+            isInView
+              ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+              : " opacity-0 translate-y-36"
+          )}
+        >
+          <h1 className="w-full text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl">
+            What we do
+          </h1>
+          <div className="px-5 mt-12 w-full flex items-center justify-center">
+            {cardData.map((data, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "flex flex-col",
+                  index !== 2
+                    ? "w-[37%] ml-5 max-md:ml-0 max-md:w-full"
+                    : "w-[27%] max-md:ml-0 max-md:w-full"
+                )}
+              >
+                <div className="box bg-white">
+                  <div className="content flex flex-col justify-center items-start max-w-[320px] max-h-[250px]">
+                    <div className="flex flex-col gap-2 items-start">
+                      <div className="flex justify-center items-center self-start p-2.5 mt-9 rounded-xl bg-slate-200 bg-opacity-70 h-[62px] w-[62px]">
+                        <Image
+                          src="/track.png"
+                          alt="Decorative icon"
+                          width={44}
+                          height={44}
+                          className="w-11 aspect-square"
+                        />
+                      </div>
+                      <h1 className="mt-3 text-xl font-medium leading-8 text-neutral-900">
+                        {data.text}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+const cardData = [
+  {
+    text: "We Minimize Empty Miles for general cargo logistics",
+  },
+  {
+    text: "Re-engineer Food Security by reducing Agro-logistics costs",
+  },
+  {
+    text: "Cut down avoidable Carbon Emissions by un-maximized mobility assets",
+  },
+];
 // interface LocationCardProps {
 //   imageSrc: string;
 //   locationName: string;
@@ -335,4 +405,4 @@ const Patners = () => {
 //     </section>
 //   );
 // }
-export { HeroSection, Statistics, Patners };
+export { HeroSection, Statistics, Patners, WhatWeDo };
