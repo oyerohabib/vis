@@ -6,5 +6,5 @@ export const NAV_LINKS: NavbarLinkProps[] = [
   { id: 3, link: "contacts", label: "contact us" },
   { id: 5, link: "review", label: "review" },
   { id: 6, link: "order", label: "order" },
-  { id: 7, link: "price", label: "price" },
+  { id: 7, link: "price", label: "price checker" },
 ];

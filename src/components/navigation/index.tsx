@@ -52,7 +52,7 @@ const MainNav = () => {
           // className={cn(scrollHeight > 200 && "invert")}
         />
       </Link>
-      <div className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 2xl:gap-x-10 w-full justify-center max-w-[50%]">
+      <div className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 2xl:gap-x-10 w-full justify-center max-w-[60%]">
         {NAV_LINKS.map((link) => (
           <Link
             href={
