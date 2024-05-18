@@ -39,7 +39,7 @@ const HeroSection = () => {
           ))}
         </Slider>
       </div>
-      <div className="flex flex-col relative z-10 text-white min-h-[650px] w-full justify-center items-center px-4 sm:px-8 xl:px-16 2xl:px-24 transition-colors duration-500 bg-black bg-opacity-[30%]">
+      <div className="flex flex-col relative z-10 text-white min-h-[650px] w-full justify-center items-center px-4 sm:px-8 xl:px-16 2xl:px-24 transition-colors duration-500">
         <div
           className="flex flex-col items-center text-center text-white
           max-w-[966px] mx-auto"
@@ -62,12 +62,12 @@ const HeroSection = () => {
             Affordable, and Predictable Transport Solutions
           </p>
         </div>
-        <div className="flex gap-2.5 py-2 pr-2 pl-8 text-xl leading-6 bg-white rounded-xl border border-solid border-primary border-opacity-60 max-md:flex-wrap max-md:pl-5 mt-6">
+        <div className="flex justify-between pl-[14px]  pr-[8px] min-h-[72px] py-[12px] text-xl leading-6 bg-white rounded-xl border border-solid border-primary border-opacity-60 max-md:flex-wrap max-md:pl-5 min-w-[543px] max-w-[545px] mt-[100px]">
           <input
             type="text"
             id="trackingIdInput"
             placeholder=" Input tracking ID"
-            className="outline-none text-black/40 placeholder:text-black placeholder:text-[24px]"
+            className="outline-none placeholder:text-black/40 text-black  text-[16px] w-full max-w-[320px] px-4"
             // className="sr-only"
             // value={trackingId}
 
@@ -75,7 +75,7 @@ const HeroSection = () => {
           />
           <button
             type="button"
-            className="justify-center px-16 py-4 text-white whitespace-nowrap bg-primary rounded-xl max-md:px-7"
+            className="px-16 py-4 text-white whitespace-nowrap bg-primary rounded-xl max-md:px-7 justify-end min-h-[56px]"
             // onClick={onTrack}
           >
             Track
@@ -171,7 +171,7 @@ const images = [
   {
     src: "/hero/patner1.png",
     alt: "Image 1",
-    className: "grow shrink-0 max-w-full aspect-[1.89] w-[189px] max-md:mt-10",
+    className: "max-w-full aspect-[1.89] w-[189px] max-md:mt-10",
   },
   {
     src: "/hero/patner2.png",
@@ -183,12 +183,12 @@ const images = [
     src: "/hero/patner3.png",
     alt: "Image 3",
     className:
-      "shrink-0 self-stretch my-auto max-w-full aspect-[1.92] w-[109px] max-md:mt-10",
+      "shrink-0 self-stretch my-auto max-w-full aspect-[1.92] w-[160px] max-md:mt-10",
   },
   {
     src: "/hero/patner4.png",
     alt: "Image 4",
-    className: "grow shrink-0 w-44 max-w-full aspect-[1.75] max-md:mt-10",
+    className: "w-44 max-w-full aspect-[1.75] max-md:mt-10",
   },
 ];
 
@@ -201,11 +201,11 @@ const Patners = () => {
   const isInView2 = useInView({ ref: AboutusRef });
 
   return (
-    <section className="px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 w-full flex flex-col items-center">
+    <section className="px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 w-full flex flex-col items-center mt-[100px]">
       <div
         ref={PatnersRef}
         className={cn(
-          "flex flex-col container items-center max-w-[1000px] px-2 sm:px-4",
+          "flex flex-col container items-center max-w-[1000px] px-2 sm:px-4 justify-center mx-auto",
           isInView
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
@@ -217,14 +217,14 @@ const Patners = () => {
       </div>
       <section
         className={cn(
-          "flex gap-5 max-md:flex-col max-md:gap-0 w-full",
+          "flex gap-5 max-md:flex-col max-md:gap-0 w-full mx-auto max-w-[1200px]",
           isInView1
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
         )}
         ref={PatnersLogoRef}
       >
-        <div className="flex gap-5 w-full">
+        <div className="flex gap-5 w-full max-h-[100px] items-center mx-auto justify-center">
           {images.map((image, index) => (
             <div
               key={index}
@@ -238,14 +238,16 @@ const Patners = () => {
       <section
         ref={AboutusRef}
         className={cn(
-          "grid grid-cols-2 w-full items-center justify-center bg-white",
+          "grid grid-cols-2 w-full items-center justify-center bg-white mt-[100px]",
           isInView2
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
         )}
       >
         <div className="flex flex-col space-y-4">
-          <h2 className="text-2xl font-bold text-primary">About Us</h2>
+          <h2 className="text-2xl font-bold text-primary text-[48px]">
+            About Us
+          </h2>
           <div className="text-[24px] font-medium">
             <p className="text-black">
               We make back-loading logistics profitable for agro-logistics
@@ -283,7 +285,7 @@ const WhatWeDo = () => {
   const isInView = useInView({ ref: SectionRef });
   return (
     <>
-      <section className="w-full flex flex-col px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20">
+      <section className="w-full flex flex-col px-4 sm:px-8 xl:px-16 2xl:px-24  mt-[100px]">
         <div
           ref={SectionRef}
           className={cn(
@@ -296,14 +298,14 @@ const WhatWeDo = () => {
           <h1 className="w-full text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl">
             What we do
           </h1>
-          <div className="px-5 mt-12 w-full flex items-center justify-center">
+          <div className="mt-12 w-full flex items-center justify-center">
             {cardData.map((data, index) => (
               <div
                 key={index}
                 className={cn(
                   "flex flex-col",
                   index !== 2
-                    ? "w-[37%] ml-5 max-md:ml-0 max-md:w-full"
+                    ? "w-[37%] max-md:ml-0 max-md:w-full"
                     : "w-[27%] max-md:ml-0 max-md:w-full"
                 )}
               >
@@ -423,7 +425,7 @@ const CoveredLocation = () => {
     <section
       ref={SectionRef}
       className={cn(
-        "flex flex-col bg-black px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 pb-12",
+        "flex flex-col bg-black px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 pb-12 mt-[100px]",
         isInView
           ? "opacity-100 translate-y-0 md:delay-300 duration-500"
           : " opacity-0 translate-y-36"
@@ -432,30 +434,27 @@ const CoveredLocation = () => {
       <h2 className="text-5xl font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
         Our Coverage Cities
       </h2>
-      <p className="mt-6 text-xl font-light leading-6 text-white w-full md:w-[40%]">
+      <p className="mt-6 text-xl font-light leading-6 text-white w-full md:w-[50%]">
         Our commitment to serve you constantly propels us to enlarge our
         coverage locations to ensure efficient service delivery and proximity to
         our priority channels.
       </p>
-      <Slider {...settings} className="mt-5">
+      <Slider {...settings} className="mt-[50px]">
         {locations.map((locations, index) => (
-          <>
-            <div className="flex w-full max-w-[380px]">
-              <div className="relative flex px-16 pt-80 pb-12 text-2xl font-medium leading-7 whitespace-nowrap rounded-3xl text-center  border border-white border-solid shadow-sm aspect-[0.96] text-zinc-100 max-md:px-5 max-md:pt-10 max-md:mt-9">
-                <Image
-                  loading="lazy"
-                  src={`/states${locations.image}.png`}
-                  alt={locations.locationName}
-                  layout="fill"
-                  // objectFit="object"
-                  className="object-cover absolute"
-                />
-                <span className="capitalize text-white relative">
-                  {locations.locationName}
-                </span>
-              </div>
+          <div className="flex w-full max-w-[380px]" key={index}>
+            <div className="relative flex px-16 pt-80 pb-12 text-2xl font-medium leading-7 mb-[30px] whitespace-nowrap rounded-3xl text-center  border border-white border-solid shadow-sm aspect-[0.96] text-zinc-100">
+              <Image
+                loading="lazy"
+                src={`/states${locations.image}.png`}
+                alt={locations.locationName}
+                layout="fill"
+                className="object-cover absolute"
+              />
+              <span className="capitalize text-white relative">
+                {locations.locationName}
+              </span>
             </div>
-          </>
+          </div>
         ))}
       </Slider>
     </section>
@@ -496,7 +495,7 @@ const FeedbackcardData: CardProps[] = [
 ];
 
 const Feedbackcard = ({ image, name, review }: CardProps) => (
-  <article className="flex flex-col items-center px-12 py-14 w-full bg-white rounded-3xl shadow-2xl max-w-[411px]">
+  <article className="flex flex-col items-center px-12 py-14 w-full bg-white rounded-3xl shadow-xl max-w-[411px]">
     <Image
       src={`${image}.png`}
       alt="feedback"
@@ -555,7 +554,7 @@ const FeedBack = () => {
       <section
         ref={SectionRef}
         className={cn(
-          "flex flex-col bg-white px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 pb-12",
+          "flex flex-col bg-white px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 mt-[100px]",
           isInView
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
@@ -568,7 +567,7 @@ const FeedBack = () => {
           Take a dive into the reviews of what our user have to say about their
           experience at with Viscio Express
         </p>
-        <Slider {...settings} className="mt-5 py-7">
+        <Slider {...settings} className="my-[30px] py-[30px]">
           {FeedbackcardData.map((data, index) => (
             <Feedbackcard {...data} key={index} />
           ))}

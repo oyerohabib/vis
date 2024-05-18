@@ -30,7 +30,7 @@ const MainNav = () => {
         scrollHeight > 200
           ? " fixed backdrop-blur-xl top-0 left-0  z-50 -translate-y-28 bg-white/90 opacity-0 animate-slideDown py-2 shadow-md"
           : "sm:py-6 py-4",
-        pathname === home ? "fixed top-0 left-0 z-[150]" : "",
+        pathname === home ? "fixed top-0 le9ft-0 z-[150]" : "",
         {
           "bg-white/60 ": scrollHeight > 800 && scrollHeight < 4300,
         }
@@ -44,12 +44,12 @@ const MainNav = () => {
         )}
       >
         <Image
-          src="/logo.png"
+          src={scrollHeight > 200 ? "/bluelogo.png" : "/logo.png"}
           alt="logo"
           width={55}
           height={18}
           loading="eager"
-          className={cn(scrollHeight > 200 && "invert")}
+          // className={cn(scrollHeight > 200 && "invert")}
         />
       </Link>
       <div className="hidden lg:flex items-center gap-x-5 lg:gap-x-7 2xl:gap-x-10 w-full justify-center max-w-[50%]">
@@ -67,7 +67,7 @@ const MainNav = () => {
             className={cn(
               " w-full text-white  flex justify-center capitalize text-base relative font-medium  before:bg-primary before:w-[0%] before:h-1 before:absolute before:-bottom-2 before:left-0 before:transition-all before:duration-500 ",
               scrollHeight > 200 && "text-black",
-              isActive === link.link ? "before:w-full text-primary" : "",
+              isActive === link.link ? "before:w-full text-primary" : ""
               //   pathname === home && scrollHeight < 200
               //     ? "text-white"
               //     : "text-black"
@@ -77,8 +77,15 @@ const MainNav = () => {
           </Link>
         ))}
       </div>
-      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 [&>button]:bg-white [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary">
-        <button type="button">Login</button>
+      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 [&>button]:bg-white [&>button]:w-[189px] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary h-[56px]">
+        <button
+          type="button"
+          className={cn(
+            scrollHeight > 200 && "border border-primary bg-transparent"
+          )}
+        >
+          Login
+        </button>
         <button type="button">Get started</button>
       </div>
     </nav>
