@@ -39,7 +39,7 @@ const HeroSection = () => {
           ))}
         </Slider>
       </div>
-      <div className="flex flex-col relative z-10 text-white min-h-[650px] w-full justify-center items-center px-4 sm:px-8 xl:px-16 2xl:px-24 transition-colors duration-500">
+      <div className="flex flex-col relative z-10 text-white min-h-[650px] w-full justify-center items-center px-4 sm:px-8 xl:px-16 2xl:px-24 transition-colors duration-500 mt-[70px]">
         <div
           className="flex flex-col items-center text-center text-white
           max-w-[966px] mx-auto"
@@ -248,11 +248,11 @@ const Patners = () => {
           backgroundSize: "cover",
         }}
       >
-        <div className="flex flex-col space-y-4">
-          <h2 className="text-2xl font-bold text-primary text-[48px]">
+        <div className="flex flex-col space-y-8">
+          <h2 className="text-2xl font-bold text-primary text-[48px] mb-[30px]">
             About Us
           </h2>
-          <div className="text-[24px]">
+          <div className="text-[18px]">
             <p className="text-black">
               We make back-loading logistics profitable for agro-logistics
               providers and enable farmers/food aggregators move their produce

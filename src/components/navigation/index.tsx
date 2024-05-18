@@ -77,7 +77,7 @@ const MainNav = () => {
           </Link>
         ))}
       </div>
-      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 [&>button]:bg-white [&>button]:w-[189px] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary h-[56px]">
+      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 [&>button]:bg-white [&>button]:w-[150px] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary h-[56px]">
         <button
           type="button"
           className={cn(
