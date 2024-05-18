@@ -451,6 +451,8 @@ const CoveredLocation = () => {
                 loading="lazy"
                 src={`/states${locations.image}.png`}
                 alt={locations.locationName}
+                // width={411}
+                // height={427}
                 layout="fill"
                 className="object-cover absolute"
               />
