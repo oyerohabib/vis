@@ -201,7 +201,7 @@ const Patners = () => {
   const isInView2 = useInView({ ref: AboutusRef });
 
   return (
-    <section className="px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 w-full flex flex-col items-center mt-[100px]">
+    <section className="w-full flex flex-col items-center mt-[100px]">
       <div
         ref={PatnersRef}
         className={cn(
@@ -238,17 +238,21 @@ const Patners = () => {
       <section
         ref={AboutusRef}
         className={cn(
-          "grid grid-cols-2 w-full items-center justify-center bg-white mt-[100px]",
+          "grid grid-cols-2 w-full items-center justify-center mt-[100px] px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 h-[648px] max-h-[650px]",
           isInView2
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
         )}
+        style={{
+          backgroundImage: `url("/aboutback.png")`,
+          backgroundSize: "cover",
+        }}
       >
         <div className="flex flex-col space-y-4">
           <h2 className="text-2xl font-bold text-primary text-[48px]">
             About Us
           </h2>
-          <div className="text-[24px] font-medium">
+          <div className="text-[24px]">
             <p className="text-black">
               We make back-loading logistics profitable for agro-logistics
               providers and enable farmers/food aggregators move their produce
@@ -256,7 +260,7 @@ const Patners = () => {
               logistics scene is riddled with infrastructure gaps, high
               operating costs and overly fragmented activities.
             </p>
-            <p className="text-black">
+            <p className="text-black mt-5">
               Viscio express platform serves as a reliable collaboration tool
               for various logistics agents across multiple locations leveraging
               on technology tools and a smart operations framework.
