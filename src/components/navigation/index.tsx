@@ -65,7 +65,7 @@ const MainNav = () => {
               setIsActive(link.link);
             }}
             className={cn(
-              " w-full text-white  flex justify-center capitalize text-base relative font-medium  before:bg-primary before:w-[0%] before:h-1 before:absolute before:-bottom-2 before:left-0 before:transition-all before:duration-500 ",
+              " w-full text-white  flex justify-center capitalize text-base text-[18px] relative font-medium  before:bg-primary before:w-[0%] before:h-1 before:absolute before:-bottom-2 before:left-0 before:transition-all before:duration-500 ",
               scrollHeight > 200 && "text-black",
               isActive === link.link ? "before:w-full text-primary" : ""
               //   pathname === home && scrollHeight < 200
