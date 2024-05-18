@@ -45,9 +45,9 @@ const Footer = () => {
               <path
                 d="M1.5 6L14.8333 6M10.6667 11L15.0774 6.58926C15.3552 6.31148 15.4941 6.17259 15.4941 6C15.4941 5.82741 15.3552 5.68852 15.0774 5.41074L10.6667 1"
                 stroke="#001B87"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </Link>
@@ -58,7 +58,7 @@ const Footer = () => {
               <h4 className="text-lg text-white font-medium mb-4 min-[500px]:mb-7 text-center min-[500px]:text-left">
                 Viscio
               </h4>
-              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white">
+              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white/70">
                 {links.map((link, index) => (
                   <li key={index}>
                     <Link href={`/${link}`} className="capitalize">
@@ -72,7 +72,7 @@ const Footer = () => {
               <h4 className="text-lg text-white font-medium mb-4 min-[500px]:mb-7 text-center min-[500px]:text-left">
                 Locations
               </h4>
-              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white">
+              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white/70">
                 {location.map((location, index) => (
                   <li key={index} className="capitalize">
                     {location}
@@ -84,7 +84,7 @@ const Footer = () => {
               <h4 className="text-lg text-white font-medium mb-4 min-[500px]:mb-7 text-center min-[500px]:text-left">
                 Resources
               </h4>
-              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white">
+              <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white/70">
                 <li>
                   <Link href="/">FAQs</Link>
                 </li>
@@ -120,8 +120,8 @@ const Footer = () => {
               &copy; <span>viscio</span> {currentYear}, All rights reserved.
             </span>
             <div className="flex mt-4 space-x-4 sm:justify-center sm:mt-0 ">
-              <a
-                href="javascript:;"
+              <Link
+                href="/"
                 className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-white"
               >
                 <svg
@@ -139,9 +139,10 @@ const Footer = () => {
                     />
                   </g>
                 </svg>
-              </a>
-              <a
-                href="javascript:;"
+              </Link>
+
+              <Link
+                href="/"
                 className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-white"
               >
                 <svg
@@ -155,9 +156,10 @@ const Footer = () => {
                     fill="currentColor"
                   ></path>
                 </svg>
-              </a>
-              <a
-                href="javascript:;"
+              </Link>
+
+              <Link
+                href="/"
                 className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-white"
               >
                 <svg
@@ -171,9 +173,10 @@ const Footer = () => {
                     fill="currentColor"
                   ></path>
                 </svg>
-              </a>
-              <a
-                href="javascript:;"
+              </Link>
+
+              <Link
+                href="/"
                 className="w-9 h-9 rounded-full bg-gray-700 flex justify-center items-center hover:bg-white"
               >
                 <svg
@@ -183,13 +186,13 @@ const Footer = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M13.9346 1.13529C14.5684 1.30645 15.0665 1.80588 15.2349 2.43896C15.5413 3.58788 15.5413 5.98654 15.5413 5.98654C15.5413 5.98654 15.5413 8.3852 15.2349 9.53412C15.0642 10.1695 14.5661 10.669 13.9346 10.8378C12.7886 11.1449 8.19058 11.1449 8.19058 11.1449C8.19058 11.1449 3.59491 11.1449 2.44657 10.8378C1.81277 10.6666 1.31461 10.1672 1.14622 9.53412C0.839844 8.3852 0.839844 5.98654 0.839844 5.98654C0.839844 5.98654 0.839844 3.58788 1.14622 2.43896C1.31695 1.80353 1.81511 1.30411 2.44657 1.13529C3.59491 0.828125 8.19058 0.828125 8.19058 0.828125C8.19058 0.828125 12.7886 0.828125 13.9346 1.13529ZM10.541 5.98654L6.72178 8.19762V3.77545L10.541 5.98654Z"
                     fill="currentColor"
                   ></path>
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
