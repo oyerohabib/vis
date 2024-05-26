@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import "@/styles/globals.scss";
-import { poppins } from "@/fonts";
-import StateContextProvider from "@/context/StateCtx";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <StateContextProvider>
-        <body className={poppins.className}>{children}</body>
-      </StateContextProvider>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
