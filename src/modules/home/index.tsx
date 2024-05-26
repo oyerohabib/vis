@@ -6,9 +6,11 @@ import Image from "next/image";
 import { cn } from "@/utils";
 import useInView from "@/hooks/useInView";
 import "./styles.scss";
+import "./slider.scss";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ClientSlider from "./slider";
 
 const HeroSection = () => {
   const settings = {
@@ -23,8 +25,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="w-full relative min-h-full overflow-hidden">
-      <div className="w-full h-full max-h-[600px] absolute object-cover">
+    <section className="w-full relative min-h-full overflow-hidden ">
+      <div className="w-full h-full max-h-[600px] absolute object-cover z-[-10]">
         <Slider {...settings}>
           {HeroImage.map((image) => (
             <div key={image.id}>
@@ -70,9 +72,6 @@ const HeroSection = () => {
             id="trackingIdInput"
             placeholder=" Input tracking ID"
             className="outline-none placeholder:text-black/40 text-black  text-[16px] w-full max-w-[320px] px-4"
-            // className="sr-only"
-            // value={trackingId}
-
             aria-label="Tracking ID"
           />
           <button
@@ -204,85 +203,105 @@ const Patners = () => {
 
   return (
     <section className="w-full flex flex-col items-center mt-[100px]">
-      <div
+      <section
         ref={PatnersRef}
         className={cn(
-          "flex flex-col container items-center max-w-[1000px] px-2 sm:px-4 justify-center mx-auto",
           isInView
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"
         )}
       >
-        <h2 className="font-semibold text-xl sm:text-3xl lg:text-5xl text-header mb-4 font-montserrat text-primary">
-          Our Patners
-        </h2>
-      </div>
-      <section
-        className={cn(
-          "flex gap-5 max-md:flex-col max-md:gap-0 w-full mx-auto max-w-[1200px]",
-          isInView1
-            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
-            : " opacity-0 translate-y-36"
-        )}
-        ref={PatnersLogoRef}
-      >
-        <div className="flex gap-5 w-full max-h-[100px] items-center mx-auto justify-center">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className={cn("flex w-full", index > 0 ? "ml-5" : "")}
-            >
+        <div className="container">
+          <div className="mb-14 text-center">
+            <h2 className="font-semibold text-xl sm:text-3xl lg:text-5xl text-header mb-4 font-montserrat text-primary">
+              Our Patners
+            </h2>
+          </div>
+          <div
+            ref={PatnersLogoRef}
+            className={cn(
+              "grid grid-cols-2  justify-center  items-center  gap-12 md:grid-cols-3  xl:grid-cols-none xl:flex xl:justify-between",
+              isInView1
+                ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+                : " opacity-0 translate-y-36"
+            )}
+          >
+            {images.map((image, index) => (
               <CustomImage key={index} {...image} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
       <section
         ref={AboutusRef}
-        className={cn(
-          "grid grid-cols-2 w-full items-center justify-center mt-[100px] px-4 sm:px-8 xl:px-16 2xl:px-24 my-8 max-md:pt-12 lg:my-20 h-[648px] max-h-[650px]",
-          isInView2
-            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
-            : " opacity-0 translate-y-36"
-        )}
         style={{
           backgroundImage: `url("/aboutback.png")`,
           backgroundSize: "cover",
         }}
+        className={cn(
+          "py-14 lg:py-24 relative w-full mt-[100px]",
+          isInView2
+            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+            : " opacity-0 translate-y-36"
+        )}
       >
-        <div
-          // ref={AboutusRef}
-          className={cn("flex flex-col space-y-8")}
-        >
-          <h2 className="text-2xl font-bold text-primary text-[48px] mb-[30px]">
-            About Us
-          </h2>
-          <div className="text-[18px]">
-            <p className="text-black">
-              We make back-loading logistics profitable for agro-logistics
-              providers and enable farmers/food aggregators move their produce
-              from farm to market affordably & predictably. The African
-              logistics scene is riddled with infrastructure gaps, high
-              operating costs and overly fragmented activities.
-            </p>
-            <p className="text-black mt-5">
-              Viscio express platform serves as a reliable collaboration tool
-              for various logistics agents across multiple locations leveraging
-              on technology tools and a smart operations framework.
-            </p>
+        <div className="container relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 ">
+            <div className="lg:pr-24 flex items-center">
+              <motion.div
+                initial={{ x: -100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.75,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="data w-full"
+              >
+                <Image
+                  src="/hero/rightImage.png"
+                  alt="Logistics Illustration"
+                  width={600}
+                  height={520}
+                  className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover block lg:hidden mb-9 mx-auto"
+                />
+                <h2 className="font-manrope font-bold text-4xl lg:text-5xl text-black mb-9 max-lg:text-center">
+                  About Us
+                </h2>
+                <p className="font-normal text-xl leading-8 text-black max-lg:text-center max-w-2xl mx-auto">
+                  We make back-loading logistics profitable for agro-logistics
+                  providers and enable farmers/food aggregators move their
+                  produce from farm to market affordably & predictably. The
+                  African logistics scene is riddled with infrastructure gaps,
+                  high operating costs and overly fragmented activities.
+                </p>
+                <p className="font-normal text-xl leading-8 max-lg:text-center max-w-2xl mx-auto text-black mt-5">
+                  Viscio express platform serves as a reliable collaboration
+                  tool for various logistics agents across multiple locations
+                  leveraging on technology tools and a smart operations
+                  framework.
+                </p>
+              </motion.div>
+            </div>
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{
+                delay: 0.5,
+                duration: 0.75,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="img-box"
+            >
+              <Image
+                src="/hero/rightImage.png"
+                alt="Logistics Illustration"
+                width={600}
+                height={520}
+                className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block "
+              />
+            </motion.div>
           </div>
-          <button className="justify-center self-start h-[56px] text-[22px] w-[193px] mt-28 text-2xl font-light text-blue-900 rounded-xl text-center border-t-2 border-r-4 border-b-4 border-l-2 border-blue-900 border-solid max-md:px-5 max-md:mt-10">
-            Learn more
-          </button>
-        </div>
-        <div className="flex mt-8 md:mt-0 object-cover justify-end">
-          <Image
-            src="/hero/rightImage.png"
-            alt="Logistics Illustration"
-            width={600}
-            height={520}
-            className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover"
-          />
         </div>
       </section>
     </section>
@@ -294,7 +313,7 @@ const WhatWeDo = () => {
   const isInView = useInView({ ref: SectionRef });
   return (
     <>
-      <section className="w-full flex flex-col px-4 sm:px-8 xl:px-16 2xl:px-24  mt-[100px]">
+      <section className="w-full flex flex-col md:container mt-[100px] px-2">
         <div
           ref={SectionRef}
           className={cn(
@@ -304,15 +323,14 @@ const WhatWeDo = () => {
               : " opacity-0 translate-y-36"
           )}
         >
-          <h1 className="w-full text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl">
+          <h1 className="w-full text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl text-center md:text-start">
             What we do
           </h1>
-          <div className="mt-12 w-full flex items-center justify-center">
+          <div className="mt-12 w-full md:flex items-center justify-center space-y-8">
             {cardData.map((data, index) => (
               <div
                 key={index}
                 className={cn(
-                  "flex flex-col",
                   index !== 2
                     ? "w-[37%] max-md:ml-0 max-md:w-full"
                     : "w-[27%] max-md:ml-0 max-md:w-full"
@@ -399,12 +417,14 @@ const CoveredLocation = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
     arrows: false,
     autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
     slidesToShow: 3.5,
     slidesToScroll: 1,
     pauseOnHover: false,
+    cssEase: "linear",
     responsive: [
       {
         breakpoint: 1024,
@@ -423,7 +443,7 @@ const CoveredLocation = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -440,7 +460,7 @@ const CoveredLocation = () => {
           : " opacity-0 translate-y-36"
       )}
     >
-      <h2 className="text-5xl font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
+      <h2 className="md:text-5xl text-3xl text-center md:text-start font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
         Our Coverage Cities
       </h2>
       <p className="mt-6 text-xl font-light leading-6 text-white w-full md:w-[50%]">
@@ -450,7 +470,7 @@ const CoveredLocation = () => {
       </p>
       <Slider {...settings} className="mt-[50px]">
         {locations.map((location, index) => (
-          <div className="flex w-full max-w-[380px]">
+          <div className="flex w-full max-w-[380px]" key={index}>
             <div
               style={{
                 backgroundImage: `url(/states${location.image}.png)`,
@@ -467,122 +487,6 @@ const CoveredLocation = () => {
         ))}
       </Slider>
     </section>
-  );
-};
-
-type CardProps = {
-  image: string;
-  review: string;
-  name: string;
-};
-
-const FeedbackcardData: CardProps[] = [
-  {
-    image: "/feedback",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
-    name: "Ajani Ben",
-  },
-  {
-    image: "/feedback",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
-    name: "Ajani Ben",
-  },
-  {
-    image: "/feedback",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
-    name: "Ajani Ben",
-  },
-  {
-    image: "/feedback",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum tristique id lorem integer massa. Et pretium non turpis id volutpat fringilla dictumst nunc. Laoreet egestas enim quam venenatis tortor proin.",
-    name: "Ajani Ben",
-  },
-];
-
-const Feedbackcard = ({ image, name, review }: CardProps) => (
-  <article className="flex flex-col items-center px-12 py-14 w-full bg-white rounded-3xl shadow-xl max-w-[411px]">
-    <Image
-      src={`${image}.png`}
-      alt="feedback"
-      className="rounded-full w-[80px] h-[80px]"
-      width={80}
-      height={80}
-      loading="lazy"
-    />
-    <p className="self-stretch mt-6 text-lg font-light leading-6 text-center">
-      {review}
-    </p>
-    <hr className="shrink-0 mt-8 h-0.5 border-2 border-solid bg-zinc-800 border-zinc-800 w-[134px]" />
-    <p className="mt-4 text-xl leading-6">{name}</p>
-  </article>
-);
-
-const FeedBack = () => {
-  const SectionRef = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView({ ref: SectionRef });
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    arrows: false,
-    autoplay: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    pauseOnHover: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1.5,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-  return (
-    <>
-      <section
-        ref={SectionRef}
-        className={cn(
-          "flex flex-col bg-white px-4 sm:px-8 xl:px-16 2xl:px-24 py-8 mt-[100px]",
-          isInView
-            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
-            : " opacity-0 translate-y-36"
-        )}
-      >
-        <h2 className="text-5xl font-medium text-primary leading-[57.6px] max-md:max-w-full max-md:text-4xl">
-          What our Customers says
-        </h2>
-        <p className="mt-6 text-xl font-light leading-6 text-black w-full md:w-[40%]">
-          Take a dive into the reviews of what our user have to say about their
-          experience at with Viscio Express
-        </p>
-        <Slider {...settings} className="my-[30px] py-[30px]">
-          {FeedbackcardData.map((data, index) => (
-            <Feedbackcard {...data} key={index} />
-          ))}
-        </Slider>
-      </section>
-    </>
   );
 };
 
@@ -624,8 +528,13 @@ const GiveReview = () => {
 
 const CTA = () => {
   return (
-    <section className="py-20">
-      <div className="container px-4 sm:px-6 lg:px-8">
+    <motion.section
+      initial={{ y: 100, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.05, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+      className="py-20"
+    >
+      <div className="md:container">
         <div className="xl:p-24 gap-32 p-12 rounded-2xl bg-gradient-to-r from-primary to-violet-600 flex  justify-between flex-col-reverse lg:flex-row">
           <div className="w-full lg:w-2/6 relative">
             <Image
@@ -892,6 +801,78 @@ const CTA = () => {
           </div>
         </div>
       </div>
+    </motion.section>
+  );
+};
+
+const Stat = () => {
+  return (
+    <section className="pb-20 md:-mt-[100px] md:z-[99]">
+      <div className="md:container">
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="md:rounded-2xl py-10 px-10 xl:py-16 xl:px-20 bg-gray-50 flex items-center justify-between flex-col gap-16 lg:flex-row"
+        >
+          <div className="w-full lg:w-60">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center lg:text-left">
+              Our Stats
+            </h2>
+            <p className="text-sm text-gray-500 leading-6 text-center lg:text-left">
+              We help you to unleash the power within your business
+            </p>
+          </div>
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:w-4/5"
+          >
+            <div className="flex flex-col flex-1 gap-10 lg:gap-0 lg:flex-row lg:justify-between">
+              {statData.map((data) => (
+                <div className="block" key={data.value}>
+                  <div className="font-manrope font-bold text-4xl text-indigo-600 mb-3 text-center lg:text-left">
+                    {data.value}
+                  </div>
+                  <span className="text-gray-900 text-center block lg:text-left">
+                    {data.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const Feedback = () => {
+  const clientRef = React.useRef<HTMLHeadingElement>(null);
+  const isInView = useInView({ ref: clientRef });
+  return (
+    <section
+      className={cn(
+        "w-full flex flex-col items-center md:container mt-[100px]"
+      )}
+    >
+      <div className="flex w-full items-center justify-center md:justify-start text-center md:items-start ">
+        <h2
+          ref={clientRef}
+          className={cn(
+            "font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-primary",
+            isInView
+              ? "opacity-100 translate-y-0 delay-300 duration-1000"
+              : " opacity-0 translate-y-36"
+          )}
+        >
+          What Our Customer say
+        </h2>
+      </div>
+      <div className="flex w-full justify-center  items-center relative mt-10 sm:mt-16 px-4">
+        <ClientSlider />
+      </div>
     </section>
   );
 };
@@ -902,7 +883,8 @@ export {
   Patners,
   WhatWeDo,
   CoveredLocation,
-  FeedBack,
   GiveReview,
   CTA,
+  Stat,
+  Feedback,
 };

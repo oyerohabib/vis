@@ -1,0 +1,57 @@
+.embla {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --slide-height: 19rem;
+  --background-site: #d2d2d2;
+  --brand-primary: rgb(0, 0, 0);
+  --brand-secondary: rgb(130, 130, 130);
+}
+
+.embla__container {
+  backface-visibility: hidden;
+}
+
+.embla__button {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.embla__button {
+  z-index: 1;
+  color: var(--background-site);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.embla__dot {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.embla__dot:after {
+  background: var(--background-site);
+  border-radius: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  content: "";
+}
+.embla__dot--selected:after {
+  background: linear-gradient(
+    45deg,
+    var(--brand-primary),
+    var(--brand-secondary)
+  );
+}
