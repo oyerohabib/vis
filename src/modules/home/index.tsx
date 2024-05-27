@@ -239,7 +239,7 @@ const Patners = () => {
           backgroundSize: "cover",
         }}
         className={cn(
-          "py-14 lg:py-24 relative w-full mt-[100px]",
+          "py-14 lg:py-24 relative w-full mt-[100px] overflow-hidden",
           isInView2
             ? "opacity-100 translate-y-0 md:delay-300 duration-500"
             : " opacity-0 translate-y-36"

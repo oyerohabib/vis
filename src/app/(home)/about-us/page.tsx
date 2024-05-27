@@ -1,7 +1,13 @@
 import React from "react";
+import { AboutHero, Services } from "@/modules/about";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <>
+      <AboutHero />
+      <Services />
+    </>
+  );
 };
 
 export default page;
