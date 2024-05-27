@@ -76,8 +76,8 @@ const AboutHero = () => {
                 <p className="font-normal text-base md:text-xl leading-8  max-w-2xl mx-auto text-black mt-5">
                   Our commitment is to facilitate movement of packages and cargo
                   from point of origin to the destination desired by the user.
-                  We are creating Africa's largest logistics marketplace and
-                  collaboration tool across multiple-modal channels.
+                  We are creating Africa&apos;s largest logistics marketplace
+                  and collaboration tool across multiple-modal channels.
                 </p>
                 <p className="font-normal text-base md:text-xl leading-8 max-w-2xl mx-auto text-black mt-5">
                   In ensuring that we keep to our promise of safely moving your
@@ -360,7 +360,6 @@ const benefits = [
   "Prospective Logistics Agents are required to select mobility asset type (motorbike, vehicle or truck), year of production, plate number and uploads of documents (driver license, vehicle registration document and complete )",
   "Our Quality Assessment Agent will verify/screen your application after which you become verified on the Viscio express platform; which means you can start receiving requests.",
   "For complete information about required documents, click here for checklist.",
-  "For more information kindly send an email to: support@viscio.com.ng",
 ];
 
 const BAL = () => {
@@ -409,6 +408,15 @@ const BAL = () => {
             {benefits.slice(1).map((benefit, index) => (
               <li key={index}>{benefit}</li>
             ))}
+            <li className="">
+              For more information kindly send an email to:{" "}
+              <a
+                href="mailto:support@viscio.com.ng"
+                className="text-primary underline "
+              >
+                support@viscio.com.ng
+              </a>
+            </li>
           </ul>
         </article>
       </motion.section>
