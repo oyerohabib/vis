@@ -86,10 +86,10 @@ const Footer = () => {
               </h4>
               <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white/70">
                 <li>
-                  <Link href="/">FAQs</Link>
+                  <Link href="/faqs?path=faqs">FAQs</Link>
                 </li>
                 <li>
-                  <Link href="/"> Become an Agent</Link>
+                  <Link href="/agent?path=agent"> Become an Agent</Link>
                 </li>
               </ul>
             </div>
