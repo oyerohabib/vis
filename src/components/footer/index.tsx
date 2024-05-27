@@ -2,11 +2,11 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const links = [
-  "about us",
-  "contact us",
-  "privacy policy",
-  "term and condition",
+const Navlink = [
+  { label: "about us", path: "about-us?path=about-us" },
+  { label: "contact us", path: "contacts?path=contacts" },
+  { label: "privacy policy", path: "privacy?path=privacy" },
+  { label: "term and condition", path: "terms?path=terms" },
 ];
 
 const location = ["lagos", "abuja", "calabar", "markurdi ..."];
@@ -59,10 +59,10 @@ const Footer = () => {
                 Viscio
               </h4>
               <ul className="grid gap-4 min-[500px]:gap-6 text-center min-[500px]:text-left text-white/70">
-                {links.map((link, index) => (
-                  <li key={index}>
-                    <Link href={`/${link}`} className="capitalize">
-                      {link}
+                {Navlink.map((link) => (
+                  <li key={link.path}>
+                    <Link href={`/${link.path}`} className="capitalize">
+                      {link.label}
                     </Link>
                   </li>
                 ))}
