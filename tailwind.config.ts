@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      listStyleType: {
+        roman: "upper-roman",
+        "lower-alpha": "lower-alpha",
+      },
       colors: {
         primary: "#001B87",
       },
