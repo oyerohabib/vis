@@ -103,12 +103,12 @@ const Services = () => {
     <>
       <main className="md:container px-4 overflow-hidden mt-[50px] md:mt-[100px]">
         <section
-          ref={AboutusRef}
+          // ref={AboutusRef}
           className={cn(
-            "relative w-full",
-            isInView2
-              ? "opacity-100 translate-y-0 md:delay-300 duration-500"
-              : " opacity-0 translate-y-36"
+            "relative w-full"
+            // isInView2
+            //   ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+            //   : " opacity-0 translate-y-36"
           )}
         >
           <div className="relative">
@@ -163,12 +163,12 @@ const Services = () => {
           </div>
         </section>
         <section
-          ref={AboutusRef}
+          // ref={AboutusRef}
           className={cn(
-            "relative w-full",
-            isInView2
-              ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
-              : " opacity-0 translate-y-36"
+            "relative w-full"
+            // isInView2
+            //   ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
+            //   : " opacity-0 translate-y-36"
           )}
         >
           <div className="relative">
@@ -225,12 +225,12 @@ const Services = () => {
           </div>
         </section>
         <section
-          ref={AboutusRef}
+          // ref={AboutusRef}
           className={cn(
-            "relative w-full",
-            isInView2
-              ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
-              : " opacity-0 translate-y-36"
+            "relative w-full"
+            // isInView2
+            //   ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
+            //   : " opacity-0 translate-y-36"
           )}
         >
           <div className="relative">
@@ -285,12 +285,12 @@ const Services = () => {
           </div>
         </section>
         <section
-          ref={AboutusRef}
+          // ref={AboutusRef}
           className={cn(
-            "relative w-full",
-            isInView2
-              ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
-              : " opacity-0 translate-y-36"
+            "relative w-full"
+            // isInView2
+            //   ? "opacity-100 translate-y-0 md:delay-300 duration-500 mt-[25px] md:mt-[50px]"
+            //   : " opacity-0 translate-y-36"
           )}
         >
           <div className="relative">
@@ -349,4 +349,71 @@ const Services = () => {
   );
 };
 
-export { AboutHero, Services };
+type BenefitItemProps = {
+  text: string;
+};
+
+const benefits = [
+  "Viscio provides improved market access to a large pool of prospective customers.",
+  "Viscio will provide improved visibility and tracking of your mobility asset leveraging on our telematics framework",
+  "Registration and Otp Verification (with a fully completed profile)",
+  "Prospective Logistics Agents are required to select mobility asset type (motorbike, vehicle or truck), year of production, plate number and uploads of documents (driver license, vehicle registration document and complete )",
+  "Our Quality Assessment Agent will verify/screen your application after which you become verified on the Viscio express platform; which means you can start receiving requests.",
+  "For complete information about required documents, click here for checklist.",
+  "For more information kindly send an email to: support@viscio.com.ng",
+];
+
+const BAL = () => {
+  const AboutusRef = React.useRef<HTMLDivElement>(null);
+  const isInView2 = useInView({ ref: AboutusRef });
+  return (
+    <>
+      <motion.section
+        initial={{ y: 100, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.05, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        ref={AboutusRef}
+        className={cn(
+          "flex flex-col px-5 md:container overflow-hidden mt-[50px] md:mt-[100px] md:mb-[100px]",
+          isInView2
+            ? "opacity-100 translate-y-0 md:delay-300 duration-500"
+            : " opacity-0 translate-y-36"
+        )}
+      >
+        <h1 className="self-center text-6xl text-primary capitalize leading-[76.8px] max-md:max-w-full max-md:text-4xl font-medium text-center">
+          Become a logistics agent
+        </h1>
+        <article className="mt-10 w-full font-light tracking-wider leading-7 text-neutral-900 max-md:max-w-full text-base">
+          <p>
+            You can truly become your own boss as a Viscio express logistics
+            agent whether as an owner of a motorcycle, vehicle or a fleet of
+            mobility assets. Viscio is a collaborative tool that depends on
+            logistics agents and logistics infrastructure partners. As our
+            logistics agent you can earn by fulfilling logistics requests in any
+            of the cities we operate.
+            <br />
+            <br />
+          </p>
+          <h2 className="font-medium underline text-center text-2xl">
+            Benefits our Logistics Agent Enjoy
+          </h2>
+          <ul className="mt-5 list-disc ml-6">
+            <li>
+              Viscio provides improved market access to a large pool of
+              prospective customers. To begin, download our Viscio Express
+              Driver App and follow the steps below:
+            </li>
+          </ul>
+
+          <ul className="list-disc ml-6">
+            {benefits.slice(1).map((benefit, index) => (
+              <li key={index}>{benefit}</li>
+            ))}
+          </ul>
+        </article>
+      </motion.section>
+    </>
+  );
+};
+
+export { AboutHero, Services, BAL };
