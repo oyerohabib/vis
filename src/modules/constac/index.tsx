@@ -25,7 +25,7 @@ const ContactUs = () => {
                   Have An Issue?
                 </h1>
                 <p className="text-gray-900 text-lg font-normal leading-7 lg:text-left text-center">
-                  We're here to assist you! Whether you have questions,
+                  We&apos;re here to assist you! Whether you have questions,
                   feedback, or inquiries, our team is ready to help.
                 </p>
                 <div className="my-12 grid md:grid-cols-2 grid-cols-1 md:gap-x-8 gap-y-8">
