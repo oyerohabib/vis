@@ -5,21 +5,22 @@ import React, { createContext, useContext, useEffect, useMemo } from "react";
 interface StateContextProps {
   showMobileMenu: boolean;
   setShowMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  ShowAdminSidebar: boolean;
-  setShowAdminSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  Showprice: boolean;
-  setShowprice: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedprice: string;
-  setSelectedrice: React.Dispatch<React.SetStateAction<string>>;
+  ShowOtp: boolean;
+  setShowOtp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StateContext = createContext({} as StateContextProps);
 
 const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
-  const [ShowAdminSidebar, setShowAdminSidebar] = React.useState(false);
-  const [Showprice, setShowprice] = React.useState(false);
-  const [selectedprice, setSelectedrice] = React.useState("");
+  const [ShowOtp, setShowOtp] = React.useState(false);
+  const isAnyModalOpen = ShowOtp;
+
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator?.userAgent
+    );
+  };
 
   useEffect(() => {
     if (showMobileMenu) {
@@ -31,7 +32,6 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setShowMobileMenu(false);
-        setShowAdminSidebar(false);
       }
     };
 
@@ -40,7 +40,7 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showMobileMenu, ShowAdminSidebar]);
+  }, [showMobileMenu]);
 
   useEffect(() => {
     const t = "%c  Made By \ud83d\udc9a  - Phoenix ",
@@ -61,23 +61,10 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
     () => ({
       showMobileMenu,
       setShowMobileMenu,
-      ShowAdminSidebar,
-      setShowAdminSidebar,
-      Showprice,
-      setShowprice,
-      selectedprice,
-      setSelectedrice,
+      ShowOtp,
+      setShowOtp,
     }),
-    [
-      showMobileMenu,
-      setShowMobileMenu,
-      ShowAdminSidebar,
-      setShowAdminSidebar,
-      Showprice,
-      setShowprice,
-      selectedprice,
-      setSelectedrice,
-    ]
+    [showMobileMenu, setShowMobileMenu, ShowOtp, setShowOtp]
   );
 
   return (

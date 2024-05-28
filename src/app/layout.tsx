@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../styles/globals.scss";
 import { poppins } from "@/fonts";
 import StateContextProvider from "@/context/StateCtx";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASEURL as string),
@@ -44,7 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <StateContextProvider>
-        <body className={poppins.className}>{children}</body>
+        <body className={poppins.className}>
+          {children}
+          <Toaster />
+        </body>
       </StateContextProvider>
     </html>
   );

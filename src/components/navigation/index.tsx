@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CloseSquare, HambergerMenu } from "iconsax-react";
 import { SkeletonNavbar } from "../skeltons";
+import { Button } from "../ui/button";
 
 const MainNav = () => {
   const { showMobileMenu, setShowMobileMenu } = useStateCtx();
@@ -86,16 +87,23 @@ const MainNav = () => {
           </Link>
         ))}
       </div>
-      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 [&>button]:bg-white [&>button]:w-[150px] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary h-[56px]">
-        <button
-          type="button"
+      <div className="hidden lg:flex gap-x-3 xl:gap-x-5 items-center [&>Button]:bg-white [&>Button]:w-[150px] [&>Button]:px-4 [&>Button]:py-2 [&>Button]:rounded-md [&>Button:last-child]:bg-primary  [&>Button:last-child]:text-white [&>Button]:font-medium [&>Button]:text-primary h-[56px]">
+        <Button
+          asChild
           className={cn(
-            scrollHeight > 200 && "border border-primary bg-transparent"
+            scrollHeight > 200 && "border border-primary bg-transparent ",
+            "bg-white text-primary py-2 w-[150px] px-4 h-[56px] hover:bg-white"
           )}
         >
-          Login
-        </button>
-        <button type="button">Get started</button>
+          <Link href="/login">Login</Link>
+        </Button>
+        <Button
+          className="bg-primary text-white py-2 w-[150px] h-[56px] hover:bg-primary"
+          asChild
+          type="button"
+        >
+          <Link href="/signup">Get started</Link>
+        </Button>
       </div>
       <div
         tabIndex={0}
@@ -194,12 +202,21 @@ const MobileNav = () => {
               </Link>
             ))}
             <div className="lg:hidden flex flex-col gap-y-5 [&>button]:bg-white [&>button]:w-[150px] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button:last-child]:bg-primary  [&>button:last-child]:text-white [&>button]:font-medium [&>button]:text-primary h-[56px]">
-              <button type="button">
-                <Link href="/sign-in">Login</Link>
-              </button>
-              <button type="button">
-                <Link href="/get-started">Get started</Link>
-              </button>
+              <Button
+                asChild
+                className={cn(
+                  "bg-white text-primary py-2 w-[150px] px-4 h-[56px] hover:bg-white"
+                )}
+              >
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button
+                className="bg-primary text-white py-2 w-[150px] h-[56px] hover:bg-primary"
+                asChild
+                type="button"
+              >
+                <Link href="/signup">Get started</Link>
+              </Button>
             </div>
           </div>
         </div>
