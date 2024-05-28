@@ -1,9 +1,8 @@
 import { MetadataRoute } from "next";
-import { getLastCommitDate } from "@/utils";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASEURL;
-  const lastCommitDate = getLastCommitDate();
+  const lastCommitDate = new Date("2024-05-01T00:00:00Z");
 
   return [
     {
