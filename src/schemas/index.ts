@@ -30,3 +30,36 @@ export const LoginSchema = z.object({
 export const OtpSchema = z.object({
   otp: z.string(),
 });
+
+export const createOrderschema = z.object({
+  pickupname: z.string().min(3, {
+    message: "Pickup name is required",
+  }),
+  pickupaddress: z.string().min(3, {
+    message: "Pickup address is required",
+  }),
+  pickupitem: z.string().array().nonempty({
+    message: "Can't be empty!",
+  }),
+  pickupphone: z.string().refine(validator.isMobilePhone, {
+    message: "Invalid phone number",
+  }),
+  deliverymode: z.string().min(3, {
+    message: "Delivery mode is required",
+  }),
+  dropoffname: z.string().min(3, {
+    message: "Dropoff name is required",
+  }),
+  dropoffaddress: z.string().min(3, {
+    message: "Dropoff address is required",
+  }),
+  dropoffphone: z.string().refine(validator.isMobilePhone, {
+    message: "Invalid phone number",
+  }),
+  deliverytype: z.string().min(3, {
+    message: "Delivery type is required",
+  }),
+  note: z.string().optional(),
+  insurance: z.boolean(),
+  weight: z.string().optional(),
+});

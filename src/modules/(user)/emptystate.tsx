@@ -78,8 +78,8 @@ const EmptyState1 = () => {
           <path
             d="M152.214 130.643L149.535 127.964M150.071 119.928C150.071 115.195 146.234 111.357 141.5 111.357C136.766 111.357 132.928 115.195 132.928 119.928C132.928 124.662 136.766 128.5 141.5 128.5C143.858 128.5 145.993 127.548 147.543 126.007C149.104 124.455 150.071 122.305 150.071 119.928Z"
             stroke="#4F46E5"
-            stroke-width="1.6"
-            stroke-linecap="round"
+            strokeWidth="1.6"
+            strokeLinecap="round"
           />
           <defs>
             <filter
@@ -89,9 +89,9 @@ const EmptyState1 = () => {
               width="164"
               height="164"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feColorMatrix
                 in="SourceAlpha"
                 type="matrix"
@@ -121,20 +121,14 @@ const EmptyState1 = () => {
         </svg>
         <div>
           <h2 className="text-center text-black text-xl font-semibold leading-loose pb-2">
-            There’s no product here
+            There&apos;s no Orders yet
           </h2>
           <p className="text-center text-black text-base font-normal leading-relaxed pb-4">
-            Try changing your filters to <br />
-            see appointments{" "}
+            Try creating an order <br />
           </p>
           <div className="flex gap-3">
             <button className="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4">
-              {" "}
-              Clear Filter{" "}
-            </button>
-            <button className="w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-700 transition-all duration-500 rounded-full text-white text-xs font-semibold leading-4">
-              {" "}
-              Change Filter
+              Create Order
             </button>
           </div>
         </div>

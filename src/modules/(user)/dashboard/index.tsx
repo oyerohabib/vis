@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { getallorders } from "@/actions/order";
 import { Order } from "@/types";
 import Link from "next/link";
+import { EmptyState1 } from "../emptystate";
+import { useOrderCtx } from "@/context/OrderCtx";
 
 const DashBoardNav = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -88,19 +90,10 @@ const DashBoardNav = () => {
 };
 
 const OrdersPreview = () => {
-  const [orders, setOrders] = useState<Order | null>(null);
-  const [isLoading, startTransition] = useTransition();
-  useEffect(() => {
-    const fetchData = async () => {
-      startTransition(() =>
-        getallorders().then((res) => {
-          setOrders(res.orders);
-        })
-      );
-    };
-    fetchData();
-  });
+  const { orders, isLoading } = useOrderCtx();
+
   console.log(orders);
+
   return (
     <section className="flex flex-col   lg:border-r lg:border-l pb-6 lg:pb-0 border-primary h-full relative items-center lg:h-[816px] font-worksans">
       <div className="flex w-full sm:px-5 items-center justify-between  border-b border-t border-primary h-[56px] relative sm:text-xl  text-black">
@@ -114,6 +107,21 @@ const OrdersPreview = () => {
             <ArrowRight2 size={18} />
           </Link>
         </Button>
+      </div>
+      <table className="min-w-full  rounded-xl">
+        <thead>
+          <tr className="bg-gray-50">
+            <th className="px-4 py-3 text-left text-sm  text-black">
+              Order ID
+            </th>
+            <th className="px-4 py-3 text-left text-sm text-black">Status</th>
+            <th className="px-4 py-3 text-left text-sm text-black">Date</th>
+            <th className="px-4 py-3 text-left text-sm text-black">Actions</th>
+          </tr>
+        </thead>
+      </table>
+      <div className="flex h-full w-full items-center justify-center">
+        <EmptyState1 />
       </div>
     </section>
   );

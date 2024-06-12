@@ -84,6 +84,9 @@ interface Order {
   deliveryAgent?: User;
   deliveryAgentId?: string;
   bids: Bid[];
+  status: "pending" | "in-tranist" | "canceled" | "delivered";
+  createdAt?: Date;
+  updatedAt: Date;
 }
 
 interface Bid {

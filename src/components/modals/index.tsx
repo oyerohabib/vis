@@ -70,7 +70,7 @@ const OtpModal = ({ email, id }: User) => {
         role="dialog"
         aria-labelledby="make-payment"
         className={cn(
-          "py-6   flex flex-col max-[350px]:h-[410px] w-[90%] h-[380px] min-[550px]:w-[500px] md:h-[400px] md:w-[682px]  justify-between items-start bg-foreground dark:bg-dark-foreground backdrop-blur-lg fixed top-1/2 left-1/2  -translate-y-1/2 z-[999]  transition-all opacity-0 select-none ",
+          "py-6   flex flex-col max-[350px]:h-[410px] w-[90%] h-[380px] min-[550px]:w-[500px] md:h-[400px] md:w-[682px]  justify-between items-start bg-white backdrop-blur-lg fixed top-1/2 left-1/2  -translate-y-1/2 z-[999]  transition-all opacity-0 select-none ",
           ShowOtp
             ? "-translate-x-1/2 duration-700 opacity-100 sm:rounded-xl md:rounded-2xl"
             : "translate-x-full duration-300 pointer-events-none"
