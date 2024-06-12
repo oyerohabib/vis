@@ -2,7 +2,7 @@
 
 import Calls from "./axios";
 import { cookies } from "next/headers";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { baseurl } from "@/utils";
 
 interface DecodedToken {
@@ -51,7 +51,7 @@ const getrefreshtoken = async () => {
       };
     }
 
-    const res = await $Http.get("/auth/refresh-token", config);
+    const res = await $Http.get("/user/refresh-token", config);
 
     return {
       status: res.status,
