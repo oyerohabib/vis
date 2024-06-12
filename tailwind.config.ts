@@ -66,6 +66,7 @@ const config = {
       },
       fontFamily: {
         poppins: [`var(--font-poppins)`, "sans-serif"],
+        worksans: [`var(--font-work-sans)`, "sans-serif"],
       },
     },
   },

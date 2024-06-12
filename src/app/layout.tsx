@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.scss";
-import { poppins } from "@/fonts";
+import { poppins, workSans } from "@/fonts";
 import StateContextProvider from "@/context/StateCtx";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <StateContextProvider>
-        <body className={poppins.className}>
+        <body className={`${poppins.className} ${workSans.variable}`}>
           {children}
           <Toaster />
         </body>

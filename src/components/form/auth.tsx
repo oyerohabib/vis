@@ -392,9 +392,9 @@ const Login = () => {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      login(values).then((data) => {
+      login(values).then(async (data) => {
         const loginva = JSON.stringify(values);
-        signIn("credentials", { loginva, redirect: false });
+        await signIn("credentials", { loginva, redirect: false });
         toast({
           title:
             data.status === 200 ? "Login successfully!" : "An error occured",
