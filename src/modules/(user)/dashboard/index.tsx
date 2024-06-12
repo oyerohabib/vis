@@ -92,8 +92,6 @@ const DashBoardNav = () => {
 const OrdersPreview = () => {
   const { orders, isLoading } = useOrderCtx();
 
-  console.log(orders);
-
   return (
     <section className="flex flex-col   lg:border-r lg:border-l pb-6 lg:pb-0 border-primary h-full relative items-center lg:h-[816px] font-worksans">
       <div className="flex w-full sm:px-5 items-center justify-between  border-b border-t border-primary h-[56px] relative sm:text-xl  text-black">
@@ -120,9 +118,13 @@ const OrdersPreview = () => {
           </tr>
         </thead>
       </table>
-      <div className="flex h-full w-full items-center justify-center">
-        <EmptyState1 />
-      </div>
+      {orders.length < 0 ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <EmptyState1 />
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 };
