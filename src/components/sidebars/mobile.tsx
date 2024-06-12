@@ -66,7 +66,7 @@ const NormalMobileSideBar = () => {
               className={cn(
                 "flex items-center gap-x-3 py-2 px-3 h-[42px] text-white font-medium text-sm transition-colors duration-300 cursor-pointer ",
                 activeLink === link.link
-                  ? "bg-WHITE text-primaryrounded outline-none"
+                  ? "bg-white text-primary rounded outline-none"
                   : "hover:bg-black/10 focus-visible:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/30"
               )}
               onClick={() => {

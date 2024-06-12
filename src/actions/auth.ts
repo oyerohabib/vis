@@ -4,6 +4,7 @@ import { LoginSchema, RegisterSchema, OtpSchema } from "@/schemas";
 import * as z from "zod";
 import { baseurl } from "@/utils";
 import Calls from "./axios";
+import { cookies } from "next/headers";
 
 const $Http = Calls(baseurl);
 
@@ -68,6 +69,7 @@ const Otp = async (values: z.infer<typeof OtpSchema>, userId: string) => {
 };
 
 const login = async (values: z.infer<typeof LoginSchema>) => {
+  const cookie = cookies();
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
     return {
@@ -76,6 +78,12 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
   }
   try {
     const res = await $Http.post("/user/login", validatedFields.data);
+    cookie.set("access_token", res.data.token, {
+      maxAge: 60 * 60 * 24 * 1,
+      httpOnly: true,
+      path: "/",
+      priority: "high",
+    });
     return {
       status: res.status,
       message: res.data.message,
