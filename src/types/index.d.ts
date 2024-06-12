@@ -4,6 +4,13 @@ type NavbarLinkProps = {
   label: string;
 };
 
+type SidebarProps = {
+  id?: number;
+  label: string;
+  icon: Icon;
+  link: string;
+};
+
 interface User {
   id: string;
   fullName: string;
@@ -21,4 +28,4 @@ interface User {
   verified: boolean;
 }
 
-export { NavbarLinkProps, User };
+export { NavbarLinkProps, User, SidebarProps };

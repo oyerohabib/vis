@@ -15,13 +15,12 @@ export default {
         }
         const { email, password } = validatedFields.data;
         const res = await login({ email, password });
-        console.log(res);
-        if (!res) return null;
+
 
         if (!res.user) {
           return null;
         }
-        const user = JSON.parse(res.user);
+        const user = res.user;
 
         return user;
       },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
 import * as z from "zod";
 import {
@@ -25,6 +25,7 @@ import { useStateCtx } from "@/context/StateCtx";
 import { OtpModal } from "@/components/modals";
 import { User } from "@/types";
 import { register, login } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 const UserSignup = () => {
   const { toast } = useToast();
@@ -356,7 +357,7 @@ const UserSignup = () => {
 
         <span className="mt-5 md:mt-8 text-sm relative block text-center text-dark-copy dark:text-copy z-10">
           Alreaady have an account?
-          <Link href="/auth/login" className="ml-1 underline font-medium">
+          <Link href="/auth/sign-in" className="ml-1 underline font-medium">
             Login
           </Link>
         </span>
@@ -376,6 +377,7 @@ const OperatorSignup = () => {
 
 const Login = () => {
   const { toast } = useToast();
+  const router = useRouter();
   const [defaultInpType, setDefaultInpType] = useState<"password" | "text">(
     "password"
   );
@@ -389,7 +391,6 @@ const Login = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log("onSubmit");
     startTransition(() => {
       login(values).then((data) => {
         const loginva = JSON.stringify(values);
@@ -399,6 +400,14 @@ const Login = () => {
             data.status === 200 ? "Login successfully!" : "An error occured",
           description: `${data.message}`,
         });
+        if (data.status === 200) {
+          if (data.user.accountType != "admin") {
+            router.push("/dashboard");
+          }
+          if (data.user.accountType === "admin") {
+            router.push("/admin-dashboard");
+          }
+        }
       });
     });
   };

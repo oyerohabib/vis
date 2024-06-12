@@ -17,4 +17,19 @@ function maskEmail(email: string): string {
   return `${maskedLocalPart}@${domain}`;
 }
 
-export { cn, baseurl, maskEmail };
+/**
+ * Shrink a string to a specified length(len).
+ * @function shrinkString
+ * @param {string} str
+ * @param {number} len
+ * @returns {string}
+ */
+const shrinkString = ({ str, len }: { str?: string; len: number }): string => {
+  if (!str) return "";
+  if (str.length > len) {
+    return str.substring(0, len) + "...";
+  }
+  return str;
+};
+
+export { cn, baseurl, maskEmail, shrinkString };
