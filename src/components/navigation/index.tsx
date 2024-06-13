@@ -95,14 +95,14 @@ const MainNav = () => {
             "bg-white text-primary py-2 w-[150px] px-4 h-[56px] hover:bg-white"
           )}
         >
-          <Link href="/login">Login</Link>
+          <Link href="/auth/sign-in">Login</Link>
         </Button>
         <Button
           className="bg-primary text-white py-2 w-[150px] h-[56px] hover:bg-primary"
           asChild
           type="button"
         >
-          <Link href="/signup">Get started</Link>
+          <Link href="/auth/sign-up">Get started</Link>
         </Button>
       </div>
       <div
@@ -208,14 +208,14 @@ const MobileNav = () => {
                   "bg-white text-primary py-2 w-[150px] px-4 h-[56px] hover:bg-white"
                 )}
               >
-                <Link href="/login">Login</Link>
+                <Link href="/auth/sign-in">Login</Link>
               </Button>
               <Button
                 className="bg-primary text-white py-2 w-[150px] h-[56px] hover:bg-primary"
                 asChild
                 type="button"
               >
-                <Link href="/signup">Get started</Link>
+                <Link href="/auth/sign-up">Get started</Link>
               </Button>
             </div>
           </div>
