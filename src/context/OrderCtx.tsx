@@ -16,13 +16,18 @@ interface OrderContextProps {
   orders: Order[];
   setOrders: Dispatch<SetStateAction<Order[]>>;
   isLoading: boolean;
+  orderSearchTerm: string;
+  setOrderSearchTerm: Dispatch<SetStateAction<string>>;
+  updateOrders: () => void;
 }
 
 export const OrderContext = createContext({} as OrderContextProps);
 
 const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
   const [isLoading, startTransition] = useTransition();
+
   useLayoutEffect(() => {
     const fetchData = async () => {
       startTransition(() =>
@@ -32,22 +37,32 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, [orders]);
+  }, []);
+
+  const updateOrders = async () => {
+    startTransition(() =>
+      getallorders().then((res) => {
+        setOrders(res.orders);
+      })
+    );
+  };
 
   const value = useMemo(
     () => ({
       orders,
       setOrders,
       isLoading,
+      orderSearchTerm,
+      setOrderSearchTerm,
+      updateOrders,
     }),
-    [orders, setOrders, isLoading]
+    [orders, isLoading, orderSearchTerm]
   );
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>
   );
 };
 
-// Call this function whenever you want to use the context
 export const useOrderCtx = () => {
   const ctx = useContext(OrderContext);
 

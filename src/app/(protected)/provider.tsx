@@ -9,8 +9,10 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <SessionProvider>
-        <OrderContextProvider>{children}</OrderContextProvider>
-        <CreateOrderModal />
+        <OrderContextProvider>
+          {children}
+          <CreateOrderModal />
+        </OrderContextProvider>
       </SessionProvider>
     </>
   );

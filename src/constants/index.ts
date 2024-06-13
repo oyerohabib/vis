@@ -37,7 +37,7 @@ export const SIDEBAR_LINKS: SidebarProps[] = [
     id: 2,
     label: "Orders",
     icon: Box,
-    link: "order",
+    link: "orders",
   },
   {
     id: 3,

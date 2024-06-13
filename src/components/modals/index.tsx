@@ -26,6 +26,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
+import { useOrderCtx } from "@/context/OrderCtx";
 import {
   Form,
   FormControl,
@@ -175,6 +176,7 @@ const OtpModal = ({ email, id }: User) => {
 
 const CreateOrderModal = () => {
   const { createOrder, setCreateOrder } = useStateCtx();
+  const { updateOrders } = useOrderCtx();
   const id = useId();
   const { toast } = useToast();
   const [isLoading, startTransition] = useTransition();
@@ -197,6 +199,7 @@ const CreateOrderModal = () => {
       itemvalue: "",
     },
   });
+  const router = useRouter();
 
   const onSubmit = (values: z.infer<typeof createOrderschema>) => {
     startTransition(() => {
@@ -208,14 +211,15 @@ const CreateOrderModal = () => {
               : "An error occured",
           description: `${data.message}`,
         });
-        // if (data.status === 201) {
-        //   setCreateOrder(false);
-        // }
+        if (data.status === 201) {
+          form.reset();
+          updateOrders();
+          setCreateOrder(false);
+          router.refresh();
+        }
       });
     });
   };
-
-  console.log(isLoading);
 
   return (
     <>
@@ -385,9 +389,7 @@ const CreateOrderModal = () => {
                           placeholder="if the item is more than one use , to seprate them"
                           onChange={(e) => {
                             const value = e.target.value;
-                            const items = value
-                              .split(",")
-                              .map((item) => item.trim());
+                            const items = value.split(",").map((item) => item);
                             field.onChange(items);
                           }}
                         />
@@ -460,6 +462,7 @@ const CreateOrderModal = () => {
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={isLoading}
                         className="flex flex-col gap-y-2"
                       >
                         <div className="flex flex-col gap-x-2 w-full">
@@ -606,6 +609,7 @@ const CreateOrderModal = () => {
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={isLoading}
                         className="flex flex-col gap-y-2"
                       >
                         <div className="flex flex-col gap-x-2 w-full">
@@ -722,7 +726,7 @@ const CreateOrderModal = () => {
                 <Button
                   type="submit"
                   tabIndex={0}
-                  // disabled={isDisabled}
+                  disabled={isLoading}
                   aria-label="Remove"
                   className={cn(
                     "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"

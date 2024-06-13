@@ -1,6 +1,12 @@
 import React from "react";
 
-const EmptyState1 = () => {
+interface EmptyStateProp {
+  Button: React.ReactNode;
+  title: string;
+  text: string;
+}
+
+const EmptyState1 = ({ Button, title, text }: EmptyStateProp) => {
   return (
     <div className="w-full flex items-center flex-wrap justify-center gap-10">
       <div className="grid gap-4 w-60">
@@ -121,16 +127,12 @@ const EmptyState1 = () => {
         </svg>
         <div>
           <h2 className="text-center text-black text-xl font-semibold leading-loose pb-2">
-            There&apos;s no Orders yet
+            {title}
           </h2>
           <p className="text-center text-black text-base font-normal leading-relaxed pb-4">
-            Try creating an order <br />
+            {text}
           </p>
-          <div className="flex gap-3">
-            <button className="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4">
-              Create Order
-            </button>
-          </div>
+          <div className="flex gap-3">{Button}</div>
         </div>
       </div>
     </div>
