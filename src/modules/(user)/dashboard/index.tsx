@@ -103,7 +103,7 @@ const OrdersPreview = () => {
       )
     : orders;
 
-  const hasSearchTerm = filteredOrders.some((order) =>
+  const hasSearchTerm = orders.some((order) =>
     order.id.toLowerCase().includes(orderSearchTerm.toLowerCase())
   );
 
