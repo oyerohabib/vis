@@ -11,6 +11,8 @@ interface StateContextProps {
   setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   swipeIndicator: boolean;
   setSwipeIndicator: React.Dispatch<React.SetStateAction<boolean>>;
+  createOrder: boolean;
+  setCreateOrder: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StateContext = createContext({} as StateContextProps);
@@ -20,9 +22,10 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [ShowOtp, setShowOtp] = React.useState(false);
   const [openSidebar, setOpenSidebar] = React.useState(false);
   const [swipeIndicator, setSwipeIndicator] = React.useState(false);
+  const [createOrder, setCreateOrder] = React.useState(false);
   const [handleSwipe, setHandleSwipe] = React.useState<number | null>(null);
 
-  const isAnyModalOpen = ShowOtp;
+  const isAnyModalOpen = ShowOtp || createOrder;
 
   const anyMobileSidebarOpen = showMobileMenu || openSidebar;
 
@@ -86,6 +89,7 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
         setShowMobileMenu(false);
         setOpenSidebar(false);
         setShowOtp(false);
+        setCreateOrder(false);
       }
     };
 
@@ -121,6 +125,8 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
       setOpenSidebar,
       swipeIndicator,
       setSwipeIndicator,
+      createOrder,
+      setCreateOrder,
     }),
     [
       showMobileMenu,
@@ -131,6 +137,8 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
       setOpenSidebar,
       swipeIndicator,
       setSwipeIndicator,
+      createOrder,
+      setCreateOrder,
     ]
   );
 

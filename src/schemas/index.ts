@@ -44,11 +44,11 @@ export const createOrderschema = z.object({
   pickupphone: z.string().refine(validator.isMobilePhone, {
     message: "Invalid phone number",
   }),
-  deliverymode: z.string().min(3, {
-    message: "Delivery mode is required",
+  deliverymode: z.enum(["bicycle", "bike", "car", "truck", "cargo"], {
+    message: "You need to select a Delivery Mode type.",
   }),
   dropoffname: z.string().min(3, {
-    message: "Dropoff name is required",
+    message: "Delivery mode is required",
   }),
   dropoffaddress: z.string().min(3, {
     message: "Dropoff address is required",
@@ -56,10 +56,11 @@ export const createOrderschema = z.object({
   dropoffphone: z.string().refine(validator.isMobilePhone, {
     message: "Invalid phone number",
   }),
-  deliverytype: z.string().min(3, {
-    message: "Delivery type is required",
+  deliverytype: z.enum(["city", "inter-state", "inter-country"], {
+    message: "You need to select a Delivery Mode type.",
   }),
   note: z.string().optional(),
   insurance: z.boolean(),
   weight: z.string().optional(),
+  itemvalue: z.string().optional(),
 });

@@ -19,9 +19,12 @@ import { Order } from "@/types";
 import Link from "next/link";
 import { EmptyState1 } from "../emptystate";
 import { useOrderCtx } from "@/context/OrderCtx";
+import { useStateCtx } from "@/context/StateCtx";
 
 const DashBoardNav = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { setCreateOrder, createOrder } = useStateCtx();
+
   return (
     <div className="w-full h-[40px]  min-[900px]:h-[56px] flex items-center justify-between gap-x-2 sm:gap-x-4 px-2 sm:px-4">
       <div className="flex w-full sm:max-w-[413px] justify-center relative">
@@ -61,9 +64,10 @@ const DashBoardNav = () => {
           tabIndex={0}
           aria-label="Create Project"
           aria-haspopup
-          //   aria-expanded={createProjectModal}
+          aria-expanded={createOrder}
           id="create-project"
           type="button"
+          onClick={() => setCreateOrder(true)}
           className=" flex h-[40px] w-[56px] min-[900px]:w-full min-[900px]:max-w-[170px] min-[900px]:min-h-[56px] min-[900px]:min-w-[214px]  lg:max-w-[250px] items-center lg:gap-x-5 gap-x-2  text-white rounded-lg hover:bg-primary/80 transition-opacity duration-300 text-sm sm:text-base justify-center bg-primary"
         >
           <Add size={24} className="hidden min-[900px]:inline" />
@@ -118,7 +122,7 @@ const OrdersPreview = () => {
           </tr>
         </thead>
       </table>
-      {orders.length < 0 ? (
+      {orders.length < 1 ? (
         <div className="flex h-full w-full items-center justify-center">
           <EmptyState1 />
         </div>

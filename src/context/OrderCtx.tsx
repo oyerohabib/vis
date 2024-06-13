@@ -32,7 +32,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, []);
+  }, [orders]);
 
   const value = useMemo(
     () => ({
