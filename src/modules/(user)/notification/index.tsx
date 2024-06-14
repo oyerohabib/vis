@@ -47,7 +47,7 @@ const Notificationcard = ({
           <p className="space-x-1.5">
             <span className="font-bold font-worksans">{from}</span>
             <NotificationCase item={item} userId={userId} />
-            {!read && <UnreadCount />}
+            {!read && <UnreadIndicator />}
           </p>
         </div>
       </div>
