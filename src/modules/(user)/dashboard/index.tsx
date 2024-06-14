@@ -233,7 +233,7 @@ const NotificationPreview = () => {
 
   return (
     <section className="flex flex-col w-full   border-r-[#e1e1e1] h-full items-center jusstify-center lg:h-[408px]">
-      <div className="flex w-full sm:px-5 items-center justify-between mb-6 border-b border-t dark:border-primary-light border-primary h-[56px] relative md:text-xl  text-header font-medium">
+      <div className="flex w-full sm:px-5 items-center justify-between mb-6 border-b border-t border-primary h-[56px] relative md:text-xl">
         <div className="flex gap-2 items-center justify-center text-header dark:text-gray-200">
           <Notification1 size="32" />
           <span>Notification</span>
