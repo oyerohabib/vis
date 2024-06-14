@@ -511,6 +511,18 @@ const CreateOrderModal = () => {
                                 Cargo
                               </FormLabel>
                             </FormItem>
+
+                            <FormItem className="flex items-center space-x-3 space-y-0 gap-x-1">
+                              <FormControl>
+                                <RadioGroupItem value="express" />
+                              </FormControl>
+                              <FormLabel className="font-normal flex flex-col">
+                                Express Delivery{" "}
+                                <span className="text-xs">
+                                  (this might attract extra charges)
+                                </span>
+                              </FormLabel>
+                            </FormItem>
                           </div>
                         </div>
                       </RadioGroup>
