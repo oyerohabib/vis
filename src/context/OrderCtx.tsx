@@ -22,6 +22,7 @@ interface OrderContextProps {
   setOrderSearchTerm: Dispatch<SetStateAction<string>>;
   updateOrders: () => void;
   Notifications: Notification[];
+  isPending: boolean; 
 }
 
 export const OrderContext = createContext({} as OrderContextProps);
@@ -72,8 +73,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       setOrderSearchTerm,
       updateOrders,
       Notifications,
+      isPending,
     }),
-    [orders, isLoading, orderSearchTerm, Notifications]
+    [orders, orderSearchTerm, Notifications]
   );
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>

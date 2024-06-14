@@ -51,6 +51,13 @@ const getrefreshtoken = async () => {
 
     const res = await $Http.get("/user/refresh-token", config);
 
+    cookies().set("access_token", res.data.refreshToken, {
+      maxAge: 60 * 60 * 24 * 1,
+      httpOnly: true,
+      path: "/",
+      priority: "high",
+    });
+
     return {
       status: res.status,
       refreshToken: res.data.refreshToken,

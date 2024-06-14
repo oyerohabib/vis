@@ -229,7 +229,7 @@ const OrdersPreview = () => {
 };
 
 const NotificationPreview = () => {
-  const { Notifications } = useOrderCtx();
+  const { Notifications, isPending } = useOrderCtx();
 
   return (
     <section className="flex flex-col w-full   border-r-[#e1e1e1] h-full items-center jusstify-center lg:h-[408px]">
