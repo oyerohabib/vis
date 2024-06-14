@@ -100,4 +100,17 @@ interface Bid {
   deliveryhour: string;
 }
 
-export { NavbarLinkProps, User, SidebarProps, Order };
+interface Notification {
+  id: number;
+  from: string;
+  avatar: string;
+  type: string;
+  item: {
+    type: string;
+    body: string;
+  };
+  read?: boolean;
+  userId: string;
+  createdAt?: Date;
+}
+export { NavbarLinkProps, User, SidebarProps, Order, Notification };

@@ -10,7 +10,8 @@ import React, {
   useState,
 } from "react";
 import { getallorders } from "@/actions/order";
-import { Order } from "@/types";
+import { getNotification } from "@/actions/notification";
+import { Order, Notification } from "@/types";
 
 interface OrderContextProps {
   orders: Order[];
@@ -19,14 +20,17 @@ interface OrderContextProps {
   orderSearchTerm: string;
   setOrderSearchTerm: Dispatch<SetStateAction<string>>;
   updateOrders: () => void;
+  Notifications: Notification[];
 }
 
 export const OrderContext = createContext({} as OrderContextProps);
 
 const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [Notifications, setNotifications] = useState<Notification[]>([]);
   const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
   const [isLoading, startTransition] = useTransition();
+  const [isPending, startGetting] = useTransition();
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -38,6 +42,17 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
     };
     fetchData();
   }, []);
+
+  useLayoutEffect(() => {
+    const fetchData = async () => {
+      startGetting(() =>
+        getNotification().then((res) => {
+          setNotifications(res.notifications);
+        })
+      );
+    };
+    fetchData();
+  });
 
   const updateOrders = async () => {
     startTransition(() =>
@@ -55,8 +70,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       orderSearchTerm,
       setOrderSearchTerm,
       updateOrders,
+      Notifications,
     }),
-    [orders, isLoading, orderSearchTerm]
+    [orders, isLoading, orderSearchTerm, Notifications]
   );
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>

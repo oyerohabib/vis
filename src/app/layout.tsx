@@ -3,6 +3,7 @@ import "../styles/globals.scss";
 import { poppins, workSans } from "@/fonts";
 import StateContextProvider from "@/context/StateCtx";
 import { Toaster } from "@/components/ui/toaster";
+import SwipeIndicator from "@/components/SwipeIndicator";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASEURL as string),
@@ -48,6 +49,7 @@ export default function RootLayout({
         <body className={`${poppins.className} ${workSans.variable}`}>
           {children}
           <Toaster />
+          <SwipeIndicator />
         </body>
       </StateContextProvider>
     </html>

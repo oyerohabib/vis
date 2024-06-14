@@ -41,8 +41,6 @@ const getrefreshtoken = async () => {
     const expInMilliseconds = decoded.exp * 1000;
     const expirationDate = new Date(expInMilliseconds);
 
-    console.log(expirationDate);
-
     const oneHourFromNow = new Date(Date.now() - 3600000);
     if (expirationDate > oneHourFromNow) {
       return {
@@ -66,5 +64,3 @@ const getrefreshtoken = async () => {
 };
 
 export { getrefreshtoken };
-
-
