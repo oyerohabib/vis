@@ -1,5 +1,9 @@
 import React from "react";
-import { DashBoardNav, OrdersPreview } from "@/modules/(user)/dashboard";
+import {
+  DashBoardNav,
+  OrdersPreview,
+  NotificationPreview,
+} from "@/modules/(user)/dashboard";
 
 const page = () => {
   return (
@@ -10,7 +14,9 @@ const page = () => {
           <div className="lg:w-[60%] w-full h-full flex-1">
             <OrdersPreview />
           </div>
-          <div className="flex-col lg:w-[40%] w-full h-full flex-1"></div>
+          <div className="flex-col lg:w-[40%] w-full h-full flex-1">
+            <NotificationPreview />
+          </div>
         </div>
       </section>
     </>

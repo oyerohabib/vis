@@ -111,6 +111,6 @@ interface Notification {
   };
   read?: boolean;
   userId: string;
-  createdAt?: Date;
+  createdAt: string;
 }
 export { NavbarLinkProps, User, SidebarProps, Order, Notification };

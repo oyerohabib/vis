@@ -10,6 +10,8 @@ import {
   TruckFast,
   Box,
   ArrowRight2,
+  Bookmark,
+  Notification1,
 } from "iconsax-react";
 import { X } from "lucide-react";
 import { cn } from "@/utils";
@@ -20,6 +22,7 @@ import { EmptyState1 } from "../emptystate";
 import { useOrderCtx } from "@/context/OrderCtx";
 import { useStateCtx } from "@/context/StateCtx";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Notificationcard } from "../notification";
 
 const DashBoardNav = () => {
   const { setCreateOrder, createOrder } = useStateCtx();
@@ -188,7 +191,7 @@ const OrdersPreview = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-300">
+          <tbody className="divide-y divide-gray-300 overflow-x-hidden overflow-y-auto">
             {filteredOrders.map((order) => (
               <tr key={order.id} className="divide-x divide-gray-300">
                 <td className="px-4 py-3 text-left text-sm text-black">
@@ -225,4 +228,46 @@ const OrdersPreview = () => {
   );
 };
 
-export { DashBoardNav, OrdersPreview };
+const NotificationPreview = () => {
+  const { Notifications } = useOrderCtx();
+
+  return (
+    <section className="flex flex-col w-full   border-r-[#e1e1e1] h-full items-center jusstify-center lg:h-[408px]">
+      <div className="flex w-full sm:px-5 items-center justify-between mb-6 border-b border-t dark:border-primary-light border-primary h-[56px] relative md:text-xl  text-header font-medium">
+        <div className="flex gap-2 items-center justify-center text-header dark:text-gray-200">
+          <Notification1 size="32" />
+          <span>Notification</span>
+        </div>
+        <Button asChild variant="ghost" className="flex">
+          <Link href="/notification">
+            <span>view all</span>
+            <ArrowRight2 size={18} />
+          </Link>
+        </Button>
+      </div>
+      {Notifications.length < 1 ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <EmptyState1
+            title="There's no Notifications yet"
+            text="Try creating an order"
+            Button={
+              <button className="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4">
+                keep working
+              </button>
+            }
+          />
+        </div>
+      ) : (
+        <ul className="space-y-[11px] px-2">
+          {Notifications.map((note) => (
+            <li key={note.id}>
+              <Notificationcard {...note} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+};
+
+export { DashBoardNav, OrdersPreview, NotificationPreview };

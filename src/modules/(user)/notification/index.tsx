@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Notification } from "@/types";
 import { useOrderCtx } from "@/context/OrderCtx";
 import { useSession } from "next-auth/react";
+import { create } from "domain";
 
 const UnreadCount = () => {
   const { Notifications } = useOrderCtx();
@@ -23,20 +24,21 @@ const Notificationcard = ({
   from,
   item,
   userId,
+  createdAt,
 }: Notification) => {
   return (
     <div
       className={cn(
-        "card flex items-start p-4 sm:px-[19px] rounded-[10px] gap-[13px] sm:gap-[19px]",
-        !read ? "" : ""
+        "card flex items-start p-4 sm:px-[19px] rounded-[10px] gap-[13px]",
+        !read ? "bg-primary/10" : "bg-white"
       )}
     >
       <Image
-        src={avatar}
+        src={"/bot.jpg"}
         alt=""
-        width={39}
-        height={39}
-        className="sm:w-[45px] overflow-hidden flex-shrink-0"
+        width={81}
+        height={51}
+        className="w-[40px] h-[40px] object-cover rounded-full"
       />
       <div
         className={cn(
@@ -49,6 +51,9 @@ const Notificationcard = ({
             <NotificationCase item={item} userId={userId} />
             {!read && <UnreadIndicator />}
           </p>
+          <time className="text-grayish-blue">
+            {timeAgo(new Date(createdAt))}
+          </time>
         </div>
       </div>
     </div>
@@ -71,7 +76,7 @@ function UnreadIndicator() {
 
 const NotificationList = () => {
   const { Notifications } = useOrderCtx();
-  console.log(Notifications);
+
   return (
     <ul className="space-y-[11px]">
       {Notifications.map((note) => (
@@ -106,7 +111,10 @@ const NotificationCase = ({ item, userId }: item) => {
       case "order":
         if (isOwner) {
           content = item.body;
+        } else {
+          content = `a new order was just made`;
         }
+
         break;
       case "message":
         content = "sent you a private message";
@@ -123,4 +131,4 @@ const NotificationCase = ({ item, userId }: item) => {
   return <span>{content}</span>;
 };
 
-export { NotificationList, UnreadCount };
+export { NotificationList, UnreadCount, Notificationcard };

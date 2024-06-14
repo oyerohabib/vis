@@ -7,6 +7,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useTransition,
+  useEffect,
   useState,
 } from "react";
 import { getallorders } from "@/actions/order";
@@ -43,7 +44,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchData();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       startGetting(() =>
         getNotification().then((res) => {
@@ -52,7 +53,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  });
+  }, []);
 
   const updateOrders = async () => {
     startTransition(() =>
