@@ -2,11 +2,9 @@
 
 import { LoginSchema, RegisterSchema, OtpSchema } from "@/schemas";
 import * as z from "zod";
-import { baseurl, response } from "@/utils";
+import { baseurl } from "@/utils";
 import Calls from "./axios";
 import { cookies } from "next/headers";
-import { signIn } from "next-auth/react";
-import { AuthError } from "next-auth";
 
 const $Http = Calls(baseurl);
 
@@ -101,47 +99,47 @@ const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 };
 
-const signInCredentials = async (email: string, password: string) => {
-  try {
-    await signIn("credentials", {
-      email,
-      password,
-    });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return response({
-            success: false,
-            error: {
-              code: 401,
-              message: "Invalid credentials.",
-            },
-          });
+// const signInCredentials = async (email: string, password: string) => {
+//   try {
+//     await signIn("credentials", {
+//       email,
+//       password,
+//     });
+//   } catch (error) {
+//     if (error instanceof AuthError) {
+//       switch (error.type) {
+//         case "CredentialsSignin":
+//           return response({
+//             success: false,
+//             error: {
+//               code: 401,
+//               message: "Invalid credentials.",
+//             },
+//           });
 
-        case "Verification":
-          return response({
-            success: false,
-            error: {
-              code: 422,
-              message: "Verification failed. Please try again.",
-            },
-          });
+//         case "Verification":
+//           return response({
+//             success: false,
+//             error: {
+//               code: 422,
+//               message: "Verification failed. Please try again.",
+//             },
+//           });
 
-        default:
-          return response({
-            success: false,
-            error: {
-              code: 500,
-              message: "Something went wrong.",
-            },
-          });
-      }
-    }
+//         default:
+//           return response({
+//             success: false,
+//             error: {
+//               code: 500,
+//               message: "Something went wrong.",
+//             },
+//           });
+//       }
+//     }
 
-    throw error;
-  }
-};
+//     throw error;
+//   }
+// };
 
 const nextlogin = async (values: z.infer<typeof LoginSchema>) => {
   const cookie = cookies();
@@ -223,4 +221,4 @@ const registerOperator = async (values: z.infer<typeof RegisterSchema>) => {
   }
 };
 
-export { Otp, register, login, signInCredentials, nextlogin, registerOperator };
+export { Otp, register, login, nextlogin, registerOperator };
