@@ -25,7 +25,7 @@ interface User {
   referrals: User[];
   referralsMade: Referral[];
   verified: boolean;
-  accountType: string;
+  accountType: "user" | "admin" | "operator";
   sentMessages: Message[];
   receivedMessages: Message[];
   conversationsAsSender: Conversation[];

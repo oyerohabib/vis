@@ -61,6 +61,7 @@ const Otp = async (values: z.infer<typeof OtpSchema>, userId: string) => {
     return {
       status: res.status,
       message: res.data.message,
+      user: res.data.user,
     };
   } catch (e: any) {
     return {
@@ -196,9 +197,16 @@ const registerOperator = async (values: z.infer<typeof RegisterSchema>) => {
     };
   }
 
-  // const 
+  const accountType = "operator";
 
-  const userdata = { email, fullName, password, referralCode, phoneNumber };
+  const userdata = {
+    email,
+    fullName,
+    password,
+    referralCode,
+    phoneNumber,
+    accountType,
+  };
 
   try {
     const res = await $Http.post("/user/signup", userdata);
