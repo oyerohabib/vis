@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Response, ResponseWithMessage } from "@/types";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -80,6 +81,15 @@ const timeAgo = (date: Date): string => {
 
   return "just now";
 };
+
+// Overload for response status in server action
+export function response(response: ResponseWithMessage): Response;
+export function response<T extends Record<string, unknown>>(
+  response: Response<T>
+): Response<T>;
+export function response<T extends object>(response: T): T {
+  return response;
+}
 
 export {
   cn,

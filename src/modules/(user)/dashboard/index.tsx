@@ -159,7 +159,7 @@ const OrdersPreview = () => {
                 ? "clear your search input"
                 : "Try creating an order"
             }
-            Button={
+            Item={
               <>
                 {!hasSearchTerm ? (
                   <button
@@ -250,7 +250,7 @@ const NotificationPreview = () => {
           <EmptyState1
             title="There's no Notifications yet"
             text="Try creating an order"
-            Button={
+            Item={
               <button className="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4">
                 keep working
               </button>

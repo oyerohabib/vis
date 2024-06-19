@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { signIn } from "next-auth/react";
 import * as z from "zod";
 import {
   Form,
@@ -26,6 +25,7 @@ import { OtpModal } from "@/components/modals";
 import { User } from "@/types";
 import { register, login } from "@/actions/auth";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const UserSignup = () => {
   const { toast } = useToast();
@@ -393,14 +393,21 @@ const Login = () => {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(values).then(async (data) => {
-        const loginva = JSON.stringify(values);
-        await signIn("credentials", { loginva, redirect: false });
+        if (data.status === 200) {
+          const { email, password } = values;
+          await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+          });
+        }
         toast({
           title:
             data.status === 200 ? "Login successfully!" : "An error occured",
           description: `${data.message}`,
         });
         if (data.status === 200) {
+          window?.localStorage.setItem("user", JSON.stringify(data.user));
           if (data.user.accountType != "admin") {
             router.push("/dashboard");
           }

@@ -1,12 +1,12 @@
 import React from "react";
 
 interface EmptyStateProp {
-  Button: React.ReactNode;
+  Item: React.ReactNode;
   title: string;
   text: string;
 }
 
-const EmptyState1 = ({ Button, title, text }: EmptyStateProp) => {
+const EmptyState1 = ({ Item, title, text }: EmptyStateProp) => {
   return (
     <div className="w-full flex items-center flex-wrap justify-center gap-10">
       <div className="grid gap-4 w-60">
@@ -132,7 +132,7 @@ const EmptyState1 = ({ Button, title, text }: EmptyStateProp) => {
           <p className="text-center text-black text-base font-normal leading-relaxed pb-4">
             {text}
           </p>
-          <div className="flex gap-3">{Button}</div>
+          <div className="flex gap-3">{Item}</div>
         </div>
       </div>
     </div>
