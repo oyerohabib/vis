@@ -20,7 +20,6 @@ import { CreateOrder } from "@/actions/order";
 import * as z from "zod";
 import { Otp } from "@/actions/auth";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { Input } from "../ui/input";
@@ -40,6 +39,7 @@ import { useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
+import { useUserCtx } from "@/context/UserCtx";
 
 const OtpModal = ({ email, id }: User) => {
   const { ShowOtp, setShowOtp } = useStateCtx();
@@ -180,7 +180,8 @@ const CreateOrderModal = () => {
   const id = useId();
   const { toast } = useToast();
   const [isLoading, startTransition] = useTransition();
-  const { data: session } = useSession();
+
+  const { user: session } = useUserCtx();
   const form = useForm<z.infer<typeof createOrderschema>>({
     resolver: zodResolver(createOrderschema),
     defaultValues: {
@@ -246,10 +247,9 @@ const CreateOrderModal = () => {
           <div className="flex items-center gap-x-1 sm:gap-x-2">
             <Image
               src={
-                session?.user?.image
-                  ? session.user.image
-                  : `https://ui-avatars.com/api/?name=${session?.user
-                      ?.email!}&background=random`
+                session?.image
+                  ? session.image
+                  : `https://ui-avatars.com/api/?name=${session?.email}&background=random`
               }
               alt="User Image"
               width={40}
@@ -257,8 +257,7 @@ const CreateOrderModal = () => {
               className="rounded-full"
             />
             <span className="text-primary font-semibold sm:text-lg tracking-wide">
-              {/* @ts-ignore */}
-              {session?.user?.fullName}
+              {session?.fullName}
             </span>
             <span className="text-primary  hidden sm:inline">
               <ChevronRight size={24} />

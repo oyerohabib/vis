@@ -20,6 +20,7 @@ interface User {
   updatedAt: Date;
   referralCode?: string;
   referredById?: string;
+  image?: string;
   referredBy?: User;
   referrals: User[];
   referralsMade: Referral[];

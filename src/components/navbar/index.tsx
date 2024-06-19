@@ -6,12 +6,12 @@ import { handleMouseEnter } from "@/utils/text-effect";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useStateCtx } from "@/context/StateCtx";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useUserCtx } from "@/context/UserCtx";
 
 const NormalHeader = () => {
   const { openSidebar, setOpenSidebar } = useStateCtx();
-  const { data: session } = useSession();
+  const { user: session } = useUserCtx();
   const pathname = usePathname().substring(1);
 
   return (
@@ -51,8 +51,8 @@ const NormalHeader = () => {
         {pathname === "dashboard" ? (
           <div className="flex gap-x-2 sm:gap-x-4 items-center">
             <h2 className="hidden md:inline sm:text-3xl capitalize font-medium text-primary">
-              Welcome back! {/* @ts-ignore */}
-              {shrinkString({ str: session?.user?.fullName!, len: 10 })}
+              Welcome back!
+              {shrinkString({ str: session?.fullName!, len: 10 })}
             </h2>
             <h2 className="max-[370px]:text-base max-[500px]:text-lg text-xl md:hidden capitalize font-medium text-primary">
               {pathname}
@@ -81,10 +81,9 @@ const NormalHeader = () => {
         >
           <Image
             src={
-              session?.user?.image
-                ? session.user.image
-                : `https://ui-avatars.com/api/?name=${session?.user
-                    ?.email!}&background=random`
+              session?.image
+                ? session.image
+                : `https://ui-avatars.com/api/?name=${session?.email}&background=random`
             }
             alt="user"
             width={32}

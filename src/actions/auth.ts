@@ -150,6 +150,7 @@ const nextlogin = async (values: z.infer<typeof LoginSchema>) => {
       error: "Login Failed. Please check your email and password.",
     };
   }
+
   try {
     const res = await $Http.post("/user/login", validatedFields.data);
     cookie.set("access_token", res.data.token, {
@@ -172,4 +173,46 @@ const nextlogin = async (values: z.infer<typeof LoginSchema>) => {
   }
 };
 
-export { Otp, register, login, signInCredentials, nextlogin };
+const registerOperator = async (values: z.infer<typeof RegisterSchema>) => {
+  const validatedFields = RegisterSchema.safeParse(values);
+  if (!validatedFields.success) {
+    return {
+      error: "Login Failed. Please check your email and password.",
+    };
+  }
+
+  const {
+    email,
+    fullName,
+    password,
+    passwordConfirm,
+    referralCode,
+    phoneNumber,
+  } = validatedFields.data;
+
+  if (password !== passwordConfirm) {
+    return {
+      error: "Password and Confirm Password do not match.",
+    };
+  }
+
+  // const 
+
+  const userdata = { email, fullName, password, referralCode, phoneNumber };
+
+  try {
+    const res = await $Http.post("/user/signup", userdata);
+    return {
+      status: res.status,
+      message: res.data.message,
+      user: res.data.user,
+    };
+  } catch (e: any) {
+    return {
+      message: e?.response?.data.message,
+      status: e?.response?.status,
+    };
+  }
+};
+
+export { Otp, register, login, signInCredentials, nextlogin, registerOperator };

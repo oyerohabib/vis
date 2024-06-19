@@ -5,7 +5,7 @@ import { cn, timeAgo } from "@/utils";
 import Image from "next/image";
 import { Notification } from "@/types";
 import { useOrderCtx } from "@/context/OrderCtx";
-import { useSession } from "next-auth/react";
+import { useUserCtx } from "@/context/UserCtx";
 import { create } from "domain";
 
 const UnreadCount = () => {
@@ -101,8 +101,8 @@ const getUnreadNotificationCount = (notifications: Notification[]): number => {
 };
 
 const NotificationCase = ({ item, userId }: item) => {
-  const { data: session } = useSession();
-  const isOwner = userId === session?.user?.id;
+  const { user: session } = useUserCtx();
+  const isOwner = userId === session?.id;
   let content;
   if (!item) {
     content = "created an order";

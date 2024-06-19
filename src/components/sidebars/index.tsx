@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { SIDEBAR_LINKS } from "@/constants";
 import { cn, shrinkString } from "@/utils";
-import { useSession } from "next-auth/react";
+import { useUserCtx } from "@/context/UserCtx";
 
 const NormalSideBar = () => {
   const [activeLink, setActiveLink] = useState("");
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { user: session } = useUserCtx();
 
   useEffect(() => {
     const currentPath = pathname?.replace(/^\/([^\/]+).*$/, "$1");
@@ -23,12 +23,7 @@ const NormalSideBar = () => {
   return (
     <section className="bg-primary z-[50] w-[0px] md:w-[96px] min-[1140px]:w-[270px] hover:w-[270px] hover:p-4 transition-all duration-300 py-4 min-[1140px]:p-4 hidden md:flex flex-col gap-y-4 items-center justify-between min-[1140px]:items-start fixed h-screen left-0 top-0 overflow-y-auto border-r border-gray-200  sidebar-scroll overflow-x-hidden group select-none">
       <Link href="/dashboard">
-        <Image
-          src="/main.png"
-          alt="Logo"
-          width={155}
-          height={53}
-        />
+        <Image src="/main.png" alt="Logo" width={155} height={53} />
       </Link>
       <ul className="flex flex-col gap-y-4 pt-8">
         {SIDEBAR_LINKS.map((link) => (
@@ -118,10 +113,9 @@ const NormalSideBar = () => {
           <div className="relative w-full max-w-[60px] flex justify-center h-[60px] rounded-full ">
             <Image
               src={
-                session?.user?.image
-                  ? session.user.image
-                  : `https://ui-avatars.com/api/?name=${session?.user
-                      ?.email!}&background=random`
+                session?.image
+                  ? session.image
+                  : `https://ui-avatars.com/api/?name=${session?.email}&background=random`
               }
               alt="user"
               width={60}
@@ -133,11 +127,9 @@ const NormalSideBar = () => {
           <div className="flex flex-col  max-[1139px]:hidden w-full group-hover:w-full group-hover:flex">
             <span
               className="text-white text-base capitalize"
-              // @ts-ignore
-              title={session?.user?.fullName}
+              title={session?.fullName}
             >
-              {/* @ts-ignore */}
-              {shrinkString({ str: session?.user?.fullName!, len: 10 })}
+              {shrinkString({ str: session?.fullName!, len: 10 })}
             </span>
           </div>
         </Link>

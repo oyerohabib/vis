@@ -97,8 +97,7 @@ const DashBoardNav = () => {
 };
 
 const OrdersPreview = () => {
-  const { orders, isLoading, orderSearchTerm, setOrderSearchTerm } =
-    useOrderCtx();
+  const { orders, orderSearchTerm, setOrderSearchTerm } = useOrderCtx();
 
   const filteredOrders = orderSearchTerm
     ? orders.filter((order) =>
@@ -125,28 +124,7 @@ const OrdersPreview = () => {
         </Button>
       </div>
 
-      {isLoading ? (
-        <div className="flex w-full items-center justify-center space-y-2 flex-col p-4">
-          <Skeleton className="h-6 rounded-none w-full" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 rounded-none w-full" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 rounded-none w-full" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-          <Skeleton className="h-6 w-full rounded-none" />
-        </div>
-      ) : filteredOrders.length < 1 ? (
+      {filteredOrders.length < 1 ? (
         <div className="flex h-full w-full items-center justify-center">
           <EmptyState1
             title={
@@ -229,7 +207,7 @@ const OrdersPreview = () => {
 };
 
 const NotificationPreview = () => {
-  const { Notifications, isPending } = useOrderCtx();
+  const { Notifications } = useOrderCtx();
 
   return (
     <section className="flex flex-col w-full   border-r-[#e1e1e1] h-full items-center jusstify-center lg:h-[408px]">

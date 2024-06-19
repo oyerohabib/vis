@@ -6,9 +6,9 @@ import React, {
   useContext,
   useLayoutEffect,
   useMemo,
-  useTransition,
   useEffect,
   useState,
+  startTransition,
 } from "react";
 import { getallorders } from "@/actions/order";
 import { getNotification } from "@/actions/notification";
@@ -17,12 +17,11 @@ import { Order, Notification } from "@/types";
 interface OrderContextProps {
   orders: Order[];
   setOrders: Dispatch<SetStateAction<Order[]>>;
-  isLoading: boolean;
+
   orderSearchTerm: string;
   setOrderSearchTerm: Dispatch<SetStateAction<string>>;
   updateOrders: () => void;
   Notifications: Notification[];
-  isPending: boolean; 
 }
 
 export const OrderContext = createContext({} as OrderContextProps);
@@ -31,8 +30,6 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [Notifications, setNotifications] = useState<Notification[]>([]);
   const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
-  const [isLoading, startTransition] = useTransition();
-  const [isPending, startGetting] = useTransition();
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -43,18 +40,18 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, []);
+  }, [orders]);
 
   useEffect(() => {
     const fetchData = async () => {
-      startGetting(() =>
+      startTransition(() =>
         getNotification().then((res) => {
           setNotifications(res.notifications);
         })
       );
     };
     fetchData();
-  }, []);
+  }, [Notifications]);
 
   const updateOrders = async () => {
     startTransition(() =>
@@ -68,12 +65,10 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
     () => ({
       orders,
       setOrders,
-      isLoading,
       orderSearchTerm,
       setOrderSearchTerm,
       updateOrders,
       Notifications,
-      isPending,
     }),
     [orders, orderSearchTerm, Notifications]
   );
