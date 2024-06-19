@@ -26,6 +26,9 @@ interface User {
   referralsMade: Referral[];
   verified: boolean;
   accountType: "user" | "admin" | "operator";
+  mobilityType: string;
+  driversLicense: string;
+  vechLicense: string;
   sentMessages: Message[];
   receivedMessages: Message[];
   conversationsAsSender: Conversation[];

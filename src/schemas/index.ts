@@ -67,3 +67,18 @@ export const createOrderschema = z.object({
   weight: z.string().optional(),
   itemvalue: z.string().optional(),
 });
+
+export const VerifyOperatorSchema = z.object({
+  ninNumber: z.string().optional(),
+  cacNumber: z.string().optional(),
+  driversLicense: z.string().optional(),
+  vechLicense: z.string().min(3, {
+    message: "plate number must be at least 6 characters long",
+  }),
+  mobilityType: z.enum(
+    ["bicycle", "bike", "car", "truck", "cargo", "express"],
+    {
+      message: "You need to select a Delivery Mode type.",
+    }
+  ),
+});

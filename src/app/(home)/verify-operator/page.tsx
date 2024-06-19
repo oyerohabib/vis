@@ -1,7 +1,8 @@
 import React from "react";
+import { VerifyOperator } from "@/modules/(operator)/verify";
 
 const page = () => {
-  return <div>page</div>;
+  return <VerifyOperator />;
 };
 
 export default page;

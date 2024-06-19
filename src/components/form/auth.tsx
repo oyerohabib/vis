@@ -740,11 +740,12 @@ const Login = () => {
         });
         if (data.status === 200) {
           window?.localStorage.setItem("user", JSON.stringify(data.user));
-          if (data.user.accountType != "admin") {
+          if (data.user.accountType === "user") {
             router.push("/dashboard");
-          }
-          if (data.user.accountType === "admin") {
-            router.push("/admin-dashboard");
+          } else if (data.user.accountType === "admin") {
+            router.push("/admin/dashboard");
+          } else {
+            router.push(`/${data.user.accountType}/dashboard`);
           }
         }
       });
