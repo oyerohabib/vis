@@ -13,6 +13,10 @@ interface StateContextProps {
   setSwipeIndicator: React.Dispatch<React.SetStateAction<boolean>>;
   createOrder: boolean;
   setCreateOrder: React.Dispatch<React.SetStateAction<boolean>>;
+  verifyOperator: boolean;
+  setVerifyOperator: React.Dispatch<React.SetStateAction<boolean>>;
+  openOperatorSidebar: boolean;
+  setOpenOperatorSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StateContext = createContext({} as StateContextProps);
@@ -23,11 +27,14 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [openSidebar, setOpenSidebar] = React.useState(false);
   const [swipeIndicator, setSwipeIndicator] = React.useState(false);
   const [createOrder, setCreateOrder] = React.useState(false);
+  const [verifyOperator, setVerifyOperator] = React.useState(false);
+  const [openOperatorSidebar, setOpenOperatorSidebar] = React.useState(false);
   const [handleSwipe, setHandleSwipe] = React.useState<number | null>(null);
 
-  const isAnyModalOpen = ShowOtp || createOrder;
+  const isAnyModalOpen = ShowOtp || createOrder || verifyOperator;
 
-  const anyMobileSidebarOpen = showMobileMenu || openSidebar;
+  const anyMobileSidebarOpen =
+    showMobileMenu || openSidebar || openOperatorSidebar;
 
   const isMobileDevice = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -63,6 +70,7 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
           localStorage.setItem("swiped", "true");
           console.log("first");
           setOpenSidebar(false);
+          setOpenOperatorSidebar(false);
         }
 
         setHandleSwipe(null);
@@ -90,6 +98,8 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
         setOpenSidebar(false);
         setShowOtp(false);
         setCreateOrder(false);
+        setVerifyOperator(false);
+        setOpenOperatorSidebar(false);
       }
     };
 
@@ -127,6 +137,10 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
       setSwipeIndicator,
       createOrder,
       setCreateOrder,
+      verifyOperator,
+      setVerifyOperator,
+      openOperatorSidebar,
+      setOpenOperatorSidebar,
     }),
     [
       showMobileMenu,
@@ -139,6 +153,10 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
       setSwipeIndicator,
       createOrder,
       setCreateOrder,
+      verifyOperator,
+      setVerifyOperator,
+      openOperatorSidebar,
+      setOpenOperatorSidebar,
     ]
   );
 

@@ -95,4 +95,30 @@ const CreateOrder = async (values: z.infer<typeof createOrderschema>) => {
   }
 };
 
-export { getallorders, CreateOrder };
+const getGeneralOrders = async () => {
+  const { refreshToken } = await getrefreshtoken();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      accept: "application/json",
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  };
+
+  try {
+    const res = await $Http.get("/get-all-orders", config);
+    return {
+      status: res.status,
+      message: res.data.message,
+      orders: res.data.orders,
+    };
+  } catch (e: any) {
+    return {
+      message: e?.response?.data.message,
+      status: e?.response?.status,
+    };
+  }
+};
+
+export { getallorders, CreateOrder, getGeneralOrders };

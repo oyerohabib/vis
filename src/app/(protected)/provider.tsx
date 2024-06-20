@@ -10,10 +10,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <SessionProvider>
-        <OrderContextProvider>
-          <UserContextProvider>{children}</UserContextProvider>
-          <CreateOrderModal />
-        </OrderContextProvider>
+        <UserContextProvider>
+          <OrderContextProvider>
+            {children}
+            <CreateOrderModal />
+          </OrderContextProvider>
+        </UserContextProvider>
       </SessionProvider>
     </>
   );

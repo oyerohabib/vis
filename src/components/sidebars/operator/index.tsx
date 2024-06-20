@@ -92,7 +92,7 @@ const OPERATORSideBar = () => {
         </Link>
 
         <Link
-          href="/operator//profile"
+          href="/operator/profile"
           className={cn(
             "w-full flex items-center gap-x-[6px]  p-2 transition-colors duration-300 justify-center mb-4",
             activeLink === "/operator/profile"

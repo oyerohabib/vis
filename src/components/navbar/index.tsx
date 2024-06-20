@@ -2,6 +2,7 @@
 import { Add, HambergerMenu, Notification } from "iconsax-react";
 import { cn, shrinkString } from "@/utils";
 import { NormalMobileSideBar } from "../sidebars/mobile";
+import { MobileOperatorSidebar } from "../sidebars/operator/mobile";
 import { handleMouseEnter } from "@/utils/text-effect";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -10,7 +11,12 @@ import Link from "next/link";
 import { useUserCtx } from "@/context/UserCtx";
 
 const NormalHeader = () => {
-  const { openSidebar, setOpenSidebar } = useStateCtx();
+  const {
+    openSidebar,
+    setOpenSidebar,
+    setOpenOperatorSidebar,
+    openOperatorSidebar,
+  } = useStateCtx();
   const PathName = usePathname();
 
   const { user: session } = useUserCtx();
@@ -46,9 +52,16 @@ const NormalHeader = () => {
                 openSidebar,
             }
           )}
-          onClick={() => setOpenSidebar(!openSidebar)}
+          onClick={() => {
+            if (session.accountType === "user") {
+              setOpenSidebar(!openSidebar);
+            } else if (session.accountType === "operator") {
+              setOpenOperatorSidebar(!openOperatorSidebar);
+            } else {
+            }
+          }}
         >
-          {openSidebar ? (
+          {openSidebar || openOperatorSidebar ? (
             <Add size={60} className="text-white" />
           ) : (
             <HambergerMenu size={32} className="text-primary" />
@@ -153,6 +166,7 @@ const NormalHeader = () => {
         </Link>
       </div>
       <NormalMobileSideBar />
+      <MobileOperatorSidebar />
     </header>
   );
 };
