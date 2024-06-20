@@ -28,12 +28,12 @@ interface OrderContextProps {
 export const OrderContext = createContext({} as OrderContextProps);
 
 const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { verifyOperator, setVerifyOperator } = useStateCtx();
   const [orders, setOrders] = useState<Order[]>([]);
   const [Generalorders, setGeneralOrders] = useState<Order[]>([]);
   const [Notifications, setNotifications] = useState<Notification[]>([]);
   const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
   const { user } = useUserCtx();
+  const { verifyOperator, setVerifyOperator } = useStateCtx();
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -70,6 +70,15 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
     };
     fetchData();
   }, [setGeneralOrders, user.accountType]);
+
+useLayoutEffect(() => {
+  if (user.accountType === "operator") {
+    const isVerified = user.isOperatorverified;
+    if (!isVerified) {
+      setVerifyOperator(true);
+    }
+  }
+}, [user.accountType, user.isOperatorverified, setVerifyOperator]);
 
   const updateOrders = async () => {
     startTransition(() =>

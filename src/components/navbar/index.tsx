@@ -62,7 +62,7 @@ const NormalHeader = () => {
           }}
         >
           {openSidebar || openOperatorSidebar ? (
-            <Add size={60} className="text-white" />
+            <Add size={60} className="text-primary" />
           ) : (
             <HambergerMenu size={32} className="text-primary" />
           )}

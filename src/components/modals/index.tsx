@@ -3,6 +3,7 @@
 
 import { useState, useTransition, useId } from "react";
 import { useStateCtx } from "@/context/StateCtx";
+import { FiAlertCircle } from "react-icons/fi";
 import { cn } from "@/utils";
 import {
   InputOTP,
@@ -765,4 +766,68 @@ const CreateOrderModal = () => {
   );
 };
 
-export { OtpModal, CreateOrderModal };
+const VerifyOperatorModal = () => {
+  const { verifyOperator, setVerifyOperator } = useStateCtx();
+  return (
+    <>
+      <div
+        aria-hidden
+        className={cn(
+          " fixed min-h-screen w-full bg-black/40  top-0 left-0  transition-all duration-300 z-[99] backdrop-blur-sm",
+          verifyOperator ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setVerifyOperator(false)}
+      />
+      <div
+        role="dialog"
+        aria-labelledby="remove-client"
+        className={cn(
+          "py-6   flex flex-col max-[350px]:h-[410px] w-[90%] h-[380px] min-[550px]:w-[500px] md:w-[682px] md:h-[400px] font-worksans items-center bg-white fixed top-1/2 left-1/2  z-[999]  transition-all opacity-0 select-none  -translate-y-1/2 -translate-x-1/2",
+          verifyOperator
+            ? "scale-100 duration-500 opacity-100 rounded-xl md:rounded-2xl"
+            : "scale-0 duration-200 pointer-events-none"
+        )}
+      >
+        <div className="flex items-center justify-between w-full border-b border-[#e1e1e1] dark:border-primary-light pb-2 pl-4 px-4 md:pl-8 ">
+          <h3 className="sm:text-lg md:text-2xl font-medium text-red-500">
+            Action Needed Urgerntly
+          </h3>
+          <button
+            type="button"
+            tabIndex={0}
+            aria-label="Close"
+            onClick={() => setVerifyOperator(false)}
+            className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-light rounded-full text-red-500"
+          >
+            <X size={24} />
+          </button>
+        </div>
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <div className="bg-red-500 w-16 h-16 mb-2 rounded-full text-3xl text-white grid place-items-center mx-auto">
+            <FiAlertCircle />
+          </div>
+          <h3 className="md:text-3xl text-lg font-semibold text-center mb-2">
+            Your Account Has Not Been Verified
+          </h3>
+          <p className="text-center mb-6 text-xs md:text-base">
+            To ensure the security and integrity of our platform, your account
+            must be verified before you can transact with others. Click the
+            verify Button to start the verification process or contact support
+            if you need assistance.
+          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={() => setVerifyOperator(false)}
+            >
+              I'll do it later
+            </Button>
+            <Button variant="success">Verify Now</Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export { OtpModal, CreateOrderModal, VerifyOperatorModal };
