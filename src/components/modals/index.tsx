@@ -71,14 +71,8 @@ const OtpModal = ({ email, id }: User) => {
         if (data.status === 200) {
           setValue("");
           setShowOtp(false);
-          const user: User = data.user;
 
-          if (user.accountType === "user") {
-            router.push("/auth/sign-in");
-          } else if (user.accountType === "operator") {
-            window?.localStorage.setItem("user", JSON.stringify(user));
-            router.push("/verify-operator");
-          }
+          router.push("/auth/sign-in");
         }
       });
     });

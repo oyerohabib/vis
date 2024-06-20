@@ -29,6 +29,7 @@ interface User {
   mobilityType: string;
   driversLicense: string;
   vechLicense: string;
+  isOperatorverified: boolean;
   sentMessages: Message[];
   receivedMessages: Message[];
   conversationsAsSender: Conversation[];
@@ -178,3 +179,5 @@ export type Response<T = boolean> = T extends object
   ? ResponseSuccess<T>
   : ResponseWithMessage;
 export { NavbarLinkProps, User, SidebarProps, Order, Notification };
+
+// xapajij412@lisoren.com

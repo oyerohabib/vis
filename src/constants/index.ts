@@ -7,9 +7,7 @@ import {
   Profile2User,
   ArchiveBook,
   TrendUp,
-  Setting2,
-  Message,
-  Truck,
+  Hierarchy,
   MessageText,
   Wallet2,
   Notification,
@@ -51,6 +49,52 @@ export const SIDEBAR_LINKS: SidebarProps[] = [
     icon: TrendUp,
     link: "price-checker",
   },
+  {
+    id: 5,
+    label: "Notifications",
+    icon: Notification,
+    link: "notification",
+  },
+  {
+    id: 6,
+    label: "Referals",
+    icon: UserAdd,
+    link: "referals",
+  },
+  {
+    id: 7,
+    label: "Wallet",
+    icon: Wallet2,
+    link: "wallet",
+  },
+];
+
+export const OPERATOR_SIDEBAR_LINKS: SidebarProps[] = [
+  {
+    id: 1,
+    label: "Dashboard",
+    icon: Category,
+    link: "dashboard",
+  },
+  {
+    id: 2,
+    label: "Orders",
+    icon: Box,
+    link: "orders",
+  },
+  {
+    id: 10,
+    label: "Bids",
+    icon: Hierarchy,
+    link: "orders",
+  },
+  {
+    id: 3,
+    label: "Chat",
+    icon: MessageText,
+    link: "chat",
+  },
+
   {
     id: 5,
     label: "Notifications",
