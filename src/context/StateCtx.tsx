@@ -17,6 +17,8 @@ interface StateContextProps {
   setVerifyOperator: React.Dispatch<React.SetStateAction<boolean>>;
   openOperatorSidebar: boolean;
   setOpenOperatorSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  openOrder: boolean;
+  setOpenOrder: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const StateContext = createContext({} as StateContextProps);
@@ -28,10 +30,11 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [swipeIndicator, setSwipeIndicator] = React.useState(false);
   const [createOrder, setCreateOrder] = React.useState(false);
   const [verifyOperator, setVerifyOperator] = React.useState(false);
+  const [openOrder, setOpenOrder] = React.useState(false);
   const [openOperatorSidebar, setOpenOperatorSidebar] = React.useState(false);
   const [handleSwipe, setHandleSwipe] = React.useState<number | null>(null);
 
-  const isAnyModalOpen = ShowOtp || createOrder || verifyOperator;
+  const isAnyModalOpen = ShowOtp || createOrder || verifyOperator || openOrder;
 
   const anyMobileSidebarOpen =
     showMobileMenu || openSidebar || openOperatorSidebar;
@@ -100,6 +103,7 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
         setCreateOrder(false);
         setVerifyOperator(false);
         setOpenOperatorSidebar(false);
+        setOpenOrder(false);
       }
     };
 
@@ -141,22 +145,18 @@ const StateContextProvider = ({ children }: { children: React.ReactNode }) => {
       setVerifyOperator,
       openOperatorSidebar,
       setOpenOperatorSidebar,
+      openOrder,
+      setOpenOrder,
     }),
     [
       showMobileMenu,
-      setShowMobileMenu,
       ShowOtp,
-      setShowOtp,
       openSidebar,
-      setOpenSidebar,
       swipeIndicator,
-      setSwipeIndicator,
       createOrder,
-      setCreateOrder,
       verifyOperator,
-      setVerifyOperator,
       openOperatorSidebar,
-      setOpenOperatorSidebar,
+      openOrder,
     ]
   );
 

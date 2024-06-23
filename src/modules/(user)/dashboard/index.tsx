@@ -97,7 +97,9 @@ const DashBoardNav = () => {
 };
 
 const OrdersPreview = () => {
-  const { orders, orderSearchTerm, setOrderSearchTerm } = useOrderCtx();
+  const { orders, orderSearchTerm, setOrderSearchTerm, setSelectedOrder } =
+    useOrderCtx();
+  const { setOpenOrder } = useStateCtx();
 
   const filteredOrders = orderSearchTerm
     ? orders.filter((order) =>
@@ -198,7 +200,15 @@ const OrdersPreview = () => {
                     {format(new Date(order.updatedAt), "PPP")}
                   </td>
                   <td className="px-4 py-3 text-left text-sm text-black">
-                    <Button className="py-4 px-2">View</Button>
+                    <Button
+                      className="py-4 px-2"
+                      onClick={() => {
+                        setOpenOrder(true);
+                        setSelectedOrder(order.id);
+                      }}
+                    >
+                      View
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -227,28 +237,37 @@ const OrdersPreview = () => {
                       }}
                     />
                   </h3>
-                  <p className="text-xs min-[400px]:text-sm sm:text-base text-header dark:text-gray-400">
-                    {order.pickupitem.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
+                  <p className="text-xs min-[400px]:text-sm sm:text-base">
+                    {order?.pickupitem.join(", ")}
                   </p>
                 </div>
-                <div className="flex w-full  max-w-[130px] sm:max-w-[160px] flex-col items-end justify-between">
-                  <p className="text-xs sm:text-sm opacity-70 text-header dark:text-gray-300">
-                    {format(new Date(order.updatedAt), "PPP")}
-                  </p>
-                  <span
-                    className={cn("px-2  rounded-full text-sm", {
-                      "bg-green-100 text-green-700":
-                        order.status === "delivered",
-                      "bg-yellow-100 text-yellow-900":
-                        order.status === "in-tranist",
-                      "bg-red-100 text-red-900": order.status === "canceled",
-                      "bg-blue-100 text-blue-700": order.status === "pending",
-                    })}
+                <div className="flex items-center justify-between gap-3 w-full">
+                  <div className="flex w-full   flex-col items-center justify-between">
+                    <p className="text-xs sm:text-sm opacity-70">
+                      {format(new Date(order.updatedAt), "PPP")}
+                    </p>
+                    <span
+                      className={cn("px-2  rounded-full text-sm", {
+                        "bg-green-100 text-green-700":
+                          order.status === "delivered",
+                        "bg-yellow-100 text-yellow-900":
+                          order.status === "in-tranist",
+                        "bg-red-100 text-red-900": order.status === "canceled",
+                        "bg-blue-100 text-blue-700": order.status === "pending",
+                      })}
+                    >
+                      {order.status}
+                    </span>
+                  </div>
+                  <Button
+                    className="py-4 px-2"
+                    onClick={() => {
+                      setOpenOrder(true);
+                      setSelectedOrder(order.id);
+                    }}
                   >
-                    {order.status}
-                  </span>
+                    View
+                  </Button>
                 </div>
               </div>
             ))}

@@ -147,4 +147,30 @@ const getBids = async () => {
   }
 };
 
-export { getallorders, CreateOrder, getGeneralOrders, getBids };
+const GetOrderById = async (id: string) => {
+  const { refreshToken } = await getrefreshtoken();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      accept: "application/json",
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  };
+
+  try {
+    const res = await $Http.get(`/get-order?id=${id}`, config);
+    return {
+      status: res.status,
+      message: res.data.message,
+      order: res.data.order,
+    };
+  } catch (e: any) {
+    return {
+      message: e?.response?.data.message,
+      status: e?.response?.status,
+    };
+  }
+};
+
+export { getallorders, CreateOrder, getGeneralOrders, getBids, GetOrderById };

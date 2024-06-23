@@ -81,6 +81,8 @@ interface Order {
   dropoffphone: string;
   deliverytype: string;
   insurance: boolean;
+  dispatched: boolean;
+  deliveries: Order[];
   owner: User;
   userId: string;
   deliveryAgent?: User;
@@ -95,8 +97,6 @@ interface Bid {
   id: number;
   bidder: User;
   userId: string;
-  order: Order;
-  orderId: string;
   accepted?: boolean;
   price: string;
   deliveryhour: string;

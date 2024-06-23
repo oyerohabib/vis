@@ -20,10 +20,12 @@ interface OrderContextProps {
   orders: Order[];
   Generalorders: Order[];
   orderSearchTerm: string;
+  selectedOrder: string;
   updateOrders: () => void;
   Notifications: Notification[];
   setOrders: Dispatch<SetStateAction<Order[]>>;
   setOrderSearchTerm: Dispatch<SetStateAction<string>>;
+  setSelectedOrder: Dispatch<SetStateAction<string>>;
 }
 
 export const OrderContext = createContext({} as OrderContextProps);
@@ -33,6 +35,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [Generalorders, setGeneralOrders] = useState<Order[]>([]);
   const [Notifications, setNotifications] = useState<Notification[]>([]);
   const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
+  const [selectedOrder, setSelectedOrder] = useState<string>("");
   const [bids, setBids] = useState<Bid[]>([]);
   const { user } = useUserCtx();
   const { setVerifyOperator } = useStateCtx();
@@ -114,8 +117,17 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       Notifications,
       Generalorders,
       bids,
+      setSelectedOrder,
+      selectedOrder,
     }),
-    [orders, orderSearchTerm, Notifications, getGeneralOrders, bids]
+    [
+      orders,
+      orderSearchTerm,
+      Notifications,
+      getGeneralOrders,
+      bids,
+      selectedOrder,
+    ]
   );
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>

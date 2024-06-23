@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useTransition, useId } from "react";
+import { useState, useTransition, useId, useEffect } from "react";
 import { useStateCtx } from "@/context/StateCtx";
 import { FiAlertCircle } from "react-icons/fi";
 import { cn } from "@/utils";
@@ -12,12 +12,12 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useToast } from "../ui/use-toast";
-import { User } from "@/types";
+import { Order, User } from "@/types";
 import { maskEmail } from "@/utils";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
 import { OtpSchema, createOrderschema } from "@/schemas";
-import { CreateOrder } from "@/actions/order";
+import { CreateOrder, GetOrderById } from "@/actions/order";
 import * as z from "zod";
 import { Otp } from "@/actions/auth";
 import { useRouter } from "next/navigation";
@@ -41,6 +41,9 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { useUserCtx } from "@/context/UserCtx";
+import useMediaQuery from "@/hooks/use-media-query";
+import { Sheet, SheetContent } from "../ui/sheet";
+import { format } from "date-fns";
 
 const OtpModal = ({ email, id }: User) => {
   const { ShowOtp, setShowOtp } = useStateCtx();
@@ -830,4 +833,145 @@ const VerifyOperatorModal = () => {
   );
 };
 
-export { OtpModal, CreateOrderModal, VerifyOperatorModal };
+const ViewOrderDetails = () => {
+  const { setOpenOrder, openOrder } = useStateCtx();
+  const { selectedOrder } = useOrderCtx();
+  const [isPending, startTransition] = useTransition();
+  const { isMobile } = useMediaQuery();
+  const [order, setOrder] = useState<Order>();
+  console.log(order);
+
+  useEffect(() => {
+    startTransition(() => {
+      GetOrderById(selectedOrder).then((data) => {
+        setOrder(data.order);
+      });
+    });
+  }, [openOrder]);
+
+  return (
+    <Sheet open={openOrder} onOpenChange={setOpenOrder}>
+      <SheetContent
+        className="w-full z-[150]"
+        side={isMobile ? "bottom" : "right"}
+      >
+        <div className="flex flex-col w-full sm:px-3 py-6 mb-6 sm:rounded-xl h-full relative">
+          <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+            <h3 className="text-lg font-semibold text-primary">
+              Order Details
+            </h3>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Status: {order?.status.replace("-", " ").toLowerCase()}
+            </p>
+          </div>
+          <div className="flex w-full flex-col py-5 gap-y-3 lg:gap-y-4">
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Pickup Name:
+              <span className="font-medium">{order?.pickupname}</span>
+              <span className="text-primary/50 text-[11px]">
+                (Created on{" "}
+                {format(
+                  new Date(order?.createdAt ? order.createdAt : new Date()),
+                  "dd-MM-yyyy"
+                )}
+                )
+              </span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Phone:
+              <span className="font-medium">{order?.pickupphone}</span>
+            </p>
+            <p className="text-sm xl:text-base text-header dark:text-gray-200 flex items-center gap-x-1">
+              Tracking ID:
+              <span className="font-medium">{order?.id}</span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Pickup Address:
+              <span className="font-medium">{order?.pickupaddress}</span>
+            </p>
+
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Items:{" "}
+              <span className="font-medium">
+                {order?.pickupitem.join(", ")}
+              </span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              DropOff Assignee:{" "}
+              <span className="font-medium">{order?.dropoffname}</span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Destination Address:
+              <span className="font-medium">{order?.dropoffaddress}</span>
+            </p>
+          </div>
+          {order?.dispatched ? (
+            <>
+              <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+                <h3 className="text-lg font-semibold text-primary">
+                  Delivery Agent Details
+                </h3>
+              </div>
+              <div className="flex w-full flex-col py-5 gap-y-3 lg:gap-y-4">
+                <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+                  Name:
+                  <span className="font-medium">
+                    {order?.deliveryAgent?.fullName}
+                  </span>
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+                <h3 className="text-lg font-semibold text-primary">Bids</h3>
+              </div>
+              <div className="flex w-full flex-col py-5 gap-y-3 lg:gap-y-4">
+                {order?.bids && order.bids.length > 0 ? (
+                  order.bids.map((bid) => (
+                    <div
+                      key={bid.id}
+                      className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1 flex-col"
+                    >
+                      <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+                        Bidder:
+                        <span className="font-medium">
+                          {bid.bidder.fullName}
+                        </span>
+                      </p>
+                      <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+                        Price:
+                        <span className="font-medium">{bid.price}</span>
+                      </p>
+                      <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+                        Estimated time of delivery:
+                        <span className="font-medium">
+                          {bid.deliveryhour} from time of pickup
+                        </span>
+                      </p>
+                      <div className="flex w-full justify-center sm:justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 py-6 max-sm:gap-x-5">
+                        <Button
+                          className={cn(
+                            "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"
+                          )}
+                        >
+                          Chat Bidder
+                        </Button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+                    No bids yet
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export { OtpModal, CreateOrderModal, VerifyOperatorModal, ViewOrderDetails };
