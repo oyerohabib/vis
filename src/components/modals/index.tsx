@@ -820,7 +820,7 @@ const VerifyOperatorModal = () => {
               variant="destructive"
               onClick={() => setVerifyOperator(false)}
             >
-              I'll do it later
+              I&apos;ll do it later
             </Button>
             <Button variant="success">Verify Now</Button>
           </div>
