@@ -3,9 +3,6 @@ import {
   type Icon,
   Category,
   Call,
-  Notification1,
-  Profile2User,
-  ArchiveBook,
   TrendUp,
   Hierarchy,
   MessageText,
@@ -21,7 +18,6 @@ export const NAV_LINKS: NavbarLinkProps[] = [
   { id: 3, link: "contacts", label: "contact us" },
   { id: 5, link: "review", label: "review" },
   { id: 6, link: "order", label: "order" },
-  { id: 7, link: "price", label: "price checker" },
 ];
 
 export const SIDEBAR_LINKS: SidebarProps[] = [

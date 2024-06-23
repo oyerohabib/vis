@@ -72,7 +72,7 @@ interface Order {
   pickupname: string;
   pickupaddress: string;
   pickupphone: string;
-  pickupitem: string[] | string;
+  pickupitem: string[];
   weight?: string;
   deliverymode: string;
   note?: string;
@@ -178,6 +178,6 @@ export type ResponseSuccess<T> =
 export type Response<T = boolean> = T extends object
   ? ResponseSuccess<T>
   : ResponseWithMessage;
-export { NavbarLinkProps, User, SidebarProps, Order, Notification };
+export { NavbarLinkProps, User, SidebarProps, Order, Notification, Bid };
 
 // xapajij412@lisoren.com

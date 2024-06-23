@@ -63,7 +63,7 @@ const OPERATORSideBar = () => {
       </ul>
       <ul className="flex flex-col w-full gap-y-6 xl:gap-y-8 pt-4 items-center">
         <Link
-          href="/settings"
+          href="/operator/settings"
           role="button"
           tabIndex={0}
           aria-label="/operator/settings"
@@ -138,7 +138,7 @@ const OPERATORSideBar = () => {
                   className={cn(
                     session.isOperatorverified
                       ? "text-[#04802e]"
-                      : " text-yellow-500"
+                      : " text-red-500"
                   )}
                 >
                   <Verify variant="Bold" />

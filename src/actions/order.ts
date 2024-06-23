@@ -121,4 +121,30 @@ const getGeneralOrders = async () => {
   }
 };
 
-export { getallorders, CreateOrder, getGeneralOrders };
+const getBids = async () => {
+  const { refreshToken } = await getrefreshtoken();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      accept: "application/json",
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  };
+
+  try {
+    const res = await $Http.get("/get-bids", config);
+    return {
+      status: res.status,
+      message: res.data.message,
+      bids: res.data.bids,
+    };
+  } catch (e: any) {
+    return {
+      message: e?.response?.data.message,
+      status: e?.response?.status,
+    };
+  }
+};
+
+export { getallorders, CreateOrder, getGeneralOrders, getBids };

@@ -156,51 +156,104 @@ const OrdersPreview = () => {
           />
         </div>
       ) : (
-        <table className="min-w-full rounded-xl">
-          <thead>
-            <tr className="bg-gray-50 divide-x divide-gray-300">
-              <th className="px-4 py-3 text-left text-sm text-black">
-                Order ID
-              </th>
-              <th className="px-4 py-3 text-left text-sm text-black">Status</th>
-              <th className="px-4 py-3 text-left text-sm text-black">Date</th>
-              <th className="px-4 py-3 text-left text-sm text-black">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-300 overflow-x-hidden overflow-y-auto">
-            {filteredOrders.map((order) => (
-              <tr key={order.id} className="divide-x divide-gray-300">
-                <td className="px-4 py-3 text-left text-sm text-black">
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: order.id.replace(
-                        new RegExp(`(${orderSearchTerm})`, "gi"),
-                        (match, group) =>
-                          `<span style="color: black; background-color: ${
-                            group.toLowerCase() ===
-                            orderSearchTerm.toLowerCase()
-                              ? "yellow"
-                              : "inherit"
-                          }">${match}</span>`
-                      ),
-                    }}
-                  />
-                </td>
-                <td className="px-4 py-3 text-left text-sm text-black">
-                  {order.status}
-                </td>
-                <td className="px-4 py-3 text-left text-sm text-black">
-                  {format(new Date(order.updatedAt), "PPP")}
-                </td>
-                <td className="px-4 py-3 text-left text-sm text-black">
-                  <Button className="py-4 px-2">View</Button>
-                </td>
+        <>
+          <table className="min-w-full w-full rounded-xl hidden md:block">
+            <thead>
+              <tr className="bg-gray-50 divide-x divide-gray-300">
+                <th className="px-4 py-3 text-left text-sm text-black">
+                  Order ID
+                </th>
+                <th className="px-4 py-3 text-left text-sm text-black">
+                  Status
+                </th>
+                <th className="px-4 py-3 text-left text-sm text-black">Date</th>
+                <th className="px-4 py-3 text-left text-sm text-black">
+                  Actions
+                </th>
               </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-300 overflow-x-hidden overflow-y-auto">
+              {filteredOrders.map((order) => (
+                <tr key={order.id} className="divide-x divide-gray-300">
+                  <td className="px-4 py-3 text-left text-sm text-black">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: order.id.replace(
+                          new RegExp(`(${orderSearchTerm})`, "gi"),
+                          (match, group) =>
+                            `<span style="color: black; background-color: ${
+                              group.toLowerCase() ===
+                              orderSearchTerm.toLowerCase()
+                                ? "yellow"
+                                : "inherit"
+                            }">${match}</span>`
+                        ),
+                      }}
+                    />
+                  </td>
+                  <td className="px-4 py-3 text-left text-sm text-black">
+                    {order.status}
+                  </td>
+                  <td className="px-4 py-3 text-left text-sm text-black">
+                    {format(new Date(order.updatedAt), "PPP")}
+                  </td>
+                  <td className="px-4 py-3 text-left text-sm text-black">
+                    <Button className="py-4 px-2">View</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex w-full flex-col max-w-[687px] hide-scroll overflow-y-auto md:hidden">
+            {filteredOrders.map((order) => (
+              <div
+                key={order.id}
+                className="w-full flex justify-between border-t border-b border-gray-200 py-2 gap-x-2"
+              >
+                <div className="flex w-full flex-col items-start justify-between gap-y-1 min-[400px]:gap-y-2">
+                  <h3 className="font-medium text-sm sm:text-base text-header dark:text-gray-100">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: order.id.replace(
+                          new RegExp(`(${orderSearchTerm})`, "gi"),
+                          (match, group) =>
+                            `<span style="color: black; background-color: ${
+                              group.toLowerCase() ===
+                              orderSearchTerm.toLowerCase()
+                                ? "yellow"
+                                : "inherit"
+                            }">${match}</span>`
+                        ),
+                      }}
+                    />
+                  </h3>
+                  <p className="text-xs min-[400px]:text-sm sm:text-base text-header dark:text-gray-400">
+                    {order.pickupitem.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </p>
+                </div>
+                <div className="flex w-full  max-w-[130px] sm:max-w-[160px] flex-col items-end justify-between">
+                  <p className="text-xs sm:text-sm opacity-70 text-header dark:text-gray-300">
+                    {format(new Date(order.updatedAt), "PPP")}
+                  </p>
+                  <span
+                    className={cn("px-2  rounded-full text-sm", {
+                      "bg-green-100 text-green-700":
+                        order.status === "delivered",
+                      "bg-yellow-100 text-yellow-900":
+                        order.status === "in-tranist",
+                      "bg-red-100 text-red-900": order.status === "canceled",
+                      "bg-blue-100 text-blue-700": order.status === "pending",
+                    })}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       )}
     </section>
   );

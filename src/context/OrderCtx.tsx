@@ -9,13 +9,14 @@ import React, {
   useState,
   startTransition,
 } from "react";
-import { getallorders, getGeneralOrders } from "@/actions/order";
+import { getallorders, getGeneralOrders, getBids } from "@/actions/order";
 import { getNotification } from "@/actions/notification";
-import { Order, Notification } from "@/types";
+import { Order, Notification, Bid } from "@/types";
 import { useUserCtx } from "./UserCtx";
 import { useStateCtx } from "./StateCtx";
 
 interface OrderContextProps {
+  bids: Bid[];
   orders: Order[];
   Generalorders: Order[];
   orderSearchTerm: string;
@@ -32,8 +33,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [Generalorders, setGeneralOrders] = useState<Order[]>([]);
   const [Notifications, setNotifications] = useState<Notification[]>([]);
   const [orderSearchTerm, setOrderSearchTerm] = useState<string>("");
+  const [bids, setBids] = useState<Bid[]>([]);
   const { user } = useUserCtx();
-  const { verifyOperator, setVerifyOperator } = useStateCtx();
+  const { setVerifyOperator } = useStateCtx();
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -44,7 +46,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, [orders]);
+  }, []);
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -63,22 +65,36 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
       startTransition(() =>
+        getBids().then((res) => {
+          setBids(res.bids);
+        })
+      );
+    };
+    fetchData();
+  }, [user, setBids]);
+
+  useLayoutEffect(() => {
+    const fetchData = async () => {
+      if (user.accountType === "user") {
+        return;
+      }
+      startTransition(() =>
         getGeneralOrders().then((res) => {
           setGeneralOrders(res.orders);
         })
       );
     };
     fetchData();
-  }, [setGeneralOrders, user.accountType]);
+  }, [user, setGeneralOrders]);
 
-useLayoutEffect(() => {
-  if (user.accountType === "operator") {
-    const isVerified = user.isOperatorverified;
-    if (!isVerified) {
-      setVerifyOperator(true);
+  useLayoutEffect(() => {
+    if (user.accountType === "operator") {
+      const isVerified = user.isOperatorverified;
+      if (!isVerified) {
+        setVerifyOperator(true);
+      }
     }
-  }
-}, [user.accountType, user.isOperatorverified, setVerifyOperator]);
+  }, [user]);
 
   const updateOrders = async () => {
     startTransition(() =>
@@ -97,8 +113,9 @@ useLayoutEffect(() => {
       updateOrders,
       Notifications,
       Generalorders,
+      bids,
     }),
-    [orders, orderSearchTerm, Notifications, getGeneralOrders]
+    [orders, orderSearchTerm, Notifications, getGeneralOrders, bids]
   );
   return (
     <OrderContext.Provider value={value}>{children}</OrderContext.Provider>
