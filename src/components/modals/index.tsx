@@ -883,7 +883,7 @@ const ViewOrderDetails = () => {
             </p>
             <p className="text-sm xl:text-base text-header dark:text-gray-200 flex items-center gap-x-1">
               Tracking ID:
-              <span className="font-medium">{order?.id}</span>
+              <span className="font-medium text-xs">{order?.id}</span>
             </p>
             <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
               Pickup Address:
