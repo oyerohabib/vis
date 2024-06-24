@@ -1,4 +1,4 @@
-import { NavbarLinkProps, SidebarProps } from "@/types";
+import { NavbarLinkProps, SidebarProps, SettingsProps } from "@/types";
 import {
   type Icon,
   Category,
@@ -76,7 +76,7 @@ export const OPERATOR_SIDEBAR_LINKS: SidebarProps[] = [
     id: 2,
     label: "Orders",
     icon: Box,
-    link: "orders",
+    link: "bids",
   },
   {
     id: 10,
@@ -108,5 +108,23 @@ export const OPERATOR_SIDEBAR_LINKS: SidebarProps[] = [
     label: "Wallet",
     icon: Wallet2,
     link: "wallet",
+  },
+];
+
+export const Settingsnav: SettingsProps[] = [
+  {
+    id: 1,
+    name: "Profile",
+    path: "/profile",
+  },
+  {
+    id: 3,
+    name: "Account Verification",
+    path: "/verification",
+  },
+  {
+    id: 5,
+    name: "Notifications",
+    path: "/notifications-settings",
   },
 ];

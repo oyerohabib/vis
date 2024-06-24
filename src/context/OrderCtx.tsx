@@ -60,7 +60,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, [Notifications]);
+    const interval = setInterval(fetchData, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -74,7 +76,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, [user, setBids]);
+    const interval = setInterval(fetchData, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useLayoutEffect(() => {
     const fetchData = async () => {
@@ -88,7 +92,9 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       );
     };
     fetchData();
-  }, [user, setGeneralOrders]);
+    const interval = setInterval(fetchData, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useLayoutEffect(() => {
     if (user.accountType === "operator") {
@@ -97,7 +103,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
         setVerifyOperator(true);
       }
     }
-  }, [user]);
+  }, [user.accountType]);
 
   const updateOrders = async () => {
     startTransition(() =>

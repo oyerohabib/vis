@@ -771,6 +771,7 @@ const CreateOrderModal = () => {
 
 const VerifyOperatorModal = () => {
   const { verifyOperator, setVerifyOperator } = useStateCtx();
+  const router = useRouter();
   return (
     <>
       <div
@@ -783,7 +784,7 @@ const VerifyOperatorModal = () => {
       />
       <div
         role="dialog"
-        aria-labelledby="remove-client"
+        aria-labelledby="Action Modal"
         className={cn(
           "py-6   flex flex-col max-[350px]:h-[410px] w-[90%] h-[380px] min-[550px]:w-[500px] md:w-[682px] md:h-[400px] font-worksans items-center bg-white fixed top-1/2 left-1/2  z-[999]  transition-all opacity-0 select-none  -translate-y-1/2 -translate-x-1/2",
           verifyOperator
@@ -825,7 +826,17 @@ const VerifyOperatorModal = () => {
             >
               I&apos;ll do it later
             </Button>
-            <Button variant="success">Verify Now</Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                router.push(
+                  "/operator/settings/verification?setting_tab=verification"
+                );
+                setVerifyOperator(false);
+              }}
+            >
+              Verify Now
+            </Button>
           </div>
         </div>
       </div>
@@ -839,7 +850,6 @@ const ViewOrderDetails = () => {
   const [isPending, startTransition] = useTransition();
   const { isMobile } = useMediaQuery();
   const [order, setOrder] = useState<Order>();
-  console.log(order);
 
   useEffect(() => {
     startTransition(() => {
