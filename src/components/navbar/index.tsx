@@ -4,11 +4,13 @@ import { cn, shrinkString } from "@/utils";
 import { NormalMobileSideBar } from "../sidebars/mobile";
 import { MobileOperatorSidebar } from "../sidebars/operator/mobile";
 import { handleMouseEnter } from "@/utils/text-effect";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useStateCtx } from "@/context/StateCtx";
 import Link from "next/link";
 import { useUserCtx } from "@/context/UserCtx";
+import React from "react";
+import { ChevronRight } from "lucide-react";
 
 const NormalHeader = () => {
   const {
@@ -17,14 +19,27 @@ const NormalHeader = () => {
     setOpenOperatorSidebar,
     openOperatorSidebar,
   } = useStateCtx();
-  const PathName = usePathname();
 
   const { user: session } = useUserCtx();
+  const [currentPath, setCurrentPath] = React.useState("");
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const settingTab = searchParams.get("setting_tab");
 
-  const pathname = PathName.substring(1);
-
-  const path = PathName.replace("/operator/", "");
-  const AdminPath = PathName.replace("/admin/", "");
+  React.useEffect(() => {
+    if (pathname.startsWith("/")) {
+      setCurrentPath(pathname.replace("/", ""));
+    }
+    if (pathname.startsWith("/operator/")) {
+      setCurrentPath(pathname.replace("/operator/", ""));
+    }
+    if (pathname.startsWith("/admin/")) {
+      setCurrentPath(pathname.replace("/admin/", ""));
+    }
+    if (settingTab) {
+      setCurrentPath("settings");
+    }
+  }, [pathname, searchParams]);
 
   return (
     <header
@@ -67,80 +82,39 @@ const NormalHeader = () => {
             <HambergerMenu size={32} className="text-primary" />
           )}
         </button>
-        {session.accountType === "user" && (
-          <>
-            {pathname === "dashboard" ? (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2 className="hidden md:inline sm:text-3xl capitalize font-medium text-primary">
-                  Welcome back!
-                  {shrinkString({ str: session?.fullName!, len: 10 })}
-                </h2>
-                <h2 className="max-[370px]:text-base max-[500px]:text-lg text-xl md:hidden capitalize font-medium text-primary">
-                  {pathname}
-                </h2>
-              </div>
-            ) : (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2
-                  onMouseEnter={handleMouseEnter}
-                  data-value={pathname}
-                  className="max-[370px]:text-base max-[500px]:text-lg text-xl sm:text-3xl capitalize font-medium text-primary"
-                >
-                  {pathname}
-                </h2>
-              </div>
+        {currentPath === "dashboard" ? (
+          <div className="flex gap-x-2 sm:gap-x-4 items-center">
+            <h2 className="hidden md:inline sm:text-3xl capitalize font-medium text-primary">
+              Welcome back!
+              {shrinkString({ str: session?.fullName!, len: 10 })}
+            </h2>
+            <h2 className="max-[370px]:text-base max-[500px]:text-lg text-xl md:hidden capitalize font-medium text-primary">
+              {currentPath}
+            </h2>
+          </div>
+        ) : (
+          <div className="flex gap-x-2 sm:gap-x-4 items-center">
+            <h2
+              onMouseEnter={handleMouseEnter}
+              data-value={currentPath}
+              className="max-[370px]:text-base max-[500px]:text-lg text-xl sm:text-3xl capitalize font-medium text-primary"
+            >
+              {currentPath}
+            </h2>
+            {settingTab && (
+              <>
+                <span className="text-3xl sm:text-4xl text-gray-700 sm:hidden">
+                  <ChevronRight />
+                </span>
+                <span className="text-3xl sm:text-4xl text-gray-700 max-sm:hidden">
+                  •
+                </span>
+                <h3 className="max-[370px]:text-sm max-[500px]:text-base text-xl sm:text-3xl capitalize font-medium text-gray-700  ">
+                  {settingTab.replace(/-/g, " ")}
+                </h3>
+              </>
             )}
-          </>
-        )}
-        {session.accountType === "operator" && (
-          <>
-            {path === "dashboard" ? (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2 className="hidden md:inline sm:text-3xl capitalize font-medium text-primary">
-                  Welcome back!
-                  {shrinkString({ str: session?.fullName!, len: 10 })}
-                </h2>
-                <h2 className="max-[370px]:text-base max-[500px]:text-lg text-xl md:hidden capitalize font-medium text-primary">
-                  {path}
-                </h2>
-              </div>
-            ) : (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2
-                  onMouseEnter={handleMouseEnter}
-                  data-value={path}
-                  className="max-[370px]:text-base max-[500px]:text-lg text-xl sm:text-3xl capitalize font-medium text-primary"
-                >
-                  {path}
-                </h2>
-              </div>
-            )}
-          </>
-        )}
-        {session.accountType === "admin" && (
-          <>
-            {AdminPath === "dashboard" ? (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2 className="hidden md:inline sm:text-3xl capitalize font-medium text-primary">
-                  Welcome back!
-                  {shrinkString({ str: session?.fullName!, len: 10 })}
-                </h2>
-                <h2 className="max-[370px]:text-base max-[500px]:text-lg text-xl md:hidden capitalize font-medium text-primary">
-                  {AdminPath}
-                </h2>
-              </div>
-            ) : (
-              <div className="flex gap-x-2 sm:gap-x-4 items-center">
-                <h2
-                  onMouseEnter={handleMouseEnter}
-                  data-value={AdminPath}
-                  className="max-[370px]:text-base max-[500px]:text-lg text-xl sm:text-3xl capitalize font-medium text-primary"
-                >
-                  {AdminPath}
-                </h2>
-              </div>
-            )}
-          </>
+          </div>
         )}
       </div>
       <div className="flex items-center  md:hidden gap-x-3 xl:gap-x-5  [&>button]:font-medium [&>button]:text-primary">

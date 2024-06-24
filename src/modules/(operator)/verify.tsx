@@ -78,10 +78,8 @@ const VerifyOperator = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setDocuments([...documents, files[0]]);
-    }
+    const files = Array.from(event.target.files || []);
+    setDocuments([...documents, ...files]);
   };
 
   const handleRemoveFile = (index: number) => {
@@ -324,16 +322,18 @@ const VerifyOperator = () => {
                       />
                     </svg>
                   </Label>
-                  <button
-                    type="button"
-                    tabIndex={0}
-                    aria-label="Remove image"
-                    onClick={() => setDocuments([])}
-                    className="text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-light rounded-full bg-white/60 backdrop-blur-sm absolute top-1 right-1 w-8 h-8 flex items-center justify-center hover:text-red-500 hover:bg-white/80 hover:brightness-150 transition-all duration-700 hover:duration-200"
-                    title="Remove image"
-                  >
-                    <X size={18} />
-                  </button>
+                  {documents.length > 0 && (
+                    <button
+                      type="button"
+                      tabIndex={0}
+                      aria-label="Remove image"
+                      onClick={() => setDocuments([])}
+                      className="text-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-light rounded-full backdrop-blur-sm w-8 h-8 flex items-center justify-center"
+                      title="Remove image"
+                    >
+                      <X size={18} />
+                    </button>
+                  )}
                 </div>
                 {documents.map((doc, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -362,6 +362,7 @@ const VerifyOperator = () => {
                   disabled={isLoading}
                   className="hidden sr-only"
                   accept="image/jpeg,image/png,image/svg+xml"
+                  multiple
                   onChange={handleFileChange}
                 />
               </div>
