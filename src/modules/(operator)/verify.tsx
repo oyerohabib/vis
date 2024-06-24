@@ -17,6 +17,28 @@ type Option = {
   value: string;
 };
 
+type CloudinaryAsset = {
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder: string;
+  original_filename: string;
+};
+
 type MultiSelectProps = {
   label: string;
   options: Option[];
@@ -64,6 +86,35 @@ const VerifyOperator = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    startTransition(async () => {
+      const uploadPromises = documents.map(uploadFile);
+      const uploadResults = await Promise.all(uploadPromises);
+      console.log(uploadResults);
+      const UpdatedData = {
+        ...data,
+        document: uploadResults.map((result) => result.url),
+      };
+      console.log({ UpdatedData: UpdatedData });
+    });
+  };
+
+  const uploadFile = async (file: File): Promise<CloudinaryAsset> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
+    formData.append("api_key", process.env.NEXT_PUBLIC_API_KEY!);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to upload image");
+    }
+    return await (res.json() as Promise<CloudinaryAsset>);
   };
 
   const handleMoblityChange = (selectedOptions: any) => {
@@ -85,8 +136,6 @@ const VerifyOperator = () => {
   const handleRemoveFile = (index: number) => {
     setDocuments(documents.filter((_, i) => i !== index));
   };
-
-  console.log(documents);
 
   return (
     <main className="flex flex-col py-4 w-full">
@@ -245,7 +294,7 @@ const VerifyOperator = () => {
               </div>
               <div className="w-full flex-col justify-start items-start gap-1.5 flex">
                 <Label
-                  htmlFor="Plate Number"
+                  htmlFor="vechLicense"
                   className="flex gap-1 items-center text-gray-600 text-base font-medium leading-relaxed"
                 >
                   Plate Number
@@ -264,8 +313,8 @@ const VerifyOperator = () => {
                 </Label>
                 <Input
                   type="text"
-                  id="Plate Number"
-                  name="Plate Number"
+                  id="vechLicense"
+                  name="vechLicense"
                   disabled={isLoading}
                   value={data?.vechLicense}
                   onChange={handleChange}
@@ -366,6 +415,7 @@ const VerifyOperator = () => {
                   onChange={handleFileChange}
                 />
               </div>
+              <button type="submit">upload</button>
             </div>
           </div>
         </div>

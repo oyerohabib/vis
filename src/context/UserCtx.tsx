@@ -30,23 +30,33 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, [userSession]);
 
   useLayoutEffect(() => {
-    const fetchUserData = async () => {
-      const userFromLocal = window.localStorage.getItem("user");
+    const userFromLocal = window.localStorage.getItem("user");
+    const updatedUserFromLocal = window.localStorage.getItem("updatedUser");
 
-      if (!userFromLocal) return;
+    if (!updatedUserFromLocal) {
+      if (userFromLocal) {
+        const parsedUser: User = JSON.parse(userFromLocal);
+        const userWithImage = {
+          ...parsedUser,
+          image: parsedUser.image
+            ? parsedUser.image
+            : `https://ui-avatars.com/api/?name=${parsedUser.fullName}&background=random`,
+        };
+        setUser(userWithImage);
+      }
+      return;
+    }
 
-      const parsedUser: User = JSON.parse(userFromLocal);
-      const userWithImage = {
-        ...parsedUser,
-        image: parsedUser.image
-          ? parsedUser.image
-          : `https://ui-avatars.com/api/?name=${parsedUser.fullName}&background=random`,
-      };
-
-      setUser(userWithImage);
+    const parsedUpdatedUser: User = JSON.parse(updatedUserFromLocal);
+    const updatedUserWithImage = {
+      ...parsedUpdatedUser,
+      image: parsedUpdatedUser.image
+        ? parsedUpdatedUser.image
+        : `https://ui-avatars.com/api/?name=${parsedUpdatedUser.fullName}&background=random`,
     };
 
-    fetchUserData();
+    setUser(updatedUserWithImage);
+    localStorage.removeItem("user");
   }, []);
 
   const value = useMemo(() => ({ user, setUser }), [user]);
