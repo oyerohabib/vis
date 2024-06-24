@@ -12,7 +12,7 @@ const verifyOperator = async (values: z.infer<typeof VerifyOperatorSchema>) => {
       error: "Login Failed. Please check your email and password.",
     };
   }
-  const { cacNumber, ninNumber, mobilityType, vechLicense, driversLicense } =
+  const { cacNumber, ninNumber, mobilityType, vechLicense, } =
     validatedFields.data;
 
   try {
@@ -21,7 +21,7 @@ const verifyOperator = async (values: z.infer<typeof VerifyOperatorSchema>) => {
       ninNumber,
       mobilityType,
       vechLicense,
-      driversLicense,
+
     });
     return {
       status: res.status,
