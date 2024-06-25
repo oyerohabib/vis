@@ -80,3 +80,13 @@ export const VerifyOperatorSchema = z.object({
 
 
 
+export const bidSchema = z.object({
+  price: z.string().min(3, {
+    message: "enter a valid price",
+  }), deliveryhour: z.string().min(3, {
+    message: "enter a valid delivery hour",
+  })
+  , orderId: z.string().min(3, {
+    message: "enter a valid order id",
+  })
+})

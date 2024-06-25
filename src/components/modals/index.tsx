@@ -22,8 +22,8 @@ import { Order, User } from "@/types";
 import { maskEmail } from "@/utils";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
-import { OtpSchema, createOrderschema } from "@/schemas";
-import { CreateOrder, GetOrderById } from "@/actions/order";
+import { OtpSchema, bidSchema, createOrderschema } from "@/schemas";
+import { createBid, CreateOrder, GetOrderById } from "@/actions/order";
 import * as z from "zod";
 import { Otp } from "@/actions/auth";
 import { useRouter } from "next/navigation";
@@ -36,6 +36,7 @@ import { useOrderCtx } from "@/context/OrderCtx";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -992,9 +993,20 @@ const ViewOrderDetails = () => {
 
 const ViewOrderDetailsOperator = () => {
   const { OperatoropenOrder, setOperatoropenOrder } = useStateCtx();
+  const [isLoading, startTransition] = useTransition();
   const { isMobile } = useMediaQuery();
   const [order, setOrder] = useState<Order>();
   const { selectedOrder } = useOrderCtx();
+  const [openCreatebid, setOpenCreatebid] = useState<Boolean>(false);
+
+  const form = useForm<z.infer<typeof bidSchema>>({
+    resolver: zodResolver(bidSchema),
+    defaultValues: {
+      price: "",
+      deliveryhour: "",
+      orderId: order?.id,
+    },
+  });
 
   useEffect(() => {
     startTransition(() => {
@@ -1056,11 +1068,297 @@ const ViewOrderDetailsOperator = () => {
               <span className="font-medium">{order?.dropoffname}</span>
             </p>
             <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              DropOff Contact:{" "}
+              <span className="font-medium">{order?.dropoffphone}</span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
               Destination Address:
               <span className="font-medium">{order?.dropoffaddress}</span>
             </p>
           </div>
+
+          {!isMobile && (
+            <>
+              {order?.dispatched ? (
+                <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
+              ) : (
+                <>
+                  {!openCreatebid && (
+                    <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+                      <div className="flex w-full justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 mt-6 relative">
+                        <button
+                          tabIndex={0}
+                          aria-label="Create bid"
+                          onClick={() => {
+                            setOpenCreatebid(true);
+                          }}
+                          className={cn(
+                            "rounded-lg border bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navbar"
+                          )}
+                        >
+                          Create Bid
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+              {openCreatebid && (
+                <div className="flex flex-col w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+                  <h3 className="text-lg font-semibold text-primary">
+                    Create Bid
+                  </h3>
+                  <Form {...form}>
+                    <form
+                      action=""
+                      className="flex flex-col mt-8 gap-y-6 md:gap-y-6 "
+                      // onSubmit={form.handleSubmit(onSubmit)}
+                    >
+                      <FormField
+                        control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="relative">
+                                <Input
+                                  {...field}
+                                  id="price"
+                                  disabled={isLoading}
+                                  type="text"
+                                  className="block px-2.5 pb-2.5  placeholder:text-white pt-4 w-full  text-sm rounded-lg border border-primary/50 h-[56px]  focus:border-primary focus:outline-none focus:ring-0 peer"
+                                  placeholder="price"
+                                />
+                                <FormLabel
+                                  htmlFor="price"
+                                  className="absolute text-sm bg-white text-gray-500 duration-300 peer-placeholder-shown:bg-transparent transform -translate-y-4 scale-75 top-2 z-10 origin-[0] peer-focus:bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-3"
+                                >
+                                  Price
+                                </FormLabel>
+                              </div>
+                            </FormControl>
+                            <FormDescription>
+                              At what price would you deliver
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="deliveryhour"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="relative">
+                                <Input
+                                  {...field}
+                                  id="deliveryhour"
+                                  disabled={isLoading}
+                                  type="text"
+                                  className="block px-2.5 pb-2.5  placeholder:text-white pt-4 w-full  text-sm rounded-lg border border-primary/50 h-[56px]  focus:border-primary focus:outline-none focus:ring-0 peer"
+                                  placeholder="price"
+                                />
+                                <FormLabel
+                                  htmlFor="price"
+                                  className="absolute text-sm bg-white text-gray-500 duration-300 peer-placeholder-shown:bg-transparent transform -translate-y-4 scale-75 top-2 z-10 origin-[0] peer-focus:bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-3"
+                                >
+                                  Delivery Hour
+                                </FormLabel>
+                              </div>
+                            </FormControl>
+                            <FormDescription>
+                              How soon can you deliver your delivery
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex w-full justify-center sm:justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 py-6 max-sm:gap-x-5">
+                        <Button
+                          type="button"
+                          tabIndex={0}
+                          aria-label="Cancel"
+                          onClick={() => {
+                            form.reset();
+                          }}
+                          variant="outline"
+                          className={cn(
+                            "rounded-lg border border-primary text-primary min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium focus-visible:outline-2 focus-visible:outline-offset-4"
+                          )}
+                        >
+                          Cancel
+                        </Button>
+
+                        <Button
+                          type="submit"
+                          tabIndex={0}
+                          disabled={isLoading}
+                          aria-label="Remove"
+                          className={cn(
+                            "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"
+                          )}
+                        >
+                          {isLoading ? (
+                            <div className="loading">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                            </div>
+                          ) : (
+                            "Make Bid"
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </div>
+              )}
+            </>
+          )}
         </div>
+
+        {isMobile && (
+          <div className="flex flex-col w-full sm:px-3 py-6 mb-6 sm:rounded-xl h-full relative">
+            {order?.dispatched ? (
+              <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
+            ) : (
+              <>
+                {!openCreatebid && (
+                  <div className="flex w-full justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 mt-6 relative">
+                    <button
+                      tabIndex={0}
+                      aria-label="Create bid"
+                      onClick={() => {
+                        setOpenCreatebid(true);
+                      }}
+                      className={cn(
+                        "rounded-lg border bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navbar"
+                      )}
+                    >
+                      Create Bid
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+            {openCreatebid && (
+              <div className="flex flex-col w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+                <h3 className="text-lg font-semibold text-primary">
+                  Create Bid
+                </h3>
+                <Form {...form}>
+                  <form
+                    action=""
+                    className="flex flex-col mt-8 gap-y-6 md:gap-y-6 "
+                    // onSubmit={form.handleSubmit(onSubmit)}
+                  >
+                    <FormField
+                      control={form.control}
+                      name="price"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="relative">
+                              <Input
+                                {...field}
+                                id="price"
+                                disabled={isLoading}
+                                type="text"
+                                className="block px-2.5 pb-2.5  placeholder:text-white pt-4 w-full  text-sm rounded-lg border border-primary/50 h-[56px]  focus:border-primary focus:outline-none focus:ring-0 peer"
+                                placeholder="price"
+                              />
+                              <FormLabel
+                                htmlFor="price"
+                                className="absolute text-sm bg-white text-gray-500 duration-300 peer-placeholder-shown:bg-transparent transform -translate-y-4 scale-75 top-2 z-10 origin-[0] peer-focus:bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-3"
+                              >
+                                Price
+                              </FormLabel>
+                            </div>
+                          </FormControl>
+                          <FormDescription>
+                            At what price would you deliver
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="deliveryhour"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="relative">
+                              <Input
+                                {...field}
+                                id="deliveryhour"
+                                disabled={isLoading}
+                                type="text"
+                                className="block px-2.5 pb-2.5  placeholder:text-white pt-4 w-full  text-sm rounded-lg border border-primary/50 h-[56px]  focus:border-primary focus:outline-none focus:ring-0 peer"
+                                placeholder="price"
+                              />
+                              <FormLabel
+                                htmlFor="price"
+                                className="absolute text-sm bg-white text-gray-500 duration-300 peer-placeholder-shown:bg-transparent transform -translate-y-4 scale-75 top-2 z-10 origin-[0] peer-focus:bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-3"
+                              >
+                                Delivery Hour
+                              </FormLabel>
+                            </div>
+                          </FormControl>
+                          <FormDescription>
+                            How soon can you deliver your delivery
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex w-full justify-center sm:justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 py-6 max-sm:gap-x-5">
+                      <Button
+                        type="button"
+                        tabIndex={0}
+                        aria-label="Cancel"
+                        onClick={() => {
+                          form.reset();
+                        }}
+                        variant="outline"
+                        className={cn(
+                          "rounded-lg border border-primary text-primary min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium focus-visible:outline-2 focus-visible:outline-offset-4"
+                        )}
+                      >
+                        Cancel
+                      </Button>
+
+                      <Button
+                        type="submit"
+                        tabIndex={0}
+                        disabled={isLoading}
+                        aria-label="Remove"
+                        className={cn(
+                          "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"
+                        )}
+                      >
+                        {isLoading ? (
+                          <div className="loading">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                        ) : (
+                          "Make Bid"
+                        )}
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
+              </div>
+            )}
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

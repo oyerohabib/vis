@@ -3,7 +3,7 @@
 import Calls from "./axios";
 import { baseurl } from "@/utils";
 import { getrefreshtoken } from "./refreshToken";
-import { createOrderschema } from "@/schemas";
+import { bidSchema, createOrderschema } from "@/schemas";
 import * as z from "zod";
 
 const $Http = Calls(`${baseurl}/order`);
@@ -48,7 +48,7 @@ const CreateOrder = async (values: z.infer<typeof createOrderschema>) => {
   const validatedFields = createOrderschema.safeParse(values);
   if (!validatedFields.success) {
     return {
-      error: "Login Failed. Please check your email and password.",
+      error: "Verification feild Check your inputs",
     };
   }
   const {
@@ -173,4 +173,37 @@ const GetOrderById = async (id: string) => {
   }
 };
 
-export { getallorders, CreateOrder, getGeneralOrders, getBids, GetOrderById };
+const createBid = async (values: z.infer<typeof bidSchema>) => {
+  const { refreshToken } = await getrefreshtoken();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      accept: "application/json",
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  };
+
+  const validatedFields = bidSchema.safeParse(values);
+  if (!validatedFields.success) {
+    return {
+      error: "Verification feild Check your inputs",
+    };
+  }
+
+  try {
+    const res = await $Http.post("/create-bid", validatedFields.data, config);
+    return {
+      status: res.status,
+      message: res.data.message,
+    };
+  } catch (e: any) {
+    return {
+      message: e?.response?.data.message,
+      status: e?.response?.status,
+    };
+  }
+};
+
+
+export { getallorders, CreateOrder, getGeneralOrders, getBids, GetOrderById, createBid };

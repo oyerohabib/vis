@@ -110,7 +110,7 @@ const OperatorDashBoardOrder = () => {
             {Generalorders.map((ord) => (
               <div
                 key={ord.id}
-                className="w-full flex justify-between border-t border-b border-gray-200 py-2 gap-x-2 items-center"
+                className="w-full flex justify-between border-t border-b border-gray-200 px-2 py-2 gap-x-2 items-center"
               >
                 <div className="flex w-full flex-col items-start justify-between gap-y-1 min-[400px]:gap-y-2">
                   <h3 className="font-medium text-sm sm:text-base">
