@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/ui/multiSelect";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useUserCtx } from "@/context/UserCtx";
 
 type Option = {
   label: string;
@@ -54,6 +55,7 @@ const MoblityType: MultiSelectProps[] = [
 
 const VerifyOperator = () => {
   const { toast } = useToast();
+  const { updateUser } = useUserCtx();
   const [data, setData] = useState<DataProps>(defaultOptions);
   const [isLoading, startTransition] = useTransition();
   const [documents, setDocuments] = useState<File[]>([]);
@@ -100,6 +102,7 @@ const VerifyOperator = () => {
             description: `${data.message}`,
           });
           if (data.status === 200) {
+            updateUser();
             window.localStorage.setItem(
               "updatedUser",
               JSON.stringify(data.user)

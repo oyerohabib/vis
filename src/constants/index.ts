@@ -76,13 +76,13 @@ export const OPERATOR_SIDEBAR_LINKS: SidebarProps[] = [
     id: 2,
     label: "Orders",
     icon: Box,
-    link: "bids",
+    link: "orders",
   },
   {
     id: 10,
     label: "Bids",
     icon: Hierarchy,
-    link: "orders",
+    link: "bids",
   },
   {
     id: 3,

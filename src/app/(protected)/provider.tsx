@@ -7,6 +7,7 @@ import {
   CreateOrderModal,
   VerifyOperatorModal,
   ViewOrderDetails,
+  ViewOrderDetailsOperator,
 } from "@/components/modals";
 import UserContextProvider from "@/context/UserCtx";
 
@@ -17,9 +18,10 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         <UserContextProvider>
           <OrderContextProvider>
             {children}
+            <ViewOrderDetails />
             <CreateOrderModal />
             <VerifyOperatorModal />
-            <ViewOrderDetails />
+            <ViewOrderDetailsOperator />
           </OrderContextProvider>
         </UserContextProvider>
       </SessionProvider>

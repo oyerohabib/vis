@@ -3,23 +3,24 @@ import React, {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
+  startTransition,
   useLayoutEffect,
   useMemo,
   useState,
 } from "react";
+import { getme } from "@/actions/user";
 import { useSession } from "next-auth/react";
 // Add Your Props here
 interface UserContextProps {
   user: User;
   setUser: React.Dispatch<SetStateAction<User>>;
+  updateUser: () => void;
 }
 export const UserContext = createContext({} as UserContextProps);
 
 const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: userSession } = useSession();
-
   const [user, setUser] = useState<User>({} as User);
+  const { data: userSession } = useSession();
 
   useLayoutEffect(() => {
     if (!userSession?.user) return;
@@ -59,7 +60,38 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("user");
   }, []);
 
-  const value = useMemo(() => ({ user, setUser }), [user]);
+  useLayoutEffect(() => {
+    const ferchData = async () => {
+      startTransition(() =>
+        getme().then((res) => {
+          setUser({
+            ...res.user,
+            image: res.user.image
+              ? res.user.image
+              : `https://ui-avatars.com/api/?name=${res.user.fullName}&background=random`,
+          });
+        })
+      );
+    };
+    ferchData();
+    const interval = setInterval(ferchData, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const updateUser = async () => {
+    startTransition(() =>
+      getme().then((res) => {
+        setUser({
+          ...res.user,
+          image: res.user.image
+            ? res.user.image
+            : `https://ui-avatars.com/api/?name=${res.user.fullName}&background=random`,
+        });
+      })
+    );
+  };
+
+  const value = useMemo(() => ({ user, setUser, updateUser }), [user]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useTransition, useId, useEffect } from "react";
+import {
+  useState,
+  useId,
+  useEffect,
+  startTransition,
+  useTransition,
+} from "react";
 import { useStateCtx } from "@/context/StateCtx";
 import { FiAlertCircle } from "react-icons/fi";
 import { cn } from "@/utils";
@@ -847,7 +853,7 @@ const VerifyOperatorModal = () => {
 const ViewOrderDetails = () => {
   const { setOpenOrder, openOrder } = useStateCtx();
   const { selectedOrder } = useOrderCtx();
-  const [isPending, startTransition] = useTransition();
+
   const { isMobile } = useMediaQuery();
   const [order, setOrder] = useState<Order>();
 
@@ -984,4 +990,86 @@ const ViewOrderDetails = () => {
   );
 };
 
-export { OtpModal, CreateOrderModal, VerifyOperatorModal, ViewOrderDetails };
+const ViewOrderDetailsOperator = () => {
+  const { OperatoropenOrder, setOperatoropenOrder } = useStateCtx();
+  const { isMobile } = useMediaQuery();
+  const [order, setOrder] = useState<Order>();
+  const { selectedOrder } = useOrderCtx();
+
+  useEffect(() => {
+    startTransition(() => {
+      GetOrderById(selectedOrder).then((data) => {
+        setOrder(data.order);
+      });
+    });
+  }, [OperatoropenOrder]);
+
+  return (
+    <Sheet open={OperatoropenOrder} onOpenChange={setOperatoropenOrder}>
+      <SheetContent
+        className="w-full z-[150]"
+        side={isMobile ? "bottom" : "right"}
+      >
+        <div className="flex flex-col w-full sm:px-3 py-6 mb-6 sm:rounded-xl h-full relative">
+          <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+            <h3 className="text-lg font-semibold text-primary">
+              Order Details
+            </h3>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Status: {order?.status.replace("-", " ").toLowerCase()}
+            </p>
+          </div>
+          <div className="flex w-full flex-col py-5 gap-y-3 lg:gap-y-4">
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Pickup Name:
+              <span className="font-medium">{order?.pickupname}</span>
+              <span className="text-primary/50 text-[11px]">
+                (Created on{" "}
+                {format(
+                  new Date(order?.createdAt ? order.createdAt : new Date()),
+                  "dd-MM-yyyy"
+                )}
+                )
+              </span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Phone:
+              <span className="font-medium">{order?.pickupphone}</span>
+            </p>
+            <p className="text-sm xl:text-base text-header dark:text-gray-200 flex items-center gap-x-1">
+              Tracking ID:
+              <span className="font-medium text-xs">{order?.id}</span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Pickup Address:
+              <span className="font-medium">{order?.pickupaddress}</span>
+            </p>
+
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Items:{" "}
+              <span className="font-medium">
+                {order?.pickupitem.join(", ")}
+              </span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              DropOff Assignee:{" "}
+              <span className="font-medium">{order?.dropoffname}</span>
+            </p>
+            <p className="text-sm xl:text-base text-black flex flex-wrap items-center gap-x-1">
+              Destination Address:
+              <span className="font-medium">{order?.dropoffaddress}</span>
+            </p>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export {
+  OtpModal,
+  CreateOrderModal,
+  VerifyOperatorModal,
+  ViewOrderDetails,
+  ViewOrderDetailsOperator,
+};

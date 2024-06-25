@@ -1,3 +1,6 @@
+"use server"
+
+
 import { VerifyOperatorSchema } from "@/schemas";
 import { baseurl } from "@/utils";
 import * as z from "zod";
