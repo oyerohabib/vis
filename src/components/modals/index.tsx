@@ -1104,8 +1104,8 @@ const ViewOrderDetailsOperator = () => {
                 </>
               )}
               {openCreatebid && (
-                <div className="flex flex-col w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
-                  <h3 className="text-lg font-semibold text-primary">
+                <div className="flex flex-col w-full justify-between pb-2 md:pb-3 border-b border-primary">
+                  <h3 className="text-lg font-semibold text-primary ">
                     Create Bid
                   </h3>
                   <Form {...form}>
@@ -1245,7 +1245,7 @@ const ViewOrderDetailsOperator = () => {
               </>
             )}
             {openCreatebid && (
-              <div className="flex flex-col w-full items-center justify-between pb-2 md:pb-3 border-b border-primary">
+              <div className="flex flex-col w-full justify-between pb-2 md:pb-3 border-b border-primary">
                 <h3 className="text-lg font-semibold text-primary">
                   Create Bid
                 </h3>
