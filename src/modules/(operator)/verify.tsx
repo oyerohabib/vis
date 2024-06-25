@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import * as z from "zod";
-import { cn } from "@/utils";
+import { useRef, useState, useTransition } from "react";
+import { cn, uploadFile } from "@/utils";
 import { verifyOperator as verify } from "@/actions/verification";
 import { VerifyOperatorSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
@@ -11,32 +10,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/ui/multiSelect";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Option = {
   label: string;
   value: string;
-};
-
-type CloudinaryAsset = {
-  asset_id: string;
-  public_id: string;
-  version: number;
-  version_id: string;
-  signature: string;
-  width: number;
-  height: number;
-  format: string;
-  resource_type: string;
-  created_at: string;
-  tags: string[];
-  bytes: number;
-  type: string;
-  etag: string;
-  placeholder: boolean;
-  url: string;
-  secure_url: string;
-  folder: string;
-  original_filename: string;
 };
 
 type MultiSelectProps = {
@@ -53,6 +31,15 @@ interface DataProps {
   document?: string[];
 }
 
+const defaultOptions: DataProps = {
+  ninNumber: "",
+  cacNumber: "",
+  mobilityType: [],
+  driversLicense: "",
+  vechLicense: "",
+  document: [],
+};
+
 const MoblityType: MultiSelectProps[] = [
   {
     label: "Mobility Type",
@@ -67,7 +54,7 @@ const MoblityType: MultiSelectProps[] = [
 
 const VerifyOperator = () => {
   const { toast } = useToast();
-  const [data, setData] = useState<DataProps>();
+  const [data, setData] = useState<DataProps>(defaultOptions);
   const [isLoading, startTransition] = useTransition();
   const [documents, setDocuments] = useState<File[]>([]);
   const [verificationType, setVerificationType] = useState<"NIN" | "CAC">(
@@ -83,39 +70,45 @@ const VerifyOperator = () => {
       [name]: value,
     }));
   };
+  const router = useRouter();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     startTransition(async () => {
       const uploadPromises = documents.map(uploadFile);
       const uploadResults = await Promise.all(uploadPromises);
-      console.log(uploadResults);
+
       const UpdatedData = {
         ...data,
         document: uploadResults.map((result) => result.url),
       };
-      console.log({ UpdatedData: UpdatedData });
+      const validation = VerifyOperatorSchema.safeParse(UpdatedData);
+      if (!validation.success) {
+        toast({
+          title: "Error",
+          description: "check your inputs",
+        });
+        return;
+      }
+      startTransition(() => {
+        verify(validation.data).then((data) => {
+          toast({
+            title:
+              data.status === 200
+                ? "Verification successfully!"
+                : "An error occured",
+            description: `${data.message}`,
+          });
+          if (data.status === 200) {
+            window.localStorage.setItem("updatedUser", data.user);
+            router.refresh();
+          }
+        });
+      });
     });
   };
 
-  const uploadFile = async (file: File): Promise<CloudinaryAsset> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
-    formData.append("api_key", process.env.NEXT_PUBLIC_API_KEY!);
-
-    const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    if (!res.ok) {
-      throw new Error("Failed to upload image");
-    }
-    return await (res.json() as Promise<CloudinaryAsset>);
-  };
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const handleMoblityChange = (selectedOptions: any) => {
     const selectedValues = selectedOptions.map(
@@ -253,6 +246,8 @@ const VerifyOperator = () => {
               </div>
               <MultiSelect
                 isDisabled={isLoading}
+                // @ts-expect-error
+                controlRef={scrollRef}
                 id="multiSelect"
                 options={MoblityType}
                 className="w-full sele"
@@ -415,8 +410,36 @@ const VerifyOperator = () => {
                   onChange={handleFileChange}
                 />
               </div>
-              <button type="submit">upload</button>
             </div>
+          </div>
+          {/* buttons */}
+          <div className="flex w-full justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 mt-6">
+            <button
+              type="button"
+              tabIndex={0}
+              aria-label="Cancel"
+              onClick={() => {
+                setData(defaultOptions);
+                setDocuments([]);
+                setVerificationType("NIN");
+              }}
+              className={cn(
+                "rounded-lg border border-primary text-primary min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navbar"
+              )}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              tabIndex={0}
+              aria-label="Continue"
+              disabled={isLoading}
+              className={cn(
+                "rounded-lg border bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:opacity-80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium  focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navbar"
+              )}
+            >
+              Verify
+            </button>
           </div>
         </div>
       </form>

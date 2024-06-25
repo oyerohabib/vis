@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { CloudinaryAsset } from "@/types";
 
 
 function cn(...inputs: ClassValue[]) {
@@ -84,6 +85,48 @@ const timeAgo = (date: Date): string => {
 
 
 
+/**
+ * Uploads a file to Cloudinary and returns the uploaded asset information.
+ * @function uploadFile
+ * @async
+ * @param {File} file - The file to be uploaded to Cloudinary.
+ * @returns {Promise<CloudinaryAsset>} A promise that resolves to the uploaded Cloudinary asset information.
+ * @throws {Error} Throws an error if the upload fails.
+ *
+ * @example
+ * // Assuming you have a file input element and you select a file:
+ * const fileInput = document.querySelector('input[type="file"]');
+ * const file = fileInput.files[0];
+ * 
+ * uploadFile(file)
+ *   .then(asset => {
+ *     console.log('Uploaded asset:', asset);
+ *   })
+ *   .catch(error => {
+ *     console.error('Error uploading file:', error); 
+ *   });
+ */
+const uploadFile = async (file: File): Promise<CloudinaryAsset> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
+  formData.append("api_key", process.env.NEXT_PUBLIC_API_KEY!);
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to upload image");
+  }
+  return await (res.json() as Promise<CloudinaryAsset>);
+};
+
+
+
 export {
   cn,
   baseurl,
@@ -92,4 +135,5 @@ export {
   encryptString,
   decryptString,
   timeAgo,
+  uploadFile
 };
