@@ -100,7 +100,10 @@ const VerifyOperator = () => {
             description: `${data.message}`,
           });
           if (data.status === 200) {
-            window.localStorage.setItem("updatedUser", data.user);
+            window.localStorage.setItem(
+              "updatedUser",
+              JSON.stringify(data.user)
+            );
             router.refresh();
           }
         });

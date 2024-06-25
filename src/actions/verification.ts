@@ -23,7 +23,7 @@ const verifyOperator = async (values: z.infer<typeof VerifyOperatorSchema>) => {
       error: "Login Failed. Please check your email and password.",
     };
   }
-  console.log({ "pass": validatedFields })
+
 
   try {
     const res = await $Http.post("/verify-operator", validatedFields.data, config);
