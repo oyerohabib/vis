@@ -86,7 +86,5 @@ export const bidSchema = z.object({
   }), deliveryhour: z.string().min(3, {
     message: "enter a valid delivery hour",
   })
-  , orderId: z.string().min(3, {
-    message: "enter a valid order id",
-  })
+  , orderId: z.string().optional()
 })

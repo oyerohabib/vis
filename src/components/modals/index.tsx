@@ -993,18 +993,20 @@ const ViewOrderDetails = () => {
 
 const ViewOrderDetailsOperator = () => {
   const { OperatoropenOrder, setOperatoropenOrder } = useStateCtx();
+  const { toast } = useToast();
   const [isLoading, startTransition] = useTransition();
   const { isMobile } = useMediaQuery();
   const [order, setOrder] = useState<Order>();
-  const { selectedOrder } = useOrderCtx();
+  const { selectedOrder, updateBids, bids } = useOrderCtx();
   const [openCreatebid, setOpenCreatebid] = useState<Boolean>(false);
 
   const form = useForm<z.infer<typeof bidSchema>>({
     resolver: zodResolver(bidSchema),
+
     defaultValues: {
       price: "",
       deliveryhour: "",
-      orderId: order?.id,
+      orderId: order?.id ?? selectedOrder,
     },
   });
 
@@ -1015,6 +1017,28 @@ const ViewOrderDetailsOperator = () => {
       });
     });
   }, [OperatoropenOrder]);
+
+  const onSubmit = async (values: z.infer<typeof bidSchema>) => {
+    console.log(values);
+    const bidsDetails = {
+      ...values,
+      orderId: order?.id,
+    };
+    startTransition(() => {
+      createBid(bidsDetails).then((data) => {
+        toast({
+          title: data.status === 201 ? "Bid created" : "an error occurred",
+          description: data.message || "An error occurred while creating a bid",
+        });
+        if (data.status === 201) {
+          updateBids();
+          setOpenCreatebid(false);
+        }
+      });
+    });
+  };
+
+  const hasBidded = bids.some((bid) => bid.orderId === selectedOrder);
 
   return (
     <Sheet open={OperatoropenOrder} onOpenChange={setOperatoropenOrder}>
@@ -1079,7 +1103,9 @@ const ViewOrderDetailsOperator = () => {
 
           {!isMobile && (
             <>
-              {order?.dispatched ? (
+              {hasBidded ? (
+                <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
+              ) : order?.dispatched ? (
                 <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
               ) : (
                 <>
@@ -1088,6 +1114,9 @@ const ViewOrderDetailsOperator = () => {
                       <div className="flex w-full justify-end items-center gap-x-2 sm:gap-x-3 md:gap-x-6 mt-6 relative">
                         <button
                           tabIndex={0}
+                          disabled={bids.some(
+                            (bid) => bid.orderId === selectedOrder
+                          )}
                           aria-label="Create bid"
                           onClick={() => {
                             setOpenCreatebid(true);
@@ -1112,7 +1141,7 @@ const ViewOrderDetailsOperator = () => {
                     <form
                       action=""
                       className="flex flex-col mt-8 gap-y-6 md:gap-y-6 "
-                      // onSubmit={form.handleSubmit(onSubmit)}
+                      onSubmit={form.handleSubmit(onSubmit)}
                     >
                       <FormField
                         control={form.control}
@@ -1193,8 +1222,14 @@ const ViewOrderDetailsOperator = () => {
                         <Button
                           type="submit"
                           tabIndex={0}
-                          disabled={isLoading}
-                          aria-label="Remove"
+                          disabled={
+                            isLoading ||
+                            !(
+                              form.getValues().deliveryhour &&
+                              form.getValues().price
+                            )
+                          }
+                          aria-label="Create Bid"
                           className={cn(
                             "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"
                           )}
@@ -1222,7 +1257,9 @@ const ViewOrderDetailsOperator = () => {
 
         {isMobile && (
           <div className="flex flex-col w-full sm:px-3 py-6 mb-6 sm:rounded-xl h-full relative">
-            {order?.dispatched ? (
+            {hasBidded ? (
+              <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
+            ) : order?.dispatched ? (
               <div className="flex w-full items-center justify-between pb-2 md:pb-3 border-b border-primary"></div>
             ) : (
               <>
@@ -1231,6 +1268,9 @@ const ViewOrderDetailsOperator = () => {
                     <button
                       tabIndex={0}
                       aria-label="Create bid"
+                      disabled={bids.some(
+                        (bid) => bid.orderId === selectedOrder
+                      )}
                       onClick={() => {
                         setOpenCreatebid(true);
                       }}
@@ -1253,7 +1293,7 @@ const ViewOrderDetailsOperator = () => {
                   <form
                     action=""
                     className="flex flex-col mt-8 gap-y-6 md:gap-y-6 "
-                    // onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={form.handleSubmit(onSubmit)}
                   >
                     <FormField
                       control={form.control}
@@ -1334,8 +1374,14 @@ const ViewOrderDetailsOperator = () => {
                       <Button
                         type="submit"
                         tabIndex={0}
-                        disabled={isLoading}
-                        aria-label="Remove"
+                        aria-label="Create Bid"
+                        disabled={
+                          isLoading ||
+                          !(
+                            form.getValues().deliveryhour &&
+                            form.getValues().price
+                          )
+                        }
                         className={cn(
                           "rounded-lg bg-primary text-white min-[450px]:w-[178px] min-[450px]:h-[56px] h-[40px] px-2 max-[450px]:px-4 text-base hover:bg-primary/80 transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-40 font-medium"
                         )}

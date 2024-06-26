@@ -22,8 +22,10 @@ interface OrderContextProps {
   orderSearchTerm: string;
   selectedOrder: string;
   updateOrders: () => void;
+  updateBids: () => void;
   Notifications: Notification[];
   setOrders: Dispatch<SetStateAction<Order[]>>;
+
   setOrderSearchTerm: Dispatch<SetStateAction<string>>;
   setSelectedOrder: Dispatch<SetStateAction<string>>;
 }
@@ -112,6 +114,13 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       })
     );
   };
+  const updateBids = async () => {
+    startTransition(() =>
+      getBids().then((res) => {
+        setBids(res.bids);
+      })
+    );
+  };
 
   const value = useMemo(
     () => ({
@@ -125,6 +134,7 @@ const OrderContextProvider = ({ children }: { children: React.ReactNode }) => {
       bids,
       setSelectedOrder,
       selectedOrder,
+      updateBids,
     }),
     [
       orders,

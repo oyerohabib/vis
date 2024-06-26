@@ -99,7 +99,9 @@ interface Bid {
   userId: string;
   accepted?: boolean;
   price: string;
+  orderId: string
   deliveryhour: string;
+  status: "pending" | "accepted" | "rejected"
 }
 
 interface Notification {
