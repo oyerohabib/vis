@@ -35,7 +35,7 @@ const AboutHero = () => {
               alt="Logistics Illustration"
               width={1090}
               height={1090}
-              className="w-full h-full object-cover hidden lg:block "
+              className=" object-cover hidden lg:block "
             />
           </motion.div>
           <div className="lg:pr-24 flex items-center">
@@ -154,9 +154,9 @@ const Services = () => {
                 <Image
                   src="/abt.png"
                   alt="Logistics Illustration"
-                  width={632}
-                  height={480}
-                  className="max-w-full h-[480px] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
+                  width={600}
+                  height={300}
+                  className="max-w-full h-[300px] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
                 />
               </motion.div>
             </div>
@@ -186,12 +186,12 @@ const Services = () => {
                 <Image
                   src="/abt2.png"
                   alt="Logistics Illustration"
-                  width={632}
-                  height={480}
-                  className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
+                  width={600}
+                  height={300}
+                  className="max-w-full h-[300px] aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
                 />
               </motion.div>
-              <div className="lg:pr-24 flex items-center">
+              <div className="lg:pr-24 flex items-center mt-5">
                 <motion.div
                   initial={{ x: -100, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
@@ -205,9 +205,9 @@ const Services = () => {
                   <Image
                     src="/abt2-sm.png"
                     alt="Logistics Illustration"
-                    width={632}
-                    height={480}
-                    className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover block lg:hidden mb-9 mx-auto rounded-3xl"
+                    width={600}
+                    height={300}
+                    className="max-w-full h-[300px] aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover block lg:hidden mb-9 mx-auto rounded-3xl"
                   />
                   <h2 className="text-xl lg:text-3xl font-medium text-primary mb-9 max-lg:text-center">
                     Scheduled Delivery
@@ -233,7 +233,7 @@ const Services = () => {
             //   : " opacity-0 translate-y-36"
           )}
         >
-          <div className="relative">
+          <div className="relative p-[30px]">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 ">
               <div className="lg:pr-24 flex items-center">
                 <motion.div
@@ -249,9 +249,9 @@ const Services = () => {
                   <Image
                     src="/abt3-sm.png"
                     alt="Logistics Illustration"
-                    width={632}
-                    height={480}
-                    className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover block lg:hidden mb-9 mx-auto rounded-3xl"
+                    width={600}
+                    height={300}
+                    className="max-w-full h-[300px] aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover block lg:hidden mb-9 mx-auto rounded-3xl"
                   />
                   <h2 className="text-xl lg:text-2xl font-medium text-primary mb-9 max-lg:text-center capitalize">
                     Inter-country Delivery
@@ -276,9 +276,9 @@ const Services = () => {
                 <Image
                   src="/abt3.png"
                   alt="Logistics Illustration"
-                  width={632}
-                  height={480}
-                  className="max-w-full h-[480px] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
+                  width={600}
+                  height={300}
+                  className="max-w-full h-[300px] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
                 />
               </motion.div>
             </div>
@@ -308,9 +308,9 @@ const Services = () => {
                 <Image
                   src="/abt4.png"
                   alt="Logistics Illustration"
-                  width={632}
-                  height={480}
-                  className="max-w-full h-auto aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
+                  width={600}
+                  height={300}
+                  className="max-w-full h-[300px] aspect-[1.15] max-md:mt-10 max-md:max-w-full object-cover hidden lg:block rounded-3xl"
                 />
               </motion.div>
               <div className="lg:pr-24 flex items-center">
