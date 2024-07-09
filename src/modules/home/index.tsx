@@ -463,7 +463,7 @@ const CoveredLocation = () => {
       <h2 className="md:text-5xl text-3xl text-center md:text-start font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
         Our Coverage Cities
       </h2>
-      <p className="mt-6 text-xl font-light leading-6 text-white w-full md:w-[50%]">
+      <p className="mt-6 text-xl text-justify font-light leading-6 text-white w-full md:w-[100%]">
         Our commitment to serve you constantly propels us to enlarge our
         coverage locations to ensure efficient service delivery and proximity to
         our priority channels.
