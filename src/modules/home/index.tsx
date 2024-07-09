@@ -220,7 +220,7 @@ const Patners = () => {
           <div
             ref={PatnersLogoRef}
             className={cn(
-              "grid grid-cols-2  justify-center  items-center  gap-12 md:grid-cols-3  xl:grid-cols-none xl:flex xl:justify-between",
+              "flex flex-row  justify-center  items-center  gap-12 md:grid-cols-3  xl:grid-cols-none xl:flex xl:justify-between",
               isInView1
                 ? "opacity-100 translate-y-0 md:delay-300 duration-500"
                 : " opacity-0 translate-y-36"
@@ -470,7 +470,7 @@ const CoveredLocation = () => {
       </p>
       <Slider {...settings} className="mt-[50px]">
         {locations.map((location, index) => (
-          <div className="flex w-full max-w-[380px]" key={index}>
+          <div className="flex w-full max-w-[380px] p-[20px]" key={index}>
             <div
               style={{
                 backgroundImage: `url(/states${location.image}.png)`,
