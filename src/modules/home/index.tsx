@@ -170,7 +170,12 @@ const CustomImage = ({ src, alt, className }: ImageProps) => (
 
 const images = [
   {
-    src: "/hero/patner1.png",
+    src: "/hero/abc.png",
+    alt: "Image 1",
+    className: "max-w-full aspect-[1.89] w-[189px] max-md:mt-10",
+  },
+  {
+    src: "/hero/cargo.jpeg",
     alt: "Image 1",
     className: "max-w-full aspect-[1.89] w-[189px] max-md:mt-10",
   },
