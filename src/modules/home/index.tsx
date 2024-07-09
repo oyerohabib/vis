@@ -220,7 +220,7 @@ const Patners = () => {
           <div
             ref={PatnersLogoRef}
             className={cn(
-              "flex flex-row  justify-center  items-center  gap-12 md:grid-cols-3  xl:grid-cols-none xl:flex xl:justify-between",
+              "flex flex-row justify-center  items-center  gap-12 md:grid-cols-3  xl:grid-cols-none xl:flex xl:justify-between",
               isInView1
                 ? "opacity-100 translate-y-0 md:delay-300 duration-500"
                 : " opacity-0 translate-y-36"
@@ -463,7 +463,7 @@ const CoveredLocation = () => {
       <h2 className="md:text-5xl text-3xl text-center md:text-start font-medium text-white leading-[57.6px] max-md:max-w-full max-md:text-4xl">
         Our Coverage Cities
       </h2>
-      <p className="mt-6 text-xl text-justify font-light leading-6 text-white w-full md:w-[100%]">
+      <p className="mt-6 text-xl  font-light leading-6 text-white w-full md:w-[100%]">
         Our commitment to serve you constantly propels us to enlarge our
         coverage locations to ensure efficient service delivery and proximity to
         our priority channels.
